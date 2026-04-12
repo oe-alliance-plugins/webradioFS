@@ -2,21 +2,19 @@
 ###############################################################################
 # webradioFS von shadowrider
 ###############################################################################
-from . import _
+from . import _, __version__
 from Plugins.Plugin import PluginDescriptor
-from Screens.InfoBar import InfoBar
-from Components.PluginComponent import plugins
-from Components.PluginList import PluginList
 from enigma import getDesktop
-import Screens.Standby
 from Tools import Notifications
 from Screens import Standby
 from Screens.MessageBox import MessageBox
-from enigma import eTimer
-from enigma import gFont
+from enigma import eTimer, eConsoleAppContainer
 import os
 import time
 import datetime
+
+from twisted.web import static
+
 session = None
 running = False
 rs = open("/var/webradioFS_debug.log", "a")
@@ -30,7 +28,7 @@ standbycheck = eTimer()
 try:
      if getDesktop(0).size().width() > 1280:
         npicon = 'skin/images/webradioFSfhd.png'
-except:
+except Exception:
     pass
 
 sets_prog = {"Version": "0", "wbrmeld": "", "hauptmenu": False, "DPKG": DPKG}
@@ -47,13 +45,13 @@ if not os.path.isfile(set_file):
     new_set = 1
 
 if os.path.getsize(set_file) < 10:
-     new_set = 1
+    new_set = 1
 os.chmod('/etc/ConfFS/webradioFS_sets.db', 644)
 
 tlr = True
 try:
     import sqlite3
-except:
+except ImportError:
     tlr = False
 
 if tlr:
@@ -65,22 +63,22 @@ if tlr:
         wbrfscursor.execute('SELECT COUNT(*) FROM settings WHERE wert2=?', ("progversion"))
     except Exception as e:
         if not new_set and "no such table: settings" in str(e):
-             wbrfscursor.execute('ALTER TABLE settings2 RENAME TO settings;')
+            wbrfscursor.execute('ALTER TABLE settings2 RENAME TO settings;')
         else:
-          if new_set:
-            wbrfscursor.execute('CREATE TABLE IF NOT EXISTS settings (id INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT, group1 TEXT, nam1 TEXT, wert1 TEXT, wert2 TEXT NOT NULL UNIQUE)')
-          else:
-            wbrfscursor.execute('CREATE TABLE IF NOT EXISTS settings2 (id INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT, group1 TEXT, nam1 TEXT, wert1 TEXT, wert2 TEXT NOT NULL UNIQUE)')
-            wbrfscursor.execute('SELECT group1,nam1,wert1 from settings')
-            uniq_tb = []
-            dats = []
-            for row in wbrfscursor:
-                uniq = str(row[0]) + str(row[1])
-                if uniq not in uniq_tb:
-                    uniq_tb.append(uniq)
-                    dats.append((row[0], row[1], row[2], uniq))
-            for x in dats:
-                 wbrfscursor.execute("INSERT OR IGNORE INTO settings2 (group1,nam1,wert1,wert2) VALUES(?,?,?,?)", (x[0], x[1], x[2], x[3]))
+            if new_set:
+                wbrfscursor.execute('CREATE TABLE IF NOT EXISTS settings (id INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT, group1 TEXT, nam1 TEXT, wert1 TEXT, wert2 TEXT NOT NULL UNIQUE)')
+            else:
+                wbrfscursor.execute('CREATE TABLE IF NOT EXISTS settings2 (id INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT, group1 TEXT, nam1 TEXT, wert1 TEXT, wert2 TEXT NOT NULL UNIQUE)')
+                wbrfscursor.execute('SELECT group1,nam1,wert1 from settings')
+                uniq_tb = []
+                dats = []
+                for row in wbrfscursor:
+                    uniq = str(row[0]) + str(row[1])
+                    if uniq not in uniq_tb:
+                        uniq_tb.append(uniq)
+                        dats.append((row[0], row[1], row[2], uniq))
+                for x in dats:
+                    wbrfscursor.execute("INSERT OR IGNORE INTO settings2 (group1,nam1,wert1,wert2) VALUES(?,?,?,?)", (x[0], x[1], x[2], x[3]))
             connection.commit()
             wbrfscursor.execute('DROP TABLE settings;')
             wbrfscursor.execute('ALTER TABLE settings2 RENAME TO settings;')
@@ -108,8 +106,8 @@ if tlr:
            )
 
     for x in setsb:
-             uni = x[0] + x[1]
-             wbrfscursor.execute("INSERT OR IGNORE INTO settings (group1,nam1,wert1,wert2) VALUES(?,?,?,?);", (x[0], x[1], x[2], uni))
+        uni = x[0] + x[1]
+        wbrfscursor.execute("INSERT OR IGNORE INTO settings (group1,nam1,wert1,wert2) VALUES(?,?,?,?);", (x[0], x[1], x[2], uni))
 
     setsb = None
 
@@ -121,20 +119,20 @@ if tlr:
     favpath = row3[0]
     try:
         os.chmod(os.path.join(favpath, "webradioFS_favs.db"), 644)
-    except:
+    except OSError:
         pass
 
     wbrfscursor.execute('SELECT wert1 FROM settings WHERE nam1 = "DPKG";')
     row = wbrfscursor.fetchone()
     if row is None:
-                wbrfscursor.execute("INSERT INTO settings (group1,nam1,wert1) VALUES(?,?,?);", ("prog", "DPKG", DPKG))
+        wbrfscursor.execute("INSERT INTO settings (group1,nam1,wert1) VALUES(?,?,?);", ("prog", "DPKG", DPKG))
     else:
-                wbrfscursor.execute('UPDATE settings SET wert1 = "%s" WHERE nam1 = "DPKG" AND group1 = "prog";' % (str(DPKG)))
+        wbrfscursor.execute('UPDATE settings SET wert1 = "%s" WHERE nam1 = "DPKG" AND group1 = "prog";' % (str(DPKG)))
     wbrfscursor.execute('SELECT wert1 FROM settings WHERE nam1 = "exttmenu";')
     row2 = wbrfscursor.fetchone()
     if row2 is None:
-                sets_prog["exttmenu"] = True
-                wbrfscursor.execute("INSERT INTO settings (group1,nam1,wert1) VALUES(?,?,?);", ("prog", "exttmenu", "True"))
+        sets_prog["exttmenu"] = True
+        wbrfscursor.execute("INSERT INTO settings (group1,nam1,wert1) VALUES(?,?,?);", ("prog", "exttmenu", "True"))
     else:
         sets_prog["exttmenu"] = row2[0]
 
@@ -144,7 +142,7 @@ if tlr:
     connection.close()
 
 #import webradioFS
-from .webradioFS import myversion
+#from .webradioFS import myversion
 ########################################################
 
 
@@ -171,27 +169,24 @@ def standbycheck2():
 
 
 def deak1(ans):
-      if ans == True:
+      if ans is True:
           countrys(("deakt", "deakt"))
       else:
            main(session)
 
 
 def countrys(land):
-        main(session)
+    main(session)
 
 
 def main(session, **kwargs):
-        f_start(session)
+    f_start(session)
 
 
 def f_start(session):
     if os.path.isfile(set_file):
        if not running and not Standby.inStandby:
-            if DPKG:
-               standbycheck_conn = standbycheck.timeout.connect(standbycheck2)
-            else:
-               standbycheck.callback.append(standbycheck2)
+            standbycheck.callback.append(standbycheck2)
             standbycheck.start(600)
             running_set(session)
             global webradiofs
@@ -207,8 +202,8 @@ def autostarter():
             run = 1
             if Standby.inStandby:
                  if autoTimes[0][1] == "on_from_standby":
-                     Standby.inStandby.Power()
-                     autostarter2()
+                    Standby.inStandby.Power()
+                    autostarter2()
             else:
                 autostarter2()
 
@@ -271,13 +266,13 @@ make_autoT()
 
 
 def restarter2():
-        if session and not running:
-            standbycheck.start(600)
-            running_set(session)
-            global webradiofs
-            #reload(wbrfs)
-            from .webradioFS import WebradioFSScreen_15  # ,start
-            webradiofs = session.openWithCallback(running_set, WebradioFSScreen_15)
+    if session and not running:
+        standbycheck.start(600)
+        running_set(session)
+        global webradiofs
+        #reload(wbrfs)
+        from .webradioFS import WebradioFSScreen_15  # ,start
+        webradiofs = session.openWithCallback(running_set, WebradioFSScreen_15)
 
 
 def umschalt(stream=None):
@@ -286,7 +281,7 @@ def umschalt(stream=None):
 
 
 def webrec():
-        webradiofs.webrec()
+    webradiofs.webrec()
 
 
 def playdir(mdir=None):
@@ -320,7 +315,7 @@ def play_stop(st=None):
 
 
 def abschalt():
-      if running:
+    if running:
         standbycheck.stop()
         webradiofs.web_if_exit()
 
@@ -336,47 +331,43 @@ def out(session):
 
 def inst(resp=0):
     if resp:
-        from enigma import eConsoleAppContainer
         container = eConsoleAppContainer()
-        if DPKG:
-            self.dataAvail_conn = self.container.dataAvail.connect(inst_resp)
-        else:
-            container.dataAvail.append(inst_resp)
-            container.appClosed.append(inst_resp2)
+        container.dataAvail.append(inst_resp)
+        container.appClosed.append(inst_resp2)
         container.execute("opkg install python3-sqlite3")
 
 
 def inst_resp(retval=None):
-        #please install:\nopkg update && opkg install python-sqlite3\nor\nopkg update && opkg install python3-sqlite3"
-        Notifications.AddNotificationWithCallback(inst, MessageBox, "Please restart GUI", type=MessageBox.TYPE_INFO)
-        f = open("/tmp/002", "a")
-        f.write("test")
-        f.close()
+    #please install:\nopkg update && opkg install python-sqlite3\nor\nopkg update && opkg install python3-sqlite3"
+    Notifications.AddNotificationWithCallback(inst, MessageBox, "Please restart GUI", type=MessageBox.TYPE_INFO)
+    f = open("/tmp/002", "a")
+    f.write("test")
+    f.close()
 
 
 def inst_resp2(retval=None):
-        #please install:\nopkg update && opkg install python-sqlite3\nor\nopkg update && opkg install python3-sqlite3"
-        Notifications.AddNotificationWithCallback(inst, MessageBox, "Please restart GUI 2", type=MessageBox.TYPE_INFO)
-        f = open("/tmp/002", "a")
-        f.write("test2")
-        f.write(str(retval))
-        f.close()
+    #please install:\nopkg update && opkg install python-sqlite3\nor\nopkg update && opkg install python3-sqlite3"
+    Notifications.AddNotificationWithCallback(inst, MessageBox, "Please restart GUI 2", type=MessageBox.TYPE_INFO)
+    f = open("/tmp/002", "a")
+    f.write("test2")
+    f.write(str(retval))
+    f.close()
 
 
 def Plugins(path, **kwargs):
     global plugin_path
     plugin_path = path
     if tlr:
-      list = [PluginDescriptor(name="webradioFS", description=_("Radio"), where=[PluginDescriptor.WHERE_PLUGINMENU], icon=npicon, needsRestart=False, fnc=main)]
-      if str(sets_prog["hauptmenu"]) == "True":
-            list.append(PluginDescriptor(name="webradioFS", where=[PluginDescriptor.WHERE_MENU], fnc=menu))
-      if str(sets_prog["exttmenu"]) == "True":
-            list.append(PluginDescriptor(name="webradioFS", where=[PluginDescriptor.WHERE_EXTENSIONSMENU], icon=npicon, needsRestart=False, fnc=main))
-      list.append(PluginDescriptor(name="webradioFS", description="webradioFS", where=[PluginDescriptor.WHERE_SESSIONSTART, PluginDescriptor.WHERE_AUTOSTART], fnc=autostart))
+        items = [PluginDescriptor(name="webradioFS", description=_("Radio"), where=[PluginDescriptor.WHERE_PLUGINMENU], icon=npicon, needsRestart=False, fnc=main)]
+        if str(sets_prog["hauptmenu"]) == "True":
+            items.append(PluginDescriptor(name="webradioFS", where=[PluginDescriptor.WHERE_MENU], fnc=menu))
+        if str(sets_prog["exttmenu"]) == "True":
+            items.append(PluginDescriptor(name="webradioFS", where=[PluginDescriptor.WHERE_EXTENSIONSMENU], icon=npicon, needsRestart=False, fnc=main))
+        items.append(PluginDescriptor(name="webradioFS", description="webradioFS", where=[PluginDescriptor.WHERE_SESSIONSTART, PluginDescriptor.WHERE_AUTOSTART], fnc=autostart))
     else:
-      list = [PluginDescriptor(name="webradioFS", description=_("Radio"), where=[PluginDescriptor.WHERE_PLUGINMENU], icon=npicon, needsRestart=False, fnc=out)]
+        items = [PluginDescriptor(name="webradioFS", description=_("Radio"), where=[PluginDescriptor.WHERE_PLUGINMENU], icon=npicon, needsRestart=False, fnc=out)]
 
-    return list
+    return items
 
 
 def autostart(reason, **kwargs):
@@ -388,16 +379,15 @@ def autostart(reason, **kwargs):
         if reason == 0:
             from Plugins.Extensions.WebInterface.WebChilds.Toplevel import addExternalChild
             from .webradioFSSite import webradioFSweb
-            from twisted.web import static
             root = static.File("/usr/lib/enigma2/python/Plugins/Extensions/webradioFS")
             root.putChild(b"", webradioFSweb())
             if os.path.exists("/usr/lib/enigma2/python/Plugins/Extensions/WebInterface/web/external.xml"):
                 try:
-                    addExternalChild(("webradiofs", root, "webradiofs", myversion, True))
-                except:
+                    addExternalChild(("webradiofs", root, "webradiofs", __version__, True))
+                except Exception:
                     addExternalChild(("webradiofs", root))
             if os.path.exists("/usr/lib/enigma2/python/Plugins/Extensions/OpenWebif/pluginshook.src"):
                 try:
-                    addExternalChild(("webradiofs", root, "webradiofs", myversion))
-                except:
+                    addExternalChild(("webradiofs", root, "webradiofs", __version__))
+                except Exception:
                     pass

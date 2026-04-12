@@ -3,7 +3,7 @@
 # webradioFS von shadowrider
 ###############################################################################
 
-from . import _
+from . import _, __version__
 import codecs
 import Screens.Standby
 from Screens.Screen import Screen
@@ -100,7 +100,6 @@ from .ext import ext_l4l
 l4l_set = ext_l4l()
 
 myname = "webradioFS"
-myversion = "22.06"
 wbrfs_saver = None
 versiondat = (2026, 21, 1)
 
@@ -4569,23 +4568,22 @@ class WebradioFSScreen_15(Screen, InfoBarSeek, HelpableScreen, InfoBarNotificati
               try:
                  if self.containerwbrfs_rec:
                    self.containerwbrfs_rec.sendCtrlC()
-              except:
+              except Exception:
                    pass
 
               if L4LwbrFS:
                   try:
-
                       L4LwbrFS.delete("wbrFS")
                       L4LwbrFS.setScreen("0")
                       L4LwbrFS.setHoldKey(False)
                       if l4lR:
                           L4LwbrFS.setRefresh()
-                  except:
+                  except Exception:
                       pass
               try:
                   if fileExists("/tmp/.wbrfs_pic"):
                       os.remove("/tmp/.wbrfs_pic")
-              except:
+              except OSError:
                   pass
               varis = ("myname", "myversion", "wbrfs_saver", "versiondat", "php_num", "streamplayer", "hashwert", "manuell", "online", "starter_stream", "startsets", "sets_exp", "web_liste_streams",
                   "web_liste_favs", "right_site", "listenbreite,box", "web1", "web", "vumodel", "imagetyp", "pcfs", "sispmctl", "l4l_info", "saver_list", "L4LwbrFS", "FBts_liste",
@@ -4807,12 +4805,12 @@ class WebradioFSScreen_15(Screen, InfoBarSeek, HelpableScreen, InfoBarNotificati
         self.menuStart(menu, _("Actions-Menu"), None, self.showMainMenu)
 
     def menuStart(self, menu=None, titel=None, infos=None, back=None):
-            if back:
-                menu.insert(0, (_("back"), back, ""))
-            titel = "webradioFS: " + titel
-            self.menu_on = True
-            self.selectionChanged()
-            self.session.openWithCallback(self.menuCallback, menu_13, menu, titel, back, self.display_on, l4ls)
+        if back:
+            menu.insert(0, (_("back"), back, ""))
+        titel = "webradioFS: " + titel
+        self.menu_on = True
+        self.selectionChanged()
+        self.session.openWithCallback(self.menuCallback, menu_13, menu, titel, back, self.display_on, l4ls)
 
     def menuCallback(self, choice, back):
         if back and choice:
@@ -4849,17 +4847,17 @@ class WebradioFSScreen_15(Screen, InfoBarSeek, HelpableScreen, InfoBarNotificati
 
     def change_setup_xml(self):
         if fontlist[4]:
-              if fileExists(skin_ext + "wbrFS_setup_small.xml"):
-                 os.rename(skin_ext + "wbrFS_setup.xml", skin_ext + "wbrFS_setup_big.xml")
-                 os.rename(skin_ext + "wbrFS_setup_small.xml", skin_ext + "wbrFS_setup.xml")
-              self.meld_screen(_("This image does not allow size for the ConfigListScreen, Font is from Image - I can not help unfortunately\nPlease contact the skin developer"), "webradioFS - Info", 20, "ERROR")
+            if fileExists(skin_ext + "wbrFS_setup_small.xml"):
+                os.rename(skin_ext + "wbrFS_setup.xml", skin_ext + "wbrFS_setup_big.xml")
+                os.rename(skin_ext + "wbrFS_setup_small.xml", skin_ext + "wbrFS_setup.xml")
+            self.meld_screen(_("This image does not allow size for the ConfigListScreen, Font is from Image - I can not help unfortunately\nPlease contact the skin developer"), "webradioFS - Info", 20, "ERROR")
         else:
-          if fileExists(skin_ext + "wbrFS_setup_small.xml"):
-             os.rename(skin_ext + "wbrFS_setup.xml", skin_ext + "wbrFS_setup_big.xml")
-             os.rename(skin_ext + "wbrFS_setup_small.xml", skin_ext + "wbrFS_setup.xml")
-          else:
-            os.rename(skin_ext + "wbrFS_setup.xml", skin_ext + "wbrFS_setup_small.xml")
-            os.rename(skin_ext + "wbrFS_setup_big.xml", skin_ext + "wbrFS_setup.xml")
+            if fileExists(skin_ext + "wbrFS_setup_small.xml"):
+                os.rename(skin_ext + "wbrFS_setup.xml", skin_ext + "wbrFS_setup_big.xml")
+                os.rename(skin_ext + "wbrFS_setup_small.xml", skin_ext + "wbrFS_setup.xml")
+            else:
+                os.rename(skin_ext + "wbrFS_setup.xml", skin_ext + "wbrFS_setup_small.xml")
+                os.rename(skin_ext + "wbrFS_setup_big.xml", skin_ext + "wbrFS_setup.xml")
 
     def fav_importb(self):
         if os.path.exists("/tmp/webradioFS.imp"):
@@ -4897,9 +4895,9 @@ class WebradioFSScreen_15(Screen, InfoBarSeek, HelpableScreen, InfoBarNotificati
             self.meld_screen(_("Patch finished.") + " " + _("Restart must be performed"), "webradioFS- " + _("query"), 0, "??", self.patch_ow2, True)
 
     def patch_ow2(self, result):
-          if result == True:
-                self.volctrl.setVolume(self.org_vol, self.org_vol)
-                quitMainloop(3)
+        if result == True:
+            self.volctrl.setVolume(self.org_vol, self.org_vol)
+            quitMainloop(3)
 
     def set_startstream(self):
         global sets_grund
@@ -4913,8 +4911,8 @@ class WebradioFSScreen_15(Screen, InfoBarSeek, HelpableScreen, InfoBarNotificati
         try:
             sets_grund["startstream1"] = self.play_stream["stream_id"]
             write_settings((("grund", sets_grund),))
-        except:
-           pass
+        except Exception:
+            pass
 
     def groups_men(self):
         titel = "webradioFS: " + _("Groups")
@@ -4926,13 +4924,13 @@ class WebradioFSScreen_15(Screen, InfoBarSeek, HelpableScreen, InfoBarNotificati
         set_groups(groups)
         self.read_new()
         if not group:
-             self.showMainMenu()
+            self.showMainMenu()
         else:
             for x in self.favoritenlist:
-                 if x[0] == group:
-                      self.fav_index = self.favoritenlist.index(x)
-                      self.favoriten()
-                      break
+                if x[0] == group:
+                    self.fav_index = self.favoritenlist.index(x)
+                    self.favoriten()
+                    break
 
     def sortStreams(self):
         self.sorting = (1 - 3)
@@ -4940,11 +4938,11 @@ class WebradioFSScreen_15(Screen, InfoBarSeek, HelpableScreen, InfoBarNotificati
         self.set_streamlist(self.configfile2[2], None, sort=1)
 
     def sortStreams2(self):
-            for x in self.configfile2[2]:
-                self.db("Update streams SET pos=%d WHERE stream_id=%d;" % (x[5], x[2]))
-            self.sorting = None
-            self.menu_back()
-            self.favoriten()
+        for x in self.configfile2[2]:
+            self.db("Update streams SET pos=%d WHERE stream_id=%d;" % (x[5], x[2]))
+        self.sorting = None
+        self.menu_back()
+        self.favoriten()
 
     def setDisplay(self):
         right_site.hide()
@@ -4956,80 +4954,81 @@ class WebradioFSScreen_15(Screen, InfoBarSeek, HelpableScreen, InfoBarNotificati
 
     def del_favs2(self, answer=None):
         if answer:
-          if os.path.isfile(myfav_file):
-              os.unlink(myfav_file)
-          self.session.open(TryQuitMainloop, 3)
+            if os.path.isfile(myfav_file):
+                os.unlink(myfav_file)
+            self.session.open(TryQuitMainloop, 3)
 
     def del_logos(self):
         for x in os.listdir(sets_exp["logopath"]):
-              if os.path.isfile(os.path.join(sets_exp["logopath"], x)):
-                  os.unlink(sets_exp["logopath"] + x)
+            if os.path.isfile(os.path.join(sets_exp["logopath"], x)):
+                os.unlink(sets_exp["logopath"] + x)
         self.tools()
 
     def rc_tasten(self):
         self.session.openWithCallback(self.showConfigDone, WebradioFS_FB_Setup_13)
 
     def show_pictures(self):
-         if pcfs == True:
-             try:
-                 path = sets_exp["coversafepath"]
-                 self.wbrScreenSaver_stop()
-                 right_site.hide()
-                 self.session.openWithCallback(self.showConfigDone, Pic_Thumb, 0, path)  # ,False
-             except:
-                 self.meld_screen(_("Plugin PictureCenterFS not installed or Path failed"), "webradioFS - Info", 20, "ERROR")
-                 self.extras()
-         else:
-             self.meld_screen(_("Plugin PictureCenterFS not installed or Path failed"), "webradioFS - Info", 20, "ERROR")
-             self.extras()
+        if pcfs == True:
+            try:
+                path = sets_exp["coversafepath"]
+                self.wbrScreenSaver_stop()
+                right_site.hide()
+                self.session.openWithCallback(self.showConfigDone, Pic_Thumb, 0, path)  # ,False
+            except Exception:
+                self.meld_screen(_("Plugin PictureCenterFS not installed or Path failed"), "webradioFS - Info", 20, "ERROR")
+                self.extras()
+        else:
+            self.meld_screen(_("Plugin PictureCenterFS not installed or Path failed"), "webradioFS - Info", 20, "ERROR")
+            self.extras()
 
     def slideshow(self):
-         if pcfs == True:
-             try:
-                 self.wbrScreenSaver_stop()
-                 right_site.hide()
-                 self.session.openWithCallback(self.showConfigDone, PictureCenter)
-                 self.pcfs_run = True
-             except:
-                 self.meld_screen(_("Plugin PictureCenterFS not installed or Path failed"), "webradioFS - Info", 20, "ERROR")
-                 self.showConfigDone()
+        if pcfs == True:
+            try:
+                self.wbrScreenSaver_stop()
+                right_site.hide()
+                self.session.openWithCallback(self.showConfigDone, PictureCenter)
+                self.pcfs_run = True
+            except:
+                self.meld_screen(_("Plugin PictureCenterFS not installed or Path failed"), "webradioFS - Info", 20, "ERROR")
+                self.showConfigDone()
 
     def check_max(self):
-                   connection2 = sqlite.connect(myfav_file)
-                   connection2.text_factory = str
-                   cursor = connection2.cursor()
-                   cursor.execute("select COUNT(*) from streams")
-                   (Anzahl,) = cursor.fetchone()
-                   cursor.close()
-                   connection2.close()
-                   return Anzahl
+        connection2 = sqlite.connect(myfav_file)
+        connection2.text_factory = str
+        cursor = connection2.cursor()
+        cursor.execute("select COUNT(*) from streams")
+        (Anzahl,) = cursor.fetchone()
+        cursor.close()
+        connection2.close()
+        return Anzahl
 
     def answer2(self):
         pass
 
     def del_fav_eintrag(self, num):
-               for x in self.favoritenlist:
-                   if x[1] == num:
-                       ind = self.favoritenlist.index(x)
-                       del self.favoritenlist[ind]
-                       break
+        for x in self.favoritenlist:
+            if x[1] == num:
+                ind = self.favoritenlist.index(x)
+                del self.favoritenlist[ind]
+                break
 
 
 ##########################################################
 ########################################################
 #####################################################
 
+
     def aktual_back(self, antwort):
-           self.errorzaehler += 1
-           if antwort == True:
-              self.aktual()
-           else:
-              self.ok(None, self.errorzaehler)
+        self.errorzaehler += 1
+        if antwort == True:
+            self.aktual()
+        else:
+            self.ok(None, self.errorzaehler)
 
     def aktual(self, stream_ok="nein", answer=None):
-      if self.rec_list or satradio or self.configfile2[1] > 29:
-           self.showConfigDone()
-      elif stream_ok != False:
+        if self.rec_list or satradio or self.configfile2[1] > 29:
+            self.showConfigDone()
+        elif stream_ok != False:
             if self.stream_urls and self.errorzaehler < len(self.stream_urls) and stream_ok != "aktual" and self["streamlist"].getCurrent()[0][1] == 0:
                 self.meld_screen(_('Connection attempt') + ' ' + str(self.errorzaehler + 1) + ' ' + _('of') + ' ' + str(len(self.stream_urls)) + ' \n\n' + _('Stop trying to connect?\n(wait to check update from DB)'), "webradioFS- " + _("query"), 5, "??", self.aktual_back, False)
 #            else:
@@ -5051,40 +5050,40 @@ class WebradioFSScreen_15(Screen, InfoBarSeek, HelpableScreen, InfoBarNotificati
 
     def db(self, db_string, akt=1):
         if self.connection is not None:
-                        cursor = self.connection.cursor()
-                        cursor.execute(db_string)
-                        cursor.close()
-                        self.connection.commit()
-                        if akt:
-                            self.read_new()
+            cursor = self.connection.cursor()
+            cursor.execute(db_string)
+            cursor.close()
+            self.connection.commit()
+            if akt:
+                self.read_new()
 
     def set_start_edit(self, answer):
         if answer is True:
             self.edit()
 
     def get_offtimer(self):
-            global offtimer
-            offtimer_time = str(sets_exp["offtimer_time"])
-            if self.wecker == 0:
-                right_site.hide()
-                self.session.openWithCallback(
-                    self.exit_timer,
-                    InputBox,
-                    title=(_("Enter the minutes to shutdown:")),
-                    text=offtimer_time,
-                    maxSize=False,
-                    type=Input.NUMBER
-                )
-                offtimer = "stoppen"
-                if self.chill_taste:
-                    self.chill_taste.setText(_("Stop Sleeptimer"))
-            else:
-                if self.volume_timer.isActive():
-                    self.volume_timer.stop()
-                    self.wecker = 0
-                if self.chill_taste:
-                    self.chill_taste.setText(_("Start Sleeptimer"))
-                offtimer = "starten"
+        global offtimer
+        offtimer_time = str(sets_exp["offtimer_time"])
+        if self.wecker == 0:
+            right_site.hide()
+            self.session.openWithCallback(
+                self.exit_timer,
+                InputBox,
+                title=(_("Enter the minutes to shutdown:")),
+                text=offtimer_time,
+                maxSize=False,
+                type=Input.NUMBER
+            )
+            offtimer = "stoppen"
+            if self.chill_taste:
+                self.chill_taste.setText(_("Stop Sleeptimer"))
+        else:
+            if self.volume_timer.isActive():
+                self.volume_timer.stop()
+                self.wecker = 0
+            if self.chill_taste:
+                self.chill_taste.setText(_("Start Sleeptimer"))
+            offtimer = "starten"
         #else:
         #    self.meld_screen(_("Please set first volume parameters in the basic settings"),"webradioFS- "+_("Info"),20)
 
@@ -5096,7 +5095,7 @@ class WebradioFSScreen_15(Screen, InfoBarSeek, HelpableScreen, InfoBarNotificati
             self["key_red2"].setText(_("exit"))
             #self.versionstest=self.online_vers_check()
             aboutlist = []
-            aboutlist.append(("webradioFS - Version " + myversion, " "))
+            aboutlist.append(("webradioFS - Version " + __version__, " "))
             aboutlist.append((" ", ' '))
 
             aboutlist.append(('Autor: shadowrider', ""))
@@ -5133,6 +5132,7 @@ class WebradioFSScreen_15(Screen, InfoBarSeek, HelpableScreen, InfoBarNotificati
 
 #### update ende ################################################
 #################################################################
+
 
     def showInfo(self, played=0, id=None):
          if id:
@@ -5218,41 +5218,41 @@ class WebradioFSScreen_15(Screen, InfoBarSeek, HelpableScreen, InfoBarNotificati
 
     def showConfigDone(self, args=None, menu=None):
         if sets_exp["stop_abschalt"]:
-             self.blocker.start()
+            self.blocker.start()
         else:
-             self.blocker.stop()
+            self.blocker.stop()
         if args == 2:
-             self.m_back = None
-             self.meld_screen(_("No Pictures in Path"), _("ERROR"), 20, "ERROR")
+            self.m_back = None
+            self.meld_screen(_("No Pictures in Path"), _("ERROR"), 20, "ERROR")
         elif self.tv1 == None and self.video == None:
             if self.menu_on and self.m_back != None:
-               if menu == "tools":
-                   if sets_opt["expert"] == 0:
-                       self.showMainMenu()
-                   else:
-                       self.tools()
-               elif menu == "moduls":
-                     self.showMainMenu()
-               elif menu == "extras":
-                   self.extras()
-               elif menu == "aktions":
-                  self.aktions_menu()
-               elif menu == "admin":
-                  self.admin_menu()
+                if menu == "tools":
+                    if sets_opt["expert"] == 0:
+                        self.showMainMenu()
+                    else:
+                        self.tools()
+                elif menu == "moduls":
+                    self.showMainMenu()
+                elif menu == "extras":
+                    self.extras()
+                elif menu == "aktions":
+                    self.aktions_menu()
+                elif menu == "admin":
+                    self.admin_menu()
 
             else:
-               self.screensaver_off = 0
-               self.ResetwbrScreenSaverTimer()
+                self.screensaver_off = 0
+                self.ResetwbrScreenSaverTimer()
             self.menu_on = None
             self.m_back = None
             try:
                 right_site.show()
-            except:
+            except Exception:
                 pass
 
     def wbrScreenSaver_stop(self):
         if self.wbrScreenSaverTimer.isActive():
-             if sispmctl:
+            if sispmctl:
                 if "0" in sets_sismctl["ssr2"] or "1" in sets_sismctl["ssr2"]:
                     sets = ""
                     for x in sets_sismctl["ssr2"]:
@@ -5260,8 +5260,8 @@ class WebradioFSScreen_15(Screen, InfoBarSeek, HelpableScreen, InfoBarNotificati
                     sispmctl_file = open("/tmp/sispmctlext.txt", "w")
                     sispmctl_file.write(sets)
                     sispmctl_file.close()
-             self.wbrScreenSaverTimer.stop()
-             self.screensaver_off = 1
+            self.wbrScreenSaverTimer.stop()
+            self.screensaver_off = 1
 
     def wbrScreenSaverTimer_Timeout(self):
         global wbrfs_saver
@@ -5270,7 +5270,7 @@ class WebradioFSScreen_15(Screen, InfoBarSeek, HelpableScreen, InfoBarNotificati
         if self.wbrScreenSaverTimer.isActive():
             self.wbrScreenSaverTimer.stop()
         else:
-             if sispmctl:
+            if sispmctl:
                 if "0" in sets_sismctl["ssr1"] or "1" in sets_sismctl["ssr1"]:
                     sets = ""
                     sispmctl_file = open("/tmp/sispmctlext.txt", "w")
@@ -5280,24 +5280,24 @@ class WebradioFSScreen_15(Screen, InfoBarSeek, HelpableScreen, InfoBarNotificati
                     sispmctl_file.write(sets)
                     sispmctl_file.close()
         if onwbrInfoScreen and not self.tv1:
-              self.ResetwbrScreenSaverTimer()
+            self.ResetwbrScreenSaverTimer()
         elif (self.anzeige_fav == _("Play file") or satradio or streamplayer.is_playing or self.playlist2 or self.einzelplay) and self.stream_info != _("trying to establish connection") and not self.tv1 and not self.video and not self.configfile2[1] in (7, 3):
             rec_path = None
             rec_art = ""
             if self.record and l4l_info["rec"] > 0:
-                 rec_art = self.rec_set_list["rec_art"]
-                 rec_path = self.rec_path
-                 if self.rec_path1:
-                      rec_path = self.rec_path1
+                rec_art = self.rec_set_list["rec_art"]
+                rec_path = self.rec_path
+                if self.rec_path1:
+                    rec_path = self.rec_path1
             text = _("Stopped")
             text2 = ""
 
             if self.playlist2 or (self["streamlist"].getCurrent() and self["streamlist"].getCurrent()[0]):
                 if self.einzelplay or self.anzeige_fav == _("Play file"):
-                      text = self.streamname
-                      text2 = _("Single-play")
-                      pl1 = [self.configfile2[2][self["streamlist"].getIndex()]]
-                      playlist = (self.configfile2[0], pl1, 0)
+                    text = self.streamname
+                    text2 = _("Single-play")
+                    pl1 = [self.configfile2[2][self["streamlist"].getIndex()]]
+                    playlist = (self.configfile2[0], pl1, 0)
 
                 elif self.playlist2:
                     playlist = (self.playlist2[0], self.playlist2[2], self.playlist2_ind)
@@ -5318,15 +5318,15 @@ class WebradioFSScreen_15(Screen, InfoBarSeek, HelpableScreen, InfoBarNotificati
             picon = def_pic
 
             if self.sets["logo"]:
-               picon = self.sets["logo"]
+                picon = self.sets["logo"]
             logo = picon
             try:
                 arts = self.play_stream["sscr"].split(",")
                 art = arts[0]
                 if art != "default" and len(arts) > 1:
-                     if len(arts[1]):
-                         art2 = arts[1]
-            except:
+                    if len(arts[1]):
+                        art2 = arts[1]
+            except Exception:
                 arts = (None, None)
                 art = "default"
                 art2 = None
@@ -5336,33 +5336,31 @@ class WebradioFSScreen_15(Screen, InfoBarSeek, HelpableScreen, InfoBarNotificati
                 arts = ((sets_scr["screensaver_art"], None))
 
             if art == "pcfs_slideshow" and pcfs == True:
-                   if os.path.exists(sets_scr["slideshowpath"]):
-                       right_site.hide()
-                       self.session.openWithCallback(self.showConfigDone, Pic_Full_View, art2, "saver")
-                   else:
-                       self.meld_screen(_("Path not exist"), _("ERROR"), 20, "ERROR")
+                if os.path.exists(sets_scr["slideshowpath"]):
+                    right_site.hide()
+                    self.session.openWithCallback(self.showConfigDone, Pic_Full_View, art2, "saver")
+                else:
+                    self.meld_screen(_("Path not exist"), _("ERROR"), 20, "ERROR")
             elif art == "picscreensaver" and picscreensaver == True:
-                   try:
-                       from Plugins.Extensions.picscreensaver.plugin import picScreensaverScreen
-                       right_site.hide()
-                       self.session.openWithCallback(self.showConfigDone, picScreensaverScreen)
-                   except:
-                       pass
+                try:
+                    from Plugins.Extensions.picscreensaver.plugin import picScreensaverScreen
+                    right_site.hide()
+                    self.session.openWithCallback(self.showConfigDone, picScreensaverScreen)
+                except Exception:
+                    pass
 
             elif art == "slideshow_random" or art == "slideshow_sorted":
-              if os.path.exists(art2):
-                read_sub = sets_scr["slideshow_subdirs"]
-                #dpkg=sets_prog["DPKG"]
-                filelist = file_list(art2, read_sub).Dateiliste
-                if len(filelist) > 1:
-                    from .wbrfs_screensaver import wbrfs_diashow
-                    if not wbrfs_saver:
-
-                        wbrfs_saver = self.session.instantiateDialog(wbrfs_diashow, filelist, art, sets_scr, fontlist[4])
-                        wbrfs_saver.show()
-
-                else:
-                    self.meld_screen(_("no picture in path for slideshow") + "\n" + str(art2), "webradioFS- " + _("ERROR"), 30, "ERROR")
+                if os.path.exists(art2):
+                    read_sub = sets_scr["slideshow_subdirs"]
+                    #dpkg=sets_prog["DPKG"]
+                    filelist = file_list(art2, read_sub).Dateiliste
+                    if len(filelist) > 1:
+                        from .wbrfs_screensaver import wbrfs_diashow
+                        if not wbrfs_saver:
+                            wbrfs_saver = self.session.instantiateDialog(wbrfs_diashow, filelist, art, sets_scr, fontlist[4])
+                            wbrfs_saver.show()
+                    else:
+                        self.meld_screen(_("no picture in path for slideshow") + "\n" + str(art2), "webradioFS- " + _("ERROR"), 30, "ERROR")
 
             elif art == "theme_images":
                 if sets_scr["Keyword"] != "":
@@ -5391,62 +5389,63 @@ class WebradioFSScreen_15(Screen, InfoBarSeek, HelpableScreen, InfoBarNotificati
                 self.session.openWithCallback(self.ResetwbrScreenSaverTimer, wbrScreenSaver_13, text, text2, rec_path, coverpath, "", art, self.stream_info, playlist, logo, rec_art, self.display_on, self.exit_time, self.standby_aktion)
 
     def ResetwbrScreenSaverTimer(self, exit_art="", num=None):
-      #f=open("/tmp/exiter","a")
-      #f.write(str(exit_art)+", "+str(num)+"\n")
-      #f.close()
-      if exit_art == "exit" and num and len(num) and num[7] == "Files":
-               self.set_streamlist(self.configfile2[2], num[1], None, None)
-      if right_site:
-          right_site.show()
-      if not self.tv1:
-#        if self.wecker==1:
-#                self.volume_timer.stop()
-#                self.wecker=0
-#                if self.chill_taste: self.chill_taste.setText(_("Chillen"))
-#                offtimer = "starten"
+        #f=open("/tmp/exiter","a")
+        #f.write(str(exit_art)+", "+str(num)+"\n")
+        #f.close()
+        if exit_art == "exit" and num and len(num) and num[7] == "Files":
+            self.set_streamlist(self.configfile2[2], num[1], None, None)
+        if right_site:
+            right_site.show()
+        if not self.tv1:
+    #        if self.wecker==1:
+    #                self.volume_timer.stop()
+    #                self.wecker=0
+    #                if self.chill_taste: self.chill_taste.setText(_("Chillen"))
+    #                offtimer = "starten"
         if onwbrScreenSaver:
-                set_onwbrScreenSaver()
+            set_onwbrScreenSaver()
         if sets_scr["timeout"] > 0 and self.screensaver_off == 0:
-                t1 = sets_scr["timeout"]
-                if self.wbrScreenSaverTimer.isActive():
-                    self.wbrScreenSaverTimer.stop()
-                if len(self.favoritenlist):
-                  if self.configfile2 and len(self.configfile2):
+            t1 = sets_scr["timeout"]
+            if self.wbrScreenSaverTimer.isActive():
+                self.wbrScreenSaverTimer.stop()
+            if len(self.favoritenlist):
+                if self.configfile2 and len(self.configfile2):
                     if not satradio and self.configfile2[1] > 0 and self.configfile2[1] < 30:
                         t1 = 300
-                self.wbrScreenSaverTimer.startLongTimer(t1)
+            self.wbrScreenSaverTimer.startLongTimer(t1)
         if exit_art != "":
             self.exit_art = exit_art
             if exit_art == "stop":
-                  self.stop_stream()
+                self.stop_stream()
             if exit_art == "sleep":
                 #self.exit_art=
                 #if self.standby_aktion==None or (self.standby_aktion != "chillen" and self.standby_aktion != "wecken"):
                     #self.volume_timer.stop()
                     #if self.standby_aktion !="chillen":
-                        self.exit_art = "standby"
-                        self.wecker = 2
-                        self.vol_start()
+
+                self.exit_art = "standby"
+                self.wecker = 2
+                self.vol_start()
 
             if exit_art == "record":
-              self.rec_endless()
+                self.rec_endless()
             if exit_art == "nummer":
-              self.keyNumberGlobal(num)
+                self.keyNumberGlobal(num)
             if exit_art == "record2":
-              self.rec_menu()
+                self.rec_menu()
             if self.record and exit_art == "stopped":
-              if not self.rec_list:
-                  self.wbrfs_recClosed2("stopped")
-              else:
-                  self.rec_list = None
-                  self.Favoriten_Wechsel2(None)
-                  self.ok()
+                if not self.rec_list:
+                    self.wbrfs_recClosed2("stopped")
+                else:
+                    self.rec_list = None
+                    self.Favoriten_Wechsel2(None)
+                    self.ok()
             elif (self.record or self.rec_timer.isActive()) and exit_art == "off":
                 self.power_key_long()
             elif (self.record or self.rec_timer.isActive()) and exit_art == "standby":
-               self.power_key()
+                self.power_key()
             elif exit_art != "record":
-               self.exit_art_b(True)
+                self.exit_art_b(True)
 
     def exit_art_b(self, answer):
         if answer == True:
@@ -5456,11 +5455,10 @@ class WebradioFSScreen_15(Screen, InfoBarSeek, HelpableScreen, InfoBarNotificati
                 elif self.exit_art == "off":
                    self.power_key_long()
                 elif self.exit_art == "stopped":
-                  self.ok()
+                    self.ok()
                 elif self.exit_art == "ende":
-                  self.exit_a()
-
-            except:
+                    self.exit_a()
+            except Exception:
                 self.showConfigDone()
 
     def stream2deleteSelected(self):
@@ -5516,44 +5514,43 @@ class WebradioFSScreen_15(Screen, InfoBarSeek, HelpableScreen, InfoBarNotificati
             if self.wecker == 1 or self.standby_aktion:
                 self.stop_sleep_chill()
             else:
-
-                    self.get_offtimer()
-                    if self.chill_taste:
-                        self.chill_taste.setText(_("Stop Chill/Sleep"))
-                    offtimer = "stoppen"
+                self.get_offtimer()
+                if self.chill_taste:
+                    self.chill_taste.setText(_("Stop Chill/Sleep"))
+                offtimer = "stoppen"
          else:
             self.update()
 
     def stop_sleep_chill(self):
-                self.volume_timer.stop()
-                self.wecker = 0
-                if self.chill_taste:
-                    self.chill_taste.setText(_("Chillen"))
-                self.standby_aktion = None
-                self.setTitle(self.vorgtitle)
-                offtimer = "starten"
-                self.volctrl.setVolume(self.akt_volume, self.akt_volume)
-                try:
-                   self.chsltitel_timer.stop()
-                except:
-                   pass
+        self.volume_timer.stop()
+        self.wecker = 0
+        if self.chill_taste:
+            self.chill_taste.setText(_("Chillen"))
+        self.standby_aktion = None
+        self.setTitle(self.vorgtitle)
+        offtimer = "starten"
+        self.volctrl.setVolume(self.akt_volume, self.akt_volume)
+        try:
+            self.chsltitel_timer.stop()
+        except:
+            pass
 
     def sleep_chill_time(self):
         if self.standby_aktion:
-          e_time = int(round((self.exit_time - time.time()) / 60))
-          if self.standby_aktion == "chillen" and e_time < 1:
+            e_time = int(round((self.exit_time - time.time()) / 60))
+            if self.standby_aktion == "chillen" and e_time < 1:
                 self.setTitle(self.vorgtitle + " (" + _("week up!") + ")")
                 self.volume = self.maxV
                 self.standby_aktion = "wecken"
                 self.set_volume()
-          elif self.exit_time:
-             if not "min." in self.getTitle().lower():
-                          self.vorgtitle = self.getTitle()
-             if self.standby_aktion == "chillen":
+            elif self.exit_time:
+                if not "min." in self.getTitle().lower():
+                    self.vorgtitle = self.getTitle()
+                if self.standby_aktion == "chillen":
                     self.setTitle(self.vorgtitle + " (" + _("Chilling: still") + " " + str(e_time) + " " + _("min.") + ")")
-             else:
-                     self.setTitle(self.vorgtitle + " (" + _("Sleep in") + " " + str(e_time) + " " + _("min.") + ")")
-             self.chsltitel_timer.startLongTimer(10)
+                else:
+                    self.setTitle(self.vorgtitle + " (" + _("Sleep in") + " " + str(e_time) + " " + _("min.") + ")")
+                self.chsltitel_timer.startLongTimer(10)
 
     def vol_start(self, zeit=sets_exp["vol_auto_time"], volume=30, aktion=None):
         global offtimer
@@ -5576,15 +5573,15 @@ class WebradioFSScreen_15(Screen, InfoBarSeek, HelpableScreen, InfoBarNotificati
             if self.standby_aktion == "wecken":
                 pass
             elif self.standby_aktion == "standby":
-                    if not onwbrScreenSaver:
-                         self.power_key()
-                    else:
-                         offtimer = "starten"
+                if not onwbrScreenSaver:
+                    self.power_key()
+                else:
+                    offtimer = "starten"
             elif self.standby_aktion == "exit":
-                  if not onwbrScreenSaver:
-                      self.power_key_long()
-                  else:
-                      offtimer = "starten"
+                if not onwbrScreenSaver:
+                    self.power_key_long()
+                else:
+                    offtimer = "starten"
             else:
                 if self.chill_taste:
                     self.chill_taste.setText(_("Chillen"))
@@ -5593,24 +5590,24 @@ class WebradioFSScreen_15(Screen, InfoBarSeek, HelpableScreen, InfoBarNotificati
                 self.standby_aktion = None
 
     def set_volume(self, args=None):
-            if self.volume < 5:
-                self.volume = 5
-            oldvol2 = self.volctrl.getVolume()
-            if oldvol2 < self.volume and self.standby_aktion == "wecken":
-                VolumeControl.instance.volUp()
-                self.volume_timer.startLongTimer(sets_exp["vol_auto_time"])
-            elif oldvol2 > 5 and oldvol2 > self.volume and (self.standby_aktion == "standby" or self.standby_aktion == "exit" or self.standby_aktion == "chillen"):
-                VolumeControl.instance.volDown()
-                self.volume_timer.startLongTimer(sets_exp["vol_auto_time"])
-            else:
-                self.volume_timer.stop()
+        if self.volume < 5:
+            self.volume = 5
+        oldvol2 = self.volctrl.getVolume()
+        if oldvol2 < self.volume and self.standby_aktion == "wecken":
+            VolumeControl.instance.volUp()
+            self.volume_timer.startLongTimer(sets_exp["vol_auto_time"])
+        elif oldvol2 > 5 and oldvol2 > self.volume and (self.standby_aktion == "standby" or self.standby_aktion == "exit" or self.standby_aktion == "chillen"):
+            VolumeControl.instance.volDown()
+            self.volume_timer.startLongTimer(sets_exp["vol_auto_time"])
+        else:
+            self.volume_timer.stop()
 
-                #self.setTitle(self.vorgtitle)
-                if self.standby_aktion != "chillen":
-                    self.standby_aktion = None
-                    self.setTitle(self.vorgtitle)
-                    self.wecker = 2
-                    self.vol_start()
+        #self.setTitle(self.vorgtitle)
+        if self.standby_aktion != "chillen":
+            self.standby_aktion = None
+            self.setTitle(self.vorgtitle)
+            self.wecker = 2
+            self.vol_start()
 
     def setStandardVolume(self):
         right_site.hide()
@@ -5630,7 +5627,6 @@ class WebradioFSScreen_15(Screen, InfoBarSeek, HelpableScreen, InfoBarNotificati
       elif self.tv1 or self.video:
           pass
       else:
-
         if self.configfile2[1] > 29:
              if not isinstance(self.configfile2, types.ListType):
                   self.configfile2 = list(self.configfile2)
@@ -5667,7 +5663,7 @@ class WebradioFSScreen_15(Screen, InfoBarSeek, HelpableScreen, InfoBarNotificati
 
         global offtimer
         if zeitdiff == 0:
-          self.showConfigDone(None, "aktions")
+            self.showConfigDone(None, "aktions")
 
         else:
            #self.chill_off_timer= eTimer()
@@ -5689,35 +5685,35 @@ class WebradioFSScreen_15(Screen, InfoBarSeek, HelpableScreen, InfoBarNotificati
 #        self.set_volume()
 
     def power_key_long(self):
-                self.exit_art = "off"
-                self.exit(True, "off")
+        self.exit_art = "off"
+        self.exit(True, "off")
 
     def power_key(self):
-            self.exit_art = "standby"
-            self.exit(True, "standby")
+        self.exit_art = "standby"
+        self.exit(True, "standby")
 
     def exportStreams(self):
-           if len(self.configfile2[2]):
-              f = open("/tmp/webradioFS.exp", "w")
-              f.write("#export from webradioFS - Fav: " + self.fav_name + "\n")
-              for x in self.configfile2[2]:
-                  s = self.readSingleStreams(x[2])
+        if len(self.configfile2[2]):
+            f = open("/tmp/webradioFS.exp", "w")
+            f.write("#export from webradioFS - Fav: " + self.fav_name + "\n")
+            for x in self.configfile2[2]:
+                s = self.readSingleStreams(x[2])
 
-                  name1 = s["name"]
-                  url1 = str(s["url"])
-                  typ1 = s["typ"]
-                  btr1 = s["bitrate"]
+                name1 = s["name"]
+                url1 = str(s["url"])
+                typ1 = s["typ"]
+                btr1 = s["bitrate"]
 
-                  if (name1 and len(name1)) and (url1 and len(url1)) and (typ1 and len(typ1)):
-                      name1 = str(s["name"]).strip().replace("\n", ", ").replace("{", "").replace("}", "")
-                      descr1 = str(s["descrip"]).strip().replace("\n", ", ").replace("{", "").replace("}", "")
-                      typ1 = str(s["typ"]).strip().replace("\n", ", ").replace("{", "").replace("}", "")
-                      if not descr1 or not len(descr1):
-                          descr1 = " "
-                      if not btr1:
-                          btr1 = 0
-                      f.write("{" + name1 + "}{" + url1 + "}{" + typ1 + "}{" + descr1 + "}{" + str(btr1) + "}\n")
-              f.close()
+                if (name1 and len(name1)) and (url1 and len(url1)) and (typ1 and len(typ1)):
+                    name1 = str(s["name"]).strip().replace("\n", ", ").replace("{", "").replace("}", "")
+                    descr1 = str(s["descrip"]).strip().replace("\n", ", ").replace("{", "").replace("}", "")
+                    typ1 = str(s["typ"]).strip().replace("\n", ", ").replace("{", "").replace("}", "")
+                    if not descr1 or not len(descr1):
+                        descr1 = " "
+                    if not btr1:
+                        btr1 = 0
+                    f.write("{" + name1 + "}{" + url1 + "}{" + typ1 + "}{" + descr1 + "}{" + str(btr1) + "}\n")
+            f.close()
 
     def getStreams(self, art, con_check=0):
         global sets_prog
@@ -5733,12 +5729,12 @@ class WebradioFSScreen_15(Screen, InfoBarSeek, HelpableScreen, InfoBarNotificati
                 con1 = 1
             except:
                 if db != "/etc/ConfFS/webradioFS_favs.db" and con_check == 0:
-                   dbTimer = eTimer()
-                   if fontlist[4]:
-                             dbTimer_conn = dbTimer.timeout.connect(self.getStreams, 1)
-                   else:
+                    dbTimer = eTimer()
+                    if fontlist[4]:
+                        dbTimer_conn = dbTimer.timeout.connect(self.getStreams, 1)
+                    else:
                        dbTimer.callback.append(self.getStreams, 1)
-                   dbTimer.startLongTimer(120)
+                    dbTimer.startLongTimer(120)
 #                else:
 
 #                   self.fav_import2(None,3)
@@ -5747,37 +5743,37 @@ class WebradioFSScreen_15(Screen, InfoBarSeek, HelpableScreen, InfoBarNotificati
                 try:
                     try:
                         cursor.execute("select sscr from streams;")
-                    except:
-                       cursor.execute("ALTER TABLE streams ADD COLUMN 'sscr' TEXT DEFAULT 'default'")
+                    except Exception:
+                        cursor.execute("ALTER TABLE streams ADD COLUMN 'sscr' TEXT DEFAULT 'default'")
                     try:
                         cursor.execute("select pos from streams;")
-                    except:
-                       cursor.execute("ALTER TABLE streams ADD COLUMN 'pos' INTEGER DEFAULT 1000")
+                    except Exception:
+                        cursor.execute("ALTER TABLE streams ADD COLUMN 'pos' INTEGER DEFAULT 1000")
                     try:
                         cursor.execute("select cache from streams;")
-                    except:
-                       cursor.execute("ALTER TABLE streams ADD COLUMN 'cache' INTEGER DEFAULT 0")
-                except:
-                   pass
+                    except Exception:
+                        cursor.execute("ALTER TABLE streams ADD COLUMN 'cache' INTEGER DEFAULT 0")
+                except Exception:
+                    pass
                 cursor.execute("select * from groups;")
                 del_row = None
                 for row in cursor:
-                        if not str(row[1]).startswith("wbrfs"):
-                            groups.append(row)
+                    if not str(row[1]).startswith("wbrfs"):
+                        groups.append(row)
 
                 if len(groups):
                     cursor.execute("select name, group1,stream_id,defekt,sscr,pos,cache,bitrate,picon,url,typ from streams;")
                     failed = []
                     for row in cursor:
                         try:
-                           test1 = int(row[3]) + int(row[2]) + int(row[5]) + int(row[7])
-                           pvr_pic = ""
-                           if row[10] == "pvr":
-                              pos = row[9].rfind(':')
-                              pvr_pic = row[9][:pos].rstrip(':').replace(':', '_') + ".png"
-                           stream_liste.append([row[0], row[1], row[2], row[3], art, row[5], 0, "radio", row[6], row[8], pvr_pic])
+                            test1 = int(row[3]) + int(row[2]) + int(row[5]) + int(row[7])
+                            pvr_pic = ""
+                            if row[10] == "pvr":
+                                pos = row[9].rfind(':')
+                                pvr_pic = row[9][:pos].rstrip(':').replace(':', '_') + ".png"
+                            stream_liste.append([row[0], row[1], row[2], row[3], art, row[5], 0, "radio", row[6], row[8], pvr_pic])
                         except:
-                           failed.append(row[2])
+                            failed.append(row[2])
                     if len(failed):
                         for x in failed:
                             cursor.execute("delete from streams where stream_id = %d" % x)
@@ -5786,7 +5782,7 @@ class WebradioFSScreen_15(Screen, InfoBarSeek, HelpableScreen, InfoBarNotificati
                 try:
                     cursor.execute("select * from playlists;")
                     for row in cursor:
-                            playlists.append(row)
+                        playlists.append(row)
                 except:
                     cursor.execute('CREATE TABLE IF NOT EXISTS playlists (ID INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT, name TEXT NOT NULL,dir TEXT NOT NULL,subdirs INTEGER,random INTEGER, autoplay INTEGER,sscr TEXT );')
 
@@ -5806,11 +5802,11 @@ class WebradioFSScreen_15(Screen, InfoBarSeek, HelpableScreen, InfoBarNotificati
                 cursor = self.connection.cursor()
                 cursor.execute("select name, descrip, url, typ, genre2, defekt,bitrate,genre,volume,uploader,rec,zuv,picon,group1,stream_id,sscr,cache from streams WHERE stream_id=%d;" % id)
                 for row in cursor:
-                        try:
-                           r = int(row[5]) + row[6]
-                           single_stream = {"name": row[0], "descrip": row[1], "url": row[2], "typ": row[3], "genre2": row[4], "defekt": row[5], "bitrate": row[6], "genre": row[7], "volume": row[8], "uploader": row[9], "rec": row[10], "zuv": row[11], "picon": row[12], "group1": row[13], "stream_id": row[14], "sscr": row[15], "cache": row[16]}
-                        except:
-                           cursor.execute("delete from streams where stream_id = %d" % row[14])
+                    try:
+                        r = int(row[5]) + row[6]
+                        single_stream = {"name": row[0], "descrip": row[1], "url": row[2], "typ": row[3], "genre2": row[4], "defekt": row[5], "bitrate": row[6], "genre": row[7], "volume": row[8], "uploader": row[9], "rec": row[10], "zuv": row[11], "picon": row[12], "group1": row[13], "stream_id": row[14], "sscr": row[15], "cache": row[16]}
+                    except Exception:
+                        cursor.execute("delete from streams where stream_id = %d" % row[14])
                 cursor.close()
                 self.connection.commit()
            else:
@@ -5825,10 +5821,10 @@ class WebradioFSScreen_15(Screen, InfoBarSeek, HelpableScreen, InfoBarNotificati
            return single_stream
 
     def showTextinfo(self, ch=None):
-             txt = _("Media player setting may interfere with viewing station text and images") + "\n"
-             txt += _("to change it, please change over:") + "\n"
-             txt += _("Menu->Settings->System->Media Playback = original")
-             self.meld_screen(txt, "webradioFS - Info")
+        txt = _("Media player setting may interfere with viewing station text and images") + "\n"
+        txt += _("to change it, please change over:") + "\n"
+        txt += _("Menu->Settings->System->Media Playback = original")
+        self.meld_screen(txt, "webradioFS - Info")
 #    def veraltet2(self,veraltet=False):
 #            if veraltet:
 #                self.db_meld=_("Please install new Version, old version are no longer supported") +"\n"+"Update?\n"
@@ -5836,98 +5832,97 @@ class WebradioFSScreen_15(Screen, InfoBarSeek, HelpableScreen, InfoBarNotificati
 #                self.meld_screen(self.db_meld,"webradioFS- "+_("query"),20,"??",self.update,False)
 
     def extended_help(self, num):
-            text = ""
-            file1 = os.path.join(sets_exp["coversafepath"], 'titel_list.txt')
-            if num == 2:
-              self.title1 = "webradioFS - " + _("Titles")
-            if os.path.exists(file1):
-                fp = open(file1)
-                text = fp.read()
-                fp.close()
+        text = ""
+        file1 = os.path.join(sets_exp["coversafepath"], 'titel_list.txt')
+        if num == 2:
+            self.title1 = "webradioFS - " + _("Titles")
+        if os.path.exists(file1):
+            fp = open(file1)
+            text = fp.read()
+            fp.close()
 
-            if not len(text.strip()):
-                text = "Sorry, title file is missing or corrupted"
+        if not len(text.strip()):
+            text = "Sorry, title file is missing or corrupted"
 
-            self["help"].setText(text)
-            self.setTitle(self.title1)
-            self.botton_on_off("ext_help")
+        self["help"].setText(text)
+        self.setTitle(self.title1)
+        self.botton_on_off("ext_help")
 ####################################################################################
 
     def botton_on_off(self, art=None):
-            global wbrfs_saver
-            if self.e_help != "off":
-                     self.e_help = "off"
-                     self["key_red2"].hide()
-                     self["key_green2"].hide()
-                     self["help"].setZPosition(0)
-                     self["buttons_abdeck"].hide()
-                     self["playtext"].setText("webradioFS")
-                     self.set_streamlist(self.configfile2[2], l4l_info["Station"], None, self.akt_pl_num)
-                     self["key_red"].show()
-                     self["key_green"].show()
-                     self["green_pic"].show()
-                     self.display_art = "normal"
-                     self.selectionChanged()
-                     if self["streamlist"].getCurrent():
-                         self.setTitle(self["streamlist"].getCurrent()[0][0] + "  (" + self.configfile2[0] + ")")
+        global wbrfs_saver
+        if self.e_help != "off":
+            self.e_help = "off"
+            self["key_red2"].hide()
+            self["key_green2"].hide()
+            self["help"].setZPosition(0)
+            self["buttons_abdeck"].hide()
+            self["playtext"].setText("webradioFS")
+            self.set_streamlist(self.configfile2[2], l4l_info["Station"], None, self.akt_pl_num)
+            self["key_red"].show()
+            self["key_green"].show()
+            self["green_pic"].show()
+            self.display_art = "normal"
+            self.selectionChanged()
+            if self["streamlist"].getCurrent():
+                self.setTitle(self["streamlist"].getCurrent()[0][0] + "  (" + self.configfile2[0] + ")")
+            try:
+                self.session.deleteDialog(wbrfs_saver)
+            except Exception:
+                pass
+            wbrfs_saver = None
+            self.screensaver_off = 0
+            self.ResetwbrScreenSaverTimer()
 
-                     try:
-                         self.session.deleteDialog(wbrfs_saver)
-                     except:
-                         pass
-                     wbrfs_saver = None
-                     self.screensaver_off = 0
-                     self.ResetwbrScreenSaverTimer()
-
+        else:
+            if self.rec_list:
+                self["green_pic"].hide()
+                self["key_red2"].setText(_("Delete"))
             else:
-               if self.rec_list:
-                  self["green_pic"].hide()
-                  self["key_red2"].setText(_("Delete"))
-               else:
-                 if art == "ext_help":
-                     self.e_help = "ext_help"
-                     self["help"].setZPosition(5)
-                     self["green_pic"].hide()
-                 else:
-                     self.e_help = "on"
-                     if self.versionsalter > 0:
-                         self["key_green2"].show()
-                     else:
-                         self["green_pic"].hide()
+                if art == "ext_help":
+                    self.e_help = "ext_help"
+                    self["help"].setZPosition(5)
+                    self["green_pic"].hide()
+                else:
+                    self.e_help = "on"
+                    if self.versionsalter > 0:
+                        self["key_green2"].show()
+                    else:
+                        self["green_pic"].hide()
 
-               self["key_green"].hide()
-               self["rec_pic"].hide()
-               self["key_red"].hide()
-               self["buttons_abdeck"].show()
-               self["key_red2"].setText(_("Back"))
-               self["key_red2"].show()
+                self["key_green"].hide()
+                self["rec_pic"].hide()
+                self["key_red"].hide()
+                self["buttons_abdeck"].show()
+                self["key_red2"].setText(_("Back"))
+                self["key_red2"].show()
 
 
 ###############################################################################
 
+
     def zs2(self, answer=None):
-          if answer != None:
+        if answer != None:
             global my_settings
             if answer == True:
-               sets_grund["zs"] = True
-               write_settings((("grund", sets_grund),))
-
+                sets_grund["zs"] = True
+                write_settings((("grund", sets_grund),))
             else:
-               self.exit()
+                self.exit()
 
     def del_rec(self):
-           if self["streamlist"].getCurrent():
-                  text1 = _("Selceted File is:") + "\n" + self["streamlist"].getCurrent()[0][0] + "\n\n" + _("Do you really want to delete this file?") + "\n\n"
-                  self.meld_screen(text=text1, titel="webradioFS- " + _("query"), aktion=self.del_rec2, default=False, type1="??", timeout=20)
+        if self["streamlist"].getCurrent():
+            text1 = _("Selceted File is:") + "\n" + self["streamlist"].getCurrent()[0][0] + "\n\n" + _("Do you really want to delete this file?") + "\n\n"
+            self.meld_screen(text=text1, titel="webradioFS- " + _("query"), aktion=self.del_rec2, default=False, type1="??", timeout=20)
 
     def del_rec2(self, answer):
-            if answer:
-                try:
-                    os.remove(self["streamlist"].getCurrent()[0][1])
-                    self.ok(self.configfile2[5])
-                except OSError as e:
-                        txt = 'error: \n%s' % e
-                        self.meld_screen(txt, "webradioFS- " + _("ERROR"), 20, "ERROR")
+        if answer:
+            try:
+                os.remove(self["streamlist"].getCurrent()[0][1])
+                self.ok(self.configfile2[5])
+            except OSError as e:
+                txt = 'error: \n%s' % e
+                self.meld_screen(txt, "webradioFS- " + _("ERROR"), 20, "ERROR")
 
 ###############################################################################
 
@@ -5942,7 +5937,7 @@ class Fav_edit_13(Screen, ConfigListScreen):
 
         self.groups = []
         for x in fav_groups:
-             self.groups.append(str(x[1]))
+            self.groups.append(str(x[1]))
         self.connection = sqlite.connect(myfav_file)
         self.connection.text_factory = str
         self.cursor = self.connection.cursor()
@@ -5991,10 +5986,10 @@ class Fav_edit_13(Screen, ConfigListScreen):
             except:
                 sd["vid"] = "tmp"
             for x in fav_groups:
-                 if stream["group1"] == _("None"):
-                      sd["group"] = self.groups[0]
-                 if x[0] == stream["group1"]:
-                      sd["group"] = x[1]
+                if stream["group1"] == _("None"):
+                    sd["group"] = self.groups[0]
+                if x[0] == stream["group1"]:
+                    sd["group"] = x[1]
         self.zuverl = sd["zuverl"]
         self.rec = sd["rec"]
         self.defekt = sd["defekt"]
@@ -6017,7 +6012,7 @@ class Fav_edit_13(Screen, ConfigListScreen):
         self.conf_volume = NoSave(ConfigInteger(default=int(sd["volume"]), limits=(0, 100)))
         Screen.__init__(self, session)
         if fontlist[9]:
-                    self.skinName = "WebradioFSSetup_e"
+            self.skinName = "WebradioFSSetup_e"
         else:
             self.skin = self.skin.replace('backgroundColor="#000000"', '')
             self.skin = self.skin.replace('foregroundColor="#ffffff"', '')
@@ -6053,11 +6048,11 @@ class Fav_edit_13(Screen, ConfigListScreen):
         self.onLayoutFinish.remove(self.layoutFinished)
         self.instance.setZPosition(2)
         if fontlist[8] or fontlist[9]:
-          try:
-            if not self.fontlist[4]:
-                self['config'].instance.setFont(fontlist[3])
-                self['config'].instance.setItemHeight(fontlist[2])
-            else:
+            try:
+                if not self.fontlist[4]:
+                    self['config'].instance.setFont(fontlist[3])
+                    self['config'].instance.setItemHeight(fontlist[2])
+                else:
                     from skin import parseFont
                     stylemgr = eWindowStyleManager.getInstance()
                     skinned = eWindowStyleSkinned()
@@ -6065,10 +6060,10 @@ class Fav_edit_13(Screen, ConfigListScreen):
                     eListboxPythonConfigContent.setValueFont(parseFont(conf_font2, ((1, 1), (1, 1))))
                     eListboxPythonConfigContent.setItemHeight(conf_item)
                     stylemgr.setStyle(0, styleskinned)
-          except Exception as e:
-                                 f = open("/var/webradioFS_debug.log", "a")
-                                 f.write("set-fontin setup2:\n" + str(e) + "\n")
-                                 f.close()
+            except Exception as e:
+                f = open("/var/webradioFS_debug.log", "a")
+                f.write("set-fontin setup2:\n" + str(e) + "\n")
+                f.close()
         self.load_list()
 
     def load_list(self, g=None):
@@ -6085,68 +6080,68 @@ class Fav_edit_13(Screen, ConfigListScreen):
         webradioFSConfigList.append(getConfigListEntry(_("Screensaver:"), self.conf_sscr))
         webradioFSConfigList.append(getConfigListEntry(_("Automatically caching Tracks"), self.conf_cache))
         if self.conf_sscr.value == "Play_Video":
-                webradioFSConfigList.append(getConfigListEntry(_("Screensaver Video:"), self.conf_wbrvideofile))
+            webradioFSConfigList.append(getConfigListEntry(_("Screensaver Video:"), self.conf_wbrvideofile))
         elif self.conf_sscr.value == "slideshow_sorted" or self.conf_sscr.value == "slideshow_random":
-                webradioFSConfigList.append(getConfigListEntry(_("Picture path:"), self.conf_pic_dir))
+            webradioFSConfigList.append(getConfigListEntry(_("Picture path:"), self.conf_pic_dir))
         webradioFSConfigList.append(getConfigListEntry(_("Description:"), ))
         webradioFSConfigList.append(getConfigListEntry("", self.conf_desc))
         self["config"].setList(webradioFSConfigList)
 
     def setHelp(self):
-            self.cur = self["config"].getCurrent()
-            self["key_yellow"].setText(" ")
-            if self.cur[0] == _("Group:"):
-               self["playtext"].setText(_("Left/Right for select") + "\n" + _("Yellow for new group"))
-               self["key_yellow"].setText(_("New group"))
-            elif self.cur[0] == _("URL:"):
-                 self["key_yellow"].setText("")
-                 self["playtext"].setText(_("Press OK for edit"))
-            elif self.cur[0] == _("Name/Title:") or self.cur[0] == _("Genre 2 (optional):"):
-               self["playtext"].setText(_("Press OK for edit"))
-            elif self.cur[1] == self.conf_typ:
-               self["playtext"].setText(_("Left/Right for select"))
-            elif self.cur[1] == self.conf_sscr:
-               self["playtext"].setText(_("Left/Right for select"))
-            else:
-                self["playtext"].setText(self.cur[0])
+        self.cur = self["config"].getCurrent()
+        self["key_yellow"].setText(" ")
+        if self.cur[0] == _("Group:"):
+            self["playtext"].setText(_("Left/Right for select") + "\n" + _("Yellow for new group"))
+            self["key_yellow"].setText(_("New group"))
+        elif self.cur[0] == _("URL:"):
+            self["key_yellow"].setText("")
+            self["playtext"].setText(_("Press OK for edit"))
+        elif self.cur[0] == _("Name/Title:") or self.cur[0] == _("Genre 2 (optional):"):
+            self["playtext"].setText(_("Press OK for edit"))
+        elif self.cur[1] == self.conf_typ:
+            self["playtext"].setText(_("Left/Right for select"))
+        elif self.cur[1] == self.conf_sscr:
+            self["playtext"].setText(_("Left/Right for select"))
+        else:
+            self["playtext"].setText(self.cur[0])
 
     def add_g(self, g=None):
-         if g:
-           self.cursor.execute('INSERT INTO groups (group1) VALUES("%s");' % g)
-           self.connection.commit()
-           self.groups.append(str(g))
-           self.conf_group.value = str(g)
+        if g:
+            self.cursor.execute('INSERT INTO groups (group1) VALUES("%s");' % g)
+            self.connection.commit()
+            self.groups.append(str(g))
+            self.conf_group.value = str(g)
 
     def meld_screen(self, text, titel, timeout=0, type1="INFO", aktion=None, default=True):
-            text_len = len(text.split("\n"))
-            melde_screen.start(text, titel, aktion, default, type1, timeout, sd)
-            self.meldung1 = True
+        text_len = len(text.split("\n"))
+        melde_screen.start(text, titel, aktion, default, type1, timeout, sd)
+        self.meldung1 = True
 
     def meldung_back(self, answer=0):
         m1 = melde_screen.stop()
         self.meldung1 = None
         b1 = None
         if m1 and len(m1) and m1[1] != 0:
-                if m1[3] == "??":
-                    b1 = m1[1](m1[2])
-                elif m1[2] == True:
-                    b1 = m1[1]()
+            if m1[3] == "??":
+                b1 = m1[1](m1[2])
+            elif m1[2] == True:
+                b1 = m1[1]()
         if b1:
             b1
 
     def new_group(self):
-           self.cur = self["config"].getCurrent()
-           if self.cur[0] == _("Group:"):
-               right_site.hide()
-               self.session.openWithCallback(self.new_groupFinished, VirtualKeyBoard, title=_("enter name for new group"), text="")
+        self.cur = self["config"].getCurrent()
+        if self.cur[0] == _("Group:"):
+            right_site.hide()
+            self.session.openWithCallback(self.new_groupFinished, VirtualKeyBoard, title=_("enter name for new group"), text="")
 
     def new_groupFinished(self, ret):
-          right_site.show()
-          if ret:
-             if ret in self.groups:
-                self.meld_screen(_("Group exist"), "webradioFS - Info", 0, "ERROR")
-             else:
-                self.add_g(ret)
+        right_site.show()
+            if ret:
+                if ret in self.groups:
+                    self.meld_screen(_("Group exist"), "webradioFS - Info", 0, "ERROR")
+                else:
+                    self.add_g(ret)
 
     def path_wahl(self):
         right_site.hide()
@@ -6159,7 +6154,7 @@ class Fav_edit_13(Screen, ConfigListScreen):
     def path_wahl2(self, res):
         right_site.show()
         if res:
-           self.conf_pic_dir.value = res
+            self.conf_pic_dir.value = res
 
     def ok_button(self):
         if self.meldung1:
@@ -6178,48 +6173,48 @@ class Fav_edit_13(Screen, ConfigListScreen):
                 self.texteingabe()
 
     def texteingabeFinished(self, ret):
-                right_site.show()
-                if ret is not None:
-                    if self.cur == self.conf_stream:
-                        self.conf_stream.value = ret
-                    elif self.cur == self.conf_url:
-                        self.conf_url.value = ret
-                    elif self.cur == self.conf_desc:
-                        self.conf_desc.value = ret
-                    elif self.cur == self.conf_genre2:
-                        self.conf_genre2.value = ret
-                    elif self.cur == self.conf_genre:
-                       self.conf_genre.value = ret
+        right_site.show()
+        if ret is not None:
+            if self.cur == self.conf_stream:
+                self.conf_stream.value = ret
+            elif self.cur == self.conf_url:
+                self.conf_url.value = ret
+            elif self.cur == self.conf_desc:
+                self.conf_desc.value = ret
+            elif self.cur == self.conf_genre2:
+                self.conf_genre2.value = ret
+            elif self.cur == self.conf_genre:
+                self.conf_genre.value = ret
 
     def texteingabe(self):
-                right_site.hide()
-                titel = None
-                if self.cur == self.conf_stream:
-                        text1 = self.conf_stream.value
-                        titel = _("Stream-Name")
-                elif self.cur == self.conf_url:
-                        text1 = self.conf_url.value
-                        titel = _("Stream-URL")
-                elif self.cur == self.conf_desc:
-                        text1 = self.conf_desc.value
-                        titel = _("Stream-description")
-                elif self.cur == self.conf_genre2:
-                        text1 = self.conf_genre2.value
-                        titel = _("Genre 2")
-                elif self.cur == self.conf_genre:
-                        text1 = self.conf_genre.value
-                        titel = _("Genre 2")
-                if titel:
-                    self.session.openWithCallback(self.texteingabeFinished, VirtualKeyBoard, title=titel, text=text1)
+        right_site.hide()
+        titel = None
+        if self.cur == self.conf_stream:
+            text1 = self.conf_stream.value
+            titel = _("Stream-Name")
+        elif self.cur == self.conf_url:
+            text1 = self.conf_url.value
+            titel = _("Stream-URL")
+        elif self.cur == self.conf_desc:
+            text1 = self.conf_desc.value
+            titel = _("Stream-description")
+        elif self.cur == self.conf_genre2:
+            text1 = self.conf_genre2.value
+            titel = _("Genre 2")
+        elif self.cur == self.conf_genre:
+            text1 = self.conf_genre.value
+            titel = _("Genre 2")
+        if titel:
+            self.session.openWithCallback(self.texteingabeFinished, VirtualKeyBoard, title=titel, text=text1)
 
     def vid_wahl(self, *args):
         if args:
            self.conf_wbrvideofile.value = args[0]
 
     def list_wahl(self, auswahl):
-       if auswahl is not None:
-          if self.cur == self.conf_typ:
-                   self.conf_typ.value = auswahl[1]
+        if auswahl is not None:
+            if self.cur == self.conf_typ:
+                self.conf_typ.value = auswahl[1]
 
     def save(self):
        if self.meldung1:
@@ -6291,7 +6286,7 @@ class Fav_edit_13(Screen, ConfigListScreen):
 
     def dele(self):
         if self.stream_id:
-           self.meld_screen(_("Stream delete?"), "webradioFS- " + _("query"), 0, "??", self.dele2, False)
+            self.meld_screen(_("Stream delete?"), "webradioFS- " + _("query"), 0, "??", self.dele2, False)
 
     def dele2(self, ret):
         if ret and self.stream_id:
@@ -6353,9 +6348,9 @@ class WebradioFSSetup_13(Screen, ConfigListScreen):
 #if abteil=="opt":
         ansicht = sets_opt["expert"]
         if ansicht == True:
-                 ansicht = 1
+            ansicht = 1
         elif ansicht == False:
-                 ansicht = 0
+            ansicht = 0
         self.opt_expert = NoSave(ConfigSelection(default=ansicht, choices=[(0, _("simple")), (2, _("Show all options"))]))  # ,(1,_("Individually adjustable"))
         self.opt_views = NoSave(ConfigYesNo(default=sets_opt["views"]))
         self.opt_scr = NoSave(ConfigYesNo(default=sets_opt["scr"]))
@@ -6383,7 +6378,7 @@ class WebradioFSSetup_13(Screen, ConfigListScreen):
         self.wbrSSKeyword = NoSave(ConfigText(default=sets_scr["Keyword"], fixed_size=False))
         self.screensaver_art = NoSave(ConfigSelection(default=sets_scr["screensaver_art"], choices=saver_list))
         if (not pcfs and self.screensaver_art.value == "pcFS-slideshow") or (not picscreensaver and self.screensaver_art.value == "picscreensaver"):
-                  self.screensaver_art.value = "wechsel"
+            self.screensaver_art.value = "wechsel"
 #elif abteil=="rec":
         self.fake_entry = NoSave(ConfigNothing())
         self.rec_path = NoSave(ConfigDirectory(default=sets_rec["path"]))
@@ -6403,28 +6398,28 @@ class WebradioFSSetup_13(Screen, ConfigListScreen):
         self.audio_listpos = NoSave(ConfigYesNo(default=sets_audiofiles["audio_listpos"]))
 #sispmctl
         if sispmctl and sets_sismctl["start"]:
-          self.sismctl_start = NoSave(ConfigSequence(seperator=",", limits=[(0, 2), (0, 2), (0, 2), (0, 2)], default=sets_sismctl["start"]))
-          self.sismctl_exit = NoSave(ConfigSequence(seperator=",", limits=[(0, 2), (0, 2), (0, 2), (0, 2)], default=sets_sismctl["exit"]))
-          self.sismctl_ssr1 = NoSave(ConfigSequence(seperator=",", limits=[(0, 2), (0, 2), (0, 2), (0, 2)], default=sets_sismctl["ssr1"]))
-          self.sismctl_ssr2 = NoSave(ConfigSequence(seperator=",", limits=[(0, 2), (0, 2), (0, 2), (0, 2)], default=sets_sismctl["ssr2"]))
-          self.sismctl_nvers1 = NoSave(ConfigText(default=sets_sismctl["nvers1"]))
-          self.sismctl_vers1 = NoSave(ConfigSequence(seperator=",", limits=[(0, 2), (0, 2), (0, 2), (0, 2)], default=sets_sismctl["vers1"]))
-          self.sismctl_nvers2 = NoSave(ConfigText(default=sets_sismctl["nvers2"]))
-          self.sismctl_vers2 = NoSave(ConfigSequence(seperator=",", limits=[(0, 2), (0, 2), (0, 2), (0, 2)], default=sets_sismctl["vers2"]))
+            self.sismctl_start = NoSave(ConfigSequence(seperator=",", limits=[(0, 2), (0, 2), (0, 2), (0, 2)], default=sets_sismctl["start"]))
+            self.sismctl_exit = NoSave(ConfigSequence(seperator=",", limits=[(0, 2), (0, 2), (0, 2), (0, 2)], default=sets_sismctl["exit"]))
+            self.sismctl_ssr1 = NoSave(ConfigSequence(seperator=",", limits=[(0, 2), (0, 2), (0, 2), (0, 2)], default=sets_sismctl["ssr1"]))
+            self.sismctl_ssr2 = NoSave(ConfigSequence(seperator=",", limits=[(0, 2), (0, 2), (0, 2), (0, 2)], default=sets_sismctl["ssr2"]))
+            self.sismctl_nvers1 = NoSave(ConfigText(default=sets_sismctl["nvers1"]))
+            self.sismctl_vers1 = NoSave(ConfigSequence(seperator=",", limits=[(0, 2), (0, 2), (0, 2), (0, 2)], default=sets_sismctl["vers1"]))
+            self.sismctl_nvers2 = NoSave(ConfigText(default=sets_sismctl["nvers2"]))
+            self.sismctl_vers2 = NoSave(ConfigSequence(seperator=",", limits=[(0, 2), (0, 2), (0, 2), (0, 2)], default=sets_sismctl["vers2"]))
 
         if l4lR and abteil == "l4l":
             lcd_sets = sets_view["l4l"].split(",")
             self.logo = plugin_path + "/skin/images/webradiofs.png"
             if len(lcd_sets) < 30:
-                   i = 0
-                   set = []
-                   while i < 30:
-                        try:
-                            set.append(lcd_sets[i])
-                        except:
-                            set.append(l4lsa[i])
-                        i += 1
-                   lcd_sets = set
+                i = 0
+                set = []
+                while i < 30:
+                    try:
+                        set.append(lcd_sets[i])
+                    except:
+                        set.append(l4lsa[i])
+                    i += 1
+                lcd_sets = set
             self.lcd_on = NoSave(ConfigYesNo(default=str2bool(lcd_sets[0])))
             self.lcd_nr = NoSave(ConfigInteger(default=int(lcd_sets[1]), limits=(0, 10)))
             from Plugins.Extensions.LCD4linux.module import L4Lelement
@@ -6473,7 +6468,7 @@ class WebradioFSSetup_13(Screen, ConfigListScreen):
 
         Screen.__init__(self, session)
         if fontlist[9]:
-                    self.skinName = "WebradioFSSetup_e"
+            self.skinName = "WebradioFSSetup_e"
         else:
             self.skin = self.skin.replace('backgroundColor="#000000"', '')
             self.skin = self.skin.replace('foregroundColor="#ffffff"', '')
@@ -6512,7 +6507,7 @@ class WebradioFSSetup_13(Screen, ConfigListScreen):
         found = 0
         for x in saver_list:
             if sets_scr["screensaver_art"] == x[0]:
-                  found = 1
+                found = 1
         if found == 0:
             sets_scr["screensaver_art"] = "wechsel"
         self.oldpath = self.favpath.value
@@ -6541,11 +6536,11 @@ class WebradioFSSetup_13(Screen, ConfigListScreen):
         self.onLayoutFinish.remove(self.layoutFinished)
         self.instance.setZPosition(2)
         if fontlist[8] or fontlist[9]:
-          try:
-            if not fontlist[4]:
-                self['config'].instance.setFont(fontlist[3])
-                self['config'].instance.setItemHeight(fontlist[2])
-            else:
+            try:
+                if not fontlist[4]:
+                    self['config'].instance.setFont(fontlist[3])
+                    self['config'].instance.setItemHeight(fontlist[2])
+                else:
                     from skin import parseFont
                     stylemgr = eWindowStyleManager.getInstance()
                     skinned = eWindowStyleSkinned()
@@ -6553,28 +6548,28 @@ class WebradioFSSetup_13(Screen, ConfigListScreen):
                     eListboxPythonConfigContent.setValueFont(parseFont(conf_font2, ((1, 1), (1, 1))))
                     eListboxPythonConfigContent.setItemHeight(conf_item)
                     stylemgr.setStyle(0, styleskinned)
-          except:
+            except:
                 pass
         self.refresh()
         self.reloadList()
         self.setTitle(_("webradioFS - Settings"))
 
     def startstream(self):
-                l = []
-                for x in self.stream_liste:
-                  l.append((x[1], x[0]))
-                right_site.hide()
-                self.session.openWithCallback(self.startsel, ChoiceBox, _("Select Stream for automatic start"), list=(l))
+        l = []
+        for x in self.stream_liste:
+            l.append((x[1], x[0]))
+        right_site.hide()
+        self.session.openWithCallback(self.startsel, ChoiceBox, _("Select Stream for automatic start"), list=(l))
 
     def startsel(self, ret):
         right_site.show()
         if ret:
-           w1 = "web," + str(ret[1])
-           if int(ret[1]) < 1:
-              w1 = ret[1] + "," + str(ret[0])
-           starter_set(akt="write", wert=w1)
-           self.startstream_tmp.setValue(ret[1])
-           self.refresh()
+            w1 = "web," + str(ret[1])
+            if int(ret[1]) < 1:
+                    w1 = ret[1] + "," + str(ret[0])
+            starter_set(akt="write", wert=w1)
+            self.startstream_tmp.setValue(ret[1])
+            self.refresh()
 
     def refresh(self, meld=None):
         self.list = []
@@ -6767,41 +6762,41 @@ class WebradioFSSetup_13(Screen, ConfigListScreen):
         self["config"].setList(self.list)
 
     def meld_screen(self, text, titel, timeout=0, type1="INFO", aktion=None, default=True):
-            self.mtitel = titel
-            self.type1 = type1
-            self.stream_info = type1 + ": " + text.split("\n")[0]
-            melde_screen.start(text, titel, aktion, default, type1, timeout, sd)
-            self.meldung1 = True
+        self.mtitel = titel
+        self.type1 = type1
+        self.stream_info = type1 + ": " + text.split("\n")[0]
+        melde_screen.start(text, titel, aktion, default, type1, timeout, sd)
+        self.meldung1 = True
 
     def meldung_back(self, answer=0):
         m1 = melde_screen.stop()
         self.meldung1 = None
         b1 = None
         if m1 and len(m1) and m1[1] != 0:
-                if self.type1 == "??":
-                    b1 = m1[1](m1[2])
-                elif m1[2] == True:
-                    b1 = m1[1]()
+            if self.type1 == "??":
+                b1 = m1[1](m1[2])
+            elif m1[2] == True:
+                b1 = m1[1]()
         self.stream_info = self.orig_stream_info
         self.selectionChanged()
         if b1:
             b1
 
     def setHelp(self):
-               self.cur = self["config"].getCurrent()
-               cur = self.cur and self.cur[1]
-               if self.abteil == "moduls":
-                    self["playtext"].setText(_("When activated: set the options for this in the settings!\nWhen deactivated: the settings remain active!"))
-               elif cur == self.startstream_tmp:
-                  self["playtext"].setText(_("Press OK for select"))
-               elif cur == self.screensaver_art or cur == self.wbrvideopath:
-                  self["playtext"].setText(_("Video or live TV are not available on all boxes"))
-               elif cur == self.wbrScreenSaver:
-                  self["playtext"].setText(_("000 = off"))
-               elif cur == self.stop_abschalt:
-                   self["playtext"].setText(_("When activated: block automatic shutdown from system when inactive"))
-               else:
-                 self["playtext"].setText(str(self["config"].getCurrent()[0]))
+        self.cur = self["config"].getCurrent()
+        cur = self.cur and self.cur[1]
+        if self.abteil == "moduls":
+            self["playtext"].setText(_("When activated: set the options for this in the settings!\nWhen deactivated: the settings remain active!"))
+        elif cur == self.startstream_tmp:
+            self["playtext"].setText(_("Press OK for select"))
+        elif cur == self.screensaver_art or cur == self.wbrvideopath:
+            self["playtext"].setText(_("Video or live TV are not available on all boxes"))
+        elif cur == self.wbrScreenSaver:
+            self["playtext"].setText(_("000 = off"))
+        elif cur == self.stop_abschalt:
+            self["playtext"].setText(_("When activated: block automatic shutdown from system when inactive"))
+        else:
+            self["playtext"].setText(str(self["config"].getCurrent()[0]))
 
     def reloadList(self):
         if l4lR and self.abteil == "l4l":
@@ -6832,14 +6827,14 @@ class WebradioFSSetup_13(Screen, ConfigListScreen):
                 L4LwbrFS.setScreen(str(self.lcd_screen.value), str(self.lcd_nr.value), True)
                 L4LwbrFS.setHoldKey(True)
                 self.refresh()
-          except:
+          except Exception:
              pass
         else:
           try:
             if not self.cur[0] in (_("Color screensaver labels") + _(" (Press OK)"), _("Color screensaver background") + _(" (Press OK)"), _("backround color:")):
                self.refresh()
                self["config"].setList(self.list)
-          except:
+          except Exception:
               pass
 
     def check(self):
@@ -6945,18 +6940,18 @@ class WebradioFSSetup_13(Screen, ConfigListScreen):
     def press_ok(self):
         testcol = 0
         try:
-                self["config"].getCurrent()[1].help_window.instance.hide()
-        except:
-               pass
+            self["config"].getCurrent()[1].help_window.instance.hide()
+        except Exception:
+            pass
         self.cur = self["config"].getCurrent()
         if self.cur[1] in (self.coversafepath, self.wbrfspvrpath, self.wbrslideshowpath, self.rec_path, self.wbrvideopath, self.favpath, self.logopath, self.audiopath, self.rec_caching_dir):
             self.path_wahl()
         elif self.cur[1] == self.screensaver_art:
-                tmp_list = []
-                for x in saver_list:
-                    tmp_list.append((x[1], x[0]))
-                right_site.hide()
-                self.session.openWithCallback(self.list_sel, ChoiceBox, title=_("webradioFS - select screensaver"), list=tmp_list)
+            tmp_list = []
+            for x in saver_list:
+                tmp_list.append((x[1], x[0]))
+            right_site.hide()
+            self.session.openWithCallback(self.list_sel, ChoiceBox, title=_("webradioFS - select screensaver"), list=tmp_list)
         elif self.cur[1] in (self.picwords1, self.picwords2, self.picwords3, self.wbrSSKeyword, self.slideshow_bgcolor):
             self.texteingabe()
         elif self.cur[1] in (self.wbrSScolor, self.wbrSSbgcolor):
@@ -6967,9 +6962,9 @@ class WebradioFSSetup_13(Screen, ConfigListScreen):
                 from .wbrfscol import wbrfs_col_13
                 self.session.openWithCallback(self.set_text_col, wbrfs_col_13, self.wbrSScolor.value, self.wbrSSbgcolor.value, self.infos)
         elif self.cur[1] == self.startstream_tmp:
-                self.startstream()
+            self.startstream()
         elif self.cur[1] == self.wbrvideofile:
-                self.session.openWithCallback(self.texteingabeFinished, wbrfs_filelist)
+            self.session.openWithCallback(self.texteingabeFinished, wbrfs_filelist)
 
     def set_text_col(self, text_col=None, back_col=None):
         if back_col and text_col:
@@ -6977,77 +6972,77 @@ class WebradioFSSetup_13(Screen, ConfigListScreen):
             self.wbrSSbgcolor.value = back_col
 
     def test_col(self):
-            col_sets2 = (self.wbrSScolor, self.wbrSSbgcolor, self.slideshow_bgcolor)
-            col1 = ("ffffff", "000000", "000000")
-            num = 0
-            col_err = 0
-            for x in col_sets2:
-                try:
-                    cl = gRGB(int(str(x.value), 0x10))
-                except:
-                    x.value = col1[num]
-                    col_err = 1
-                num += 1
-            return col_err
+        col_sets2 = (self.wbrSScolor, self.wbrSSbgcolor, self.slideshow_bgcolor)
+        col1 = ("ffffff", "000000", "000000")
+        num = 0
+        col_err = 0
+        for x in col_sets2:
+            try:
+                cl = gRGB(int(str(x.value), 0x10))
+            except Exception:
+                x.value = col1[num]
+                col_err = 1
+            num += 1
+        return col_err
 
     def list_sel(self, auswahl):
-            right_site.show()
-            if auswahl is not None and not auswahl[1].startswith("not"):
-                   self.screensaver_art.value = str(auswahl[1])
-                   self.refresh()
+        right_site.show()
+        if auswahl is not None and not auswahl[1].startswith("not"):
+            self.screensaver_art.value = str(auswahl[1])
+            self.refresh()
 
     def texteingabe(self):
-             right_site.hide()
-             titel = None
-             if self.cur[1] in (self.picwords3, self.wbrSSKeyword, self.slideshow_bgcolor, self.picwords1, self.picwords2):
-                text1 = self.cur[1].value
-                titel = self.cur[0]
-             if titel:
-                    self.session.openWithCallback(self.texteingabeFinished, VirtualKeyBoard, title=titel, text=text1)  # , maxSize=max_laenge, type=typ1)
+        right_site.hide()
+        titel = None
+        if self.cur[1] in (self.picwords3, self.wbrSSKeyword, self.slideshow_bgcolor, self.picwords1, self.picwords2):
+            text1 = self.cur[1].value
+            titel = self.cur[0]
+        if titel:
+            self.session.openWithCallback(self.texteingabeFinished, VirtualKeyBoard, title=titel, text=text1)  # , maxSize=max_laenge, type=typ1)
 
     def texteingabeFinished(self, ret):
-                right_site.show()
-                if ret is not None:
-                    if self.cur[1] == self.slideshow_bgcolor:
-                        if "#" in ret[0]:
-                            ret = ret.replace("#", "")
-                        if len(ret) == 6 or len(ret) == 8:
-                            self.slideshow_bgcolor.value = ret
-                        else:
-                            self.session.open(MessageBox, _("Input failed, color sample for with: ffffff, for black: 000000"), MessageBox.TYPE_ERROR)
-                    else:
-                        if self.cur[1] == self.picwords1:
-                            self.pw1 = [(ret, ret)]
-                            self.picwords1 = NoSave(ConfigSelection(default=ret, choices=self.pw1))
-                        elif self.cur[1] == self.picwords2:
-                            self.pw2 = [(ret, ret)]
-                            self.picwords2 = NoSave(ConfigSelection(default=ret, choices=self.pw2))
-                        elif self.cur[1] == self.picwords3:
-                            self.pw3 = [(ret, ret)]
-                            self.picwords3 = NoSave(ConfigSelection(default=ret, choices=self.pw3))
-                        self.cur[1].value = ret
-                        self.refresh()
+        right_site.show()
+        if ret is not None:
+            if self.cur[1] == self.slideshow_bgcolor:
+                if "#" in ret[0]:
+                    ret = ret.replace("#", "")
+                if len(ret) == 6 or len(ret) == 8:
+                    self.slideshow_bgcolor.value = ret
+                else:
+                    self.session.open(MessageBox, _("Input failed, color sample for with: ffffff, for black: 000000"), MessageBox.TYPE_ERROR)
+            else:
+                if self.cur[1] == self.picwords1:
+                    self.pw1 = [(ret, ret)]
+                    self.picwords1 = NoSave(ConfigSelection(default=ret, choices=self.pw1))
+                elif self.cur[1] == self.picwords2:
+                    self.pw2 = [(ret, ret)]
+                    self.picwords2 = NoSave(ConfigSelection(default=ret, choices=self.pw2))
+                elif self.cur[1] == self.picwords3:
+                    self.pw3 = [(ret, ret)]
+                    self.picwords3 = NoSave(ConfigSelection(default=ret, choices=self.pw3))
+                self.cur[1].value = ret
+                self.refresh()
 
     def callAuswahl(self, path):
         right_site.show()
         if path is not None:
             if os.path.exists(path):
-                    if self["config"].getCurrent()[1] != self.favpath:
-                        self["config"].getCurrent()[1].value = path
-                    else:
-                        try:
-                            if self["config"].getCurrent()[1] == self.favpath:
-                                if fileExists(path + "/webradioFS_favs.db"):
-                                    self["config"].getCurrent()[1].value = path
-                                else:
-                                    self.tmp_path = path
-                                    self.session.openWithCallback(self.u_path, MessageBox, _("Create a new subdirectory?"), MessageBox.TYPE_YESNO)
+                if self["config"].getCurrent()[1] != self.favpath:
+                    self["config"].getCurrent()[1].value = path
+                else:
+                    try:
+                        if self["config"].getCurrent()[1] == self.favpath:
+                            if fileExists(path + "/webradioFS_favs.db"):
+                                self["config"].getCurrent()[1].value = path
                             else:
                                 self.tmp_path = path
                                 self.session.openWithCallback(self.u_path, MessageBox, _("Create a new subdirectory?"), MessageBox.TYPE_YESNO)
-                        except:
-                            err = 1
-                            self.session.open(MessageBox, _("Path") + "\n" + path + "\n " + _("not writable!"), MessageBox.TYPE_ERROR)
+                        else:
+                            self.tmp_path = path
+                            self.session.openWithCallback(self.u_path, MessageBox, _("Create a new subdirectory?"), MessageBox.TYPE_YESNO)
+                    except:
+                        err = 1
+                        self.session.open(MessageBox, _("Path") + "\n" + path + "\n " + _("not writable!"), MessageBox.TYPE_ERROR)
 
     def u_path(self, answer):
         if answer == True:
@@ -7064,7 +7059,7 @@ class WebradioFSSetup_13(Screen, ConfigListScreen):
             self.tmp_path = self.tmp_path + answer
         self["config"].getCurrent()[1].value = self.tmp_path  # +"/"
         if not fileExists(self.tmp_path + "/webradioFS_favs.db") and self["config"].getCurrent()[1] == self.favpath:
-                 ret = copyfile(self.oldpath + "webradioFS_favs.db", self.tmp_path + "/webradioFS_favs.db")
+            ret = copyfile(self.oldpath + "webradioFS_favs.db", self.tmp_path + "/webradioFS_favs.db")
 
     def path_wahl(self):
         text = _("Please select Path")
@@ -7072,34 +7067,34 @@ class WebradioFSSetup_13(Screen, ConfigListScreen):
             savepath = self.favpath.value
             text = _("Please select Save-Path for favorites...")
         elif self["config"].getCurrent()[1] == self.coversafepath:
-           savepath = self.coversafepath.value
-           text = _("Please select Save-Path for cover and titles...")
+            savepath = self.coversafepath.value
+            text = _("Please select Save-Path for cover and titles...")
         elif self["config"].getCurrent()[1] == self.logopath:
-           savepath = self.logopath.value
-           text = _("Please select path for stream-logos...")
+            savepath = self.logopath.value
+            text = _("Please select path for stream-logos...")
         elif self["config"].getCurrent()[1] == self.wbrfspvrpath:
-           savepath = self.wbrfspvrpath.value
-           text = _("Please select your image picon-path...")
+            savepath = self.wbrfspvrpath.value
+            text = _("Please select your image picon-path...")
         elif self["config"].getCurrent()[1] == self.audiopath:
-           savepath = self.audiopath.value
-           text = _("Please select startpath for audiofiles...")
+            savepath = self.audiopath.value
+            text = _("Please select startpath for audiofiles...")
         elif self["config"].getCurrent()[1] == self.rec_caching_dir:
-           savepath = self.rec_caching_dir.value
-           text = _("Please select path for caching...")
+            savepath = self.rec_caching_dir.value
+            text = _("Please select path for caching...")
         right_site.hide()
         self.session.openWithCallback(self.callAuswahl, SaveLocationBox, text, "", "/", ConfigLocations(default=[self["config"].getCurrent()[1].value]))
 
     def cancel(self):
-                for x in self["config"].list:
-                    try:
-                        x[1].cancel()
-                    except:
-                        pass
-                right_site.show()
-                if self.abteil == "moduls":
-                     self.close(False, "moduls")
-                else:
-                     self.close(False, "tools")
+        for x in self["config"].list:
+            try:
+                x[1].cancel()
+            except:
+                pass
+        right_site.show()
+        if self.abteil == "moduls":
+            self.close(False, "moduls")
+        else:
+            self.close(False, "tools")
 
 
 class WebradioFS_FB_Setup_13(Screen, ConfigListScreen):
@@ -8979,18 +8974,18 @@ def grab_text(self, typ1=None, ersatz=""):
 
 
 def grab(sender="", sTitle=None):
-        url = None
-        if sTitle and len(sTitle.strip()):
-                sTitle = sTitle.replace(":", "").replace("-", " ").replace("(", " ").replace(")", " ").split()
-                sTitle = '+'.join(sTitle)
-                url = Codierung(sTitle, sender)  # .encode("latin","ignore")
-                #f=open("/tmp/001","w")
-                #f.write(str(url)+"\n")
-                #f.close()
-                if url:
-                                user_agent = 'Mozilla/5.0 (Macintosh; U; Intel Mac OS X 10_6_4; en-US) AppleWebKit/534.3 (KHTML, like Gecko) Chrome/6.0.472.63 Safari/534.3'
-                                headers = {'User-Agent': user_agent}
-                                callInThread(threadGetPage, url, grab2, grab_err, 1)
+    url = None
+    if sTitle and len(sTitle.strip()):
+        sTitle = sTitle.replace(":", "").replace("-", " ").replace("(", " ").replace(")", " ").split()
+        sTitle = '+'.join(sTitle)
+        url = Codierung(sTitle, sender)  # .encode("latin","ignore")
+        #f=open("/tmp/001","w")
+        #f.write(str(url)+"\n")
+        #f.close()
+        if url:
+            user_agent = 'Mozilla/5.0 (Macintosh; U; Intel Mac OS X 10_6_4; en-US) AppleWebKit/534.3 (KHTML, like Gecko) Chrome/6.0.472.63 Safari/534.3'
+            headers = {'User-Agent': user_agent}
+            callInThread(threadGetPage, url, grab2, grab_err, 1)
 
 
 def grab2(result):
@@ -9055,29 +9050,29 @@ def grab2(result):
 
 
 def pic_next():
-         global pic_urls
-         if len(pic_urls):
-             url3 = pic_urls.pop(0)
-             callInThread(threadGetPage, url3, pic_show, grab_err, 2)
-         else:
-             grab_err()
+    global pic_urls
+    if len(pic_urls):
+        url3 = pic_urls.pop(0)
+        callInThread(threadGetPage, url3, pic_show, grab_err, 2)
+    else:
+        grab_err()
 
 
 def pic_next_err(*args):
     if len(pic_urls):
-       pic_next()
+        pic_next()
     else:
-       grab_err()
+        grab_err()
 
 
 def grab_err(result=None):
     global pic_urls
     pic_urls = []
     if write_debug > 1:
-           if not result:
-               d = debug("found pic failed")
-           else:
-               d = debug("found pic failed2\n" + str(result) + "\n")
+        if not result:
+            d = debug("found pic failed")
+        else:
+            d = debug("found pic failed2\n" + str(result) + "\n")
     copyfile(def_pic, "/tmp/.wbrfs_pic")
     pic_show("noPic")
 
@@ -9088,7 +9083,7 @@ def pic_show(result=None, pic=None):
                 f.write(str(pic))
                 f.close()
                 if pic:
-                        coverArtFile = file("/tmp/.wbrfs_pic", 'wb')
+                        coverArtFile = open("/tmp/.wbrfs_pic", 'wb')
                         coverArtFile.write(pic)
                         coverArtFile.close()
                 elif result != "noPic":
@@ -9163,10 +9158,10 @@ class planer_list(Screen):
                   pass
 
         def edit(self):
-                self.session.openWithCallback(self.edit_back, planer_edit, self["termine"].getCurrent(), self.streamliste)
+            self.session.openWithCallback(self.edit_back, planer_edit, self["termine"].getCurrent(), self.streamliste)
 
         def new(self):
-                self.session.openWithCallback(self.edit_back, planer_edit, "neu", self.streamliste)
+            self.session.openWithCallback(self.edit_back, planer_edit, "neu", self.streamliste)
 
         def edit_back(self, backs=1):
           right_site.show()
@@ -9203,10 +9198,10 @@ class planer_list(Screen):
                 d = read_plan().deling(pl_id)
                 self.edit_back(2)
              except Exception as e:
-                    f2 = open("/var/webradioFS_debug.log", "a")
-                    f2.write(str(e) + "\n")
-                    f2.write(str(self["termine"].getCurrent()[5]) + "\n")
-                    f.close()
+                f2 = open("/var/webradioFS_debug.log", "a")
+                f2.write(str(e) + "\n")
+                f2.write(str(self["termine"].getCurrent()[5]) + "\n")
+                f2.close()
 
         def exit(self):
                 self.close()
@@ -9299,35 +9294,35 @@ class planer_edit(Screen, ConfigListScreen):
             self.reloadList()
 
         def reloadList(self):
-                self.refresh()
-                self["config"].setList(self.list)
+            self.refresh()
+            self["config"].setList(self.list)
 
         def refresh(self):
-                list = []
-                list.append(getConfigListEntry(_("Active:"), self.aktiv))
-                list.append(getConfigListEntry(_("Action:"), self.aktion))
-                if self.aktion.value == "select":
-                     list.append(getConfigListEntry(_("Station:"), self.sender))
-                list.append(getConfigListEntry(_("Time for action:"), self.startTime))
-                list.append(getConfigListEntry(_("Repeat:"), self.repeat))
-                if self.repeat.value == "once":
-                    list.append(getConfigListEntry(_("Date:"), self.datum))
-                elif self.repeat.value == "weekdays":
-                    list.append(getConfigListEntry(_("Monday") + ":", self.mo))
-                    list.append(getConfigListEntry(_("Tuesday") + ":", self.di))
-                    list.append(getConfigListEntry(_("Wednesday") + ":", self.mi))
-                    list.append(getConfigListEntry(_("Thursday") + ":", self.do))
-                    list.append(getConfigListEntry(_("Friday") + ":", self.fr))
-                    list.append(getConfigListEntry(_("Saturday") + ":", self.sa))
-                    list.append(getConfigListEntry(_("Sunday") + ":", self.so))
-                self.list = list
+            list = []
+            list.append(getConfigListEntry(_("Active:"), self.aktiv))
+            list.append(getConfigListEntry(_("Action:"), self.aktion))
+            if self.aktion.value == "select":
+                list.append(getConfigListEntry(_("Station:"), self.sender))
+            list.append(getConfigListEntry(_("Time for action:"), self.startTime))
+            list.append(getConfigListEntry(_("Repeat:"), self.repeat))
+            if self.repeat.value == "once":
+                list.append(getConfigListEntry(_("Date:"), self.datum))
+            elif self.repeat.value == "weekdays":
+                list.append(getConfigListEntry(_("Monday") + ":", self.mo))
+                list.append(getConfigListEntry(_("Tuesday") + ":", self.di))
+                list.append(getConfigListEntry(_("Wednesday") + ":", self.mi))
+                list.append(getConfigListEntry(_("Thursday") + ":", self.do))
+                list.append(getConfigListEntry(_("Friday") + ":", self.fr))
+                list.append(getConfigListEntry(_("Saturday") + ":", self.sa))
+                list.append(getConfigListEntry(_("Sunday") + ":", self.so))
+            self.list = list
 
         def press_ok(self):
-                if self["config"].getCurrent()[1] == self.sender:
-                    l = []
-                    for x in self.streamliste:
-                        l.append((x[1], x[0]))
-                    self.session.openWithCallback(self.press_ok_back, ChoiceBox, title=_("Select station"), list=(l))
+            if self["config"].getCurrent()[1] == self.sender:
+                l = []
+                for x in self.streamliste:
+                    l.append((x[1], x[0]))
+                self.session.openWithCallback(self.press_ok_back, ChoiceBox, title=_("Select station"), list=(l))
 
         def press_ok_back(self, ret):
                 if ret:
@@ -9357,35 +9352,35 @@ class planer_edit(Screen, ConfigListScreen):
 
 
 def debug(result=None):
-        if result:
-                lines = ""
-                if fileExists("/var/webradioFS_debug.log"):
-                  f = open("/var/webradioFS_debug.log", "r")
-                  lines = f.readlines()
-                  f.close()
-                f = open("/var/webradioFS_debug.log", "w")
-                if len(lines) > 200:
-                        lines = lines[53:]
-                else:
-                   lines = lines[3:]
-                f.write("log from webradioFS, Version " + myversion + "\n")
-                for x in lines:
-                        f.write(x)
-                f.write("-->" + result.strip() + "\n")
-                f.close()
+    if result:
+        lines = ""
+        if fileExists("/var/webradioFS_debug.log"):
+            f = open("/var/webradioFS_debug.log", "r")
+            lines = f.readlines()
+            f.close()
+        f = open("/var/webradioFS_debug.log", "w")
+        if len(lines) > 200:
+            lines = lines[53:]
+        else:
+            lines = lines[3:]
+        f.write("log from webradioFS, Version " + __version__ + "\n")
+        for x in lines:
+            f.write(x)
+        f.write("-->" + result.strip() + "\n")
+        f.close()
 
 
 class blocker():
     def __init__(self):
-                self.blocktimer = None
+        self.blocktimer = None
 
     def set(self):
-             self.blocktimer = eTimer()
-             if fontlist[4]:
-                     self.blocktimer_conn = self.blocktimer.timeout.connect(self.press)
-             else:
-                    self.blocktimer.timeout.get().append(self.press)
-             self.blocktimer.startLongTimer(600)
+        self.blocktimer = eTimer()
+        if fontlist[4]:
+            self.blocktimer_conn = self.blocktimer.timeout.connect(self.press)
+        else:
+            self.blocktimer.timeout.get().append(self.press)
+        self.blocktimer.startLongTimer(600)
 
     def start(self):
         if self.blocktimer:
@@ -9394,13 +9389,13 @@ class blocker():
              self.set()
 
     def press(self):
-            self.blocktimer.stop()
-            amap = eActionMap.getInstance()
-            amap.keyPressed("dreambox remote control (native)", 385, 0)
-            amap.keyPressed("dreambox remote control (native)", 385, 1)
-            self.blocktimer.startLongTimer(600)
+        self.blocktimer.stop()
+        amap = eActionMap.getInstance()
+        amap.keyPressed("dreambox remote control (native)", 385, 0)
+        amap.keyPressed("dreambox remote control (native)", 385, 1)
+        self.blocktimer.startLongTimer(600)
 
     def stop(self):
-             if self.blocktimer:
-                 self.blocktimer.stop()
-                 self.blocktimer = None
+        if self.blocktimer:
+            self.blocktimer.stop()
+            self.blocktimer = None

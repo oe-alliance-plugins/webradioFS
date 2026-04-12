@@ -8,9 +8,7 @@ from Tools.Directories import copyfile
 from enigma import eDVBVolumecontrol, eTimer
 from twisted.web import resource
 
-from . import _
-from . import webradioFS
-from .plugin import myversion
+from . import _, __version__
 from .wbrfs_funct import read_einzeln
 
 fp = read_einzeln().reading(
@@ -145,7 +143,7 @@ class webradioFSweb(resource.Resource):
             "</head>",
             '<body bgcolor="#666666" text="#FFFFFF">',
             '<div style="max-width:700px;margin:0 auto;font-family:sans-serif;">',
-            f"<h2>webradioFS Webinterface <small>{escape(str(myversion))}</small></h2>",
+            f"<h2>webradioFS Webinterface <small>{escape(__version__)}</small></h2>",
             f"<p><b>Status:</b> {state}<br><b>Standby:</b> {standby}<br><b>Volume:</b> {volume}{' (mute)' if muted else ''}</p>",
         ]
         if logo:
