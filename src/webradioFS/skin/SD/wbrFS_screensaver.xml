@@ -1,0 +1,14 @@
+<screen name="wbrScreenSaver_13" zPosition="5" position="0,0" size="720,576" flags="wfNoBorder" backgroundColor="#000000" title="">
+  <widget name="background1" position="0,0" size="720,576" zPosition="0" transparent="0" backgroundColor="#00000000" />
+<!-- for fix background picture:
+     copy this xml to "/etc/ConfFS/wbrfs_usersaver.xml"
+     set path to your picture and delete comment-Tags, in plugin you can set for text fixed position
+  <ePixmap pixmap="/usr/lib/enigma2/python/Plugins/Extensions/webradioFS/skin/images/sscr_bgr.png" position="0,0"  size="720,576" zPosition="1" backgroundColor="#000000" alphatest="blend" />
+-->
+  <widget name="display_station" position="200,70" zPosition="1" size="680,20" font="Regular;16" valign="left" transparent="1" foregroundColor="#005B00" />
+  <widget name="display_time" position="200,20" zPosition="1" size="680,70" font="Regular;16" valign="left" transparent="1" foregroundColor="#007300" />
+  <widget name="display_nplaying" position="200,90" zPosition="1" size="680,20" font="Regular;16" valign="left" transparent="1" foregroundColor="#007300" />
+  <widget name="cover" zPosition="2" position="20,20" size="160,160" alphatest="blend" />
+  <widget name="cover2" zPosition="2" size="0,0" position="0,0" alphatest="blend" />
+
+</screen>

@@ -1,0 +1,8 @@
+<screen name="play_settings" zPosition="4" position="center,70" size="590,210" title="Settings for playing" >
+                <widget name="config" position="5,40" size="580,60" scrollbarMode="showOnDemand" />
+	        <widget name="button_backround" position="0,185" size="590,35" zPosition="1" foregroundColor="#000000" backgroundColor="#000000"   /> 
+                <widget name="pic_red" pixmap="skin_default/buttons/key_red.png" zPosition="2" position="5,190" size="30,30" backgroundColor="#000000" alphatest="blend" />
+                <widget name="pic_green" pixmap="skin_default/buttons/key_green.png" zPosition="2" position="295,190" size="30,30" backgroundColor="#000000" alphatest="blend" />
+                <widget name="key_red" position="40,190" zPosition="2" size="120,30" font="Regular;20" foregroundColor="#FFFFFF" transparent="1" />
+                <widget name="key_green" position="330,190" zPosition="2" size="140,30" font="Regular;20" foregroundColor="#FFFFFF" transparent="1" />
+</screen>

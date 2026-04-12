@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+****  important instructions  ****
+
+- z-positions  in all screens and widgets is important
+- widget dummy: set height for height stream-logo (for read an then scale picon)
+
+**** end of instructions  ****
+
+ -->
+
+<screen name="WebradioFSScreen_16" position="0,70" zPosition="1" backgroundColor="#000000" size="1920,1080" title="webradioFS">
+<!--left site in Screen for Streams, Genres...-->
+	<widget name="dummy" position="3,35" zPosition="0" size="0,45" backgroundColor="#000000" alphatest="blend" />
+        <widget source="streamlist" render="Listbox" position="30,80" size="1180,650" zPosition="2" scrollbarMode="showOnDemand" backgroundColor="#000000" foregroundColor="#FFFFFF" enableWrapAround="1"  foregroundColorSelected="#FFFFFF" backgroundColorSelected="#204060">
+		<convert type="TemplatedMultiContent">
+			{"templates": 
+                            {"default": (50,[
+					MultiContentEntryPixmapAlphaTest(pos = (5, 10), size = (30, 30), png = 2), # index 2: status-picture
+					MultiContentEntryText(pos = (40, 0), size = (880, 50), font=0, flags = RT_HALIGN_LEFT|RT_VALIGN_CENTER, text = 1), # index 1: text
+					MultiContentEntryPixmapAlphaTest(pos = (1000, 2), size = (150, 45), png = 5), # index 5: stream-logo
+					],True),
+                             "default_without_picon": (50,[
+					MultiContentEntryPixmapAlphaTest(pos = (5, 10), size = (30, 30), png = 2), # index 2: status-picture
+					MultiContentEntryText(pos = (40, 0), size = (880, 50), font=0, flags = RT_HALIGN_LEFT|RT_VALIGN_CENTER, text = 1), # index 1: text
+					],True),
+                             "info": (50,[
+					MultiContentEntryText(pos = (5, 1), size = (300, 50), font=0, flags = RT_HALIGN_LEFT|RT_VALIGN_CENTER, border_width = 0, text = 0), # index 1: text
+					MultiContentEntryText(pos = (350, 1), size = (825, 50), font=0, flags = RT_HALIGN_LEFT|RT_VALIGN_CENTER, color=0xf47d19,color_sel=0xf47d19, border_width = 0, text = 1)
+					],False),
+                             "menus": (50,[
+					MultiContentEntryText(pos = (5, 0), size = (1150, 50), font=1, flags = RT_HALIGN_CENTER|RT_VALIGN_CENTER, text = 1), # index 1: text
+					],True),
+                             "about": (50,[
+					MultiContentEntryText(pos = (0, 0), size = (1180, 50), font=1, flags = RT_HALIGN_CENTER|RT_VALIGN_CENTER, color=0xf47d19,color_sel=0xf47d19, border_width = 0, text = 0)
+					],False),
+                             "genre": (50,[
+					MultiContentEntryText(pos = (5, 0), size = (1180, 40), font=1, flags = RT_HALIGN_LEFT|RT_VALIGN_CENTER, border_width = 0, text = 1)
+					],True)
+                             },	"fonts": [gFont("Regular", 35),gFont("Regular", 32)],"itemHeight": 50
+			}
+		</convert>
+	</widget>
+
+  <!--top on left site in stream-list-Screen-->
+        <widget name="rec_pic" position="15,15" pixmap="/usr/lib/enigma2/python/Plugins/Extensions/webradioFS/skin/images/rec1.png" size="40,30" zPosition="2" backgroundColor="#000000" alphatest="blend"></widget> 
+
+	<widget source="rec_text_new" render="Listbox" position="40,15" size="1180,80" selectionDisabled="1" zPosition="1" backgroundColor="#000000" foregroundColor="#FFFFFF" enableWrapAround="0" >
+		<convert type="TemplatedMultiContent">
+			{"templates": 
+                            {"default": (50,[
+					MultiContentEntryText(pos = (5, 0), size = (1180, 50), font=0, flags = RT_HALIGN_CENTER|RT_VALIGN_CENTER, color=0xB5B5B5, text = 0), 
+					],False),
+                             "cache": (50,[
+					MultiContentEntryText(pos = (5, 0), size = (1180, 50), font=0, flags = RT_HALIGN_CENTER|RT_VALIGN_CENTER, color=0x58B74, text = 0), 
+					],False),
+                             "record": (50,[
+					MultiContentEntryText(pos = (5, 0), size = (1180, 50), font=0, flags = RT_HALIGN_CENTER|RT_VALIGN_CENTER, color=0xFF4500, text = 0), 
+					],False),
+                             "timer": (50,[
+					MultiContentEntryText(pos = (5, 0), size = (680, 50), font=0, flags = RT_HALIGN_CENTER|RT_VALIGN_CENTER, color=0xFFD800, text = 0), 
+					],False),
+
+                             "titel": (50,[
+					MultiContentEntryText(pos = (5, 0), size = (1180, 50), font=0, flags = RT_HALIGN_CENTER|RT_VALIGN_CENTER, color=0xf47d19, text = 0), 
+					],False),
+                             },"fonts": [gFont("Regular", 35)],"itemHeight": 50
+			}
+		</convert>
+	</widget>
+<!--extended help-->
+    <widget name="help" zPosition="0" position="20,15" size="1200,715" foregroundColor="#FFFFFF" backgroundColor="#000000" font="Regular;28"></widget> 
+<!--left site in Screen for help and info -->
+    <widget source="playtext" render="Label" position="10,788" zPosition="2" size="1800,110" font="Regular;32" valign="center" halign="center" foregroundColor="#00f47d19" backgroundColor="#000000" transparent="0"></widget> 
+<!--bottom in Screen for streams and genres, ... (button-line)-->
+    <ePixmap pixmap="skin_default/buttons/key_red.png" position="15,957" size="40,30" backgroundColor="#000000" alphatest="blend"></ePixmap>
+    <widget name="green_pic" pixmap="skin_default/buttons/key_green.png" position="445,957" size="40,30" backgroundColor="#000000" alphatest="blend"></widget>
+    <ePixmap pixmap="skin_default/buttons/key_yellow.png" position="805,957" size="40,30" backgroundColor="#000000" alphatest="blend"></ePixmap>
+    <ePixmap pixmap="skin_default/buttons/key_blue.png" position="1285,957" size="40,30" backgroundColor="#000000" alphatest="blend"></ePixmap>
+    <widget name="key_red" position="70,945" zPosition="1" size="250,40" font="Regular;28" foregroundColor="#FFFFFF" backgroundColor="#000000" noWrap="1" transparent="1"></widget>
+    <widget name="key_green" position="500,945" zPosition="1" size="250,40" font="Regular;28" foregroundColor="#FFFFFF" backgroundColor="#000000" noWrap="1" transparent="1"></widget>
+    <widget name="key_yellow" position="865,945" zPosition="1" size="250,40" font="Regular;28" foregroundColor="#FFFFFF" backgroundColor="#000000" noWrap="1" transparent="1"></widget>
+    <widget name="key_blue" position="1345,945" zPosition="1" size="250,40" font="Regular;28" foregroundColor="#FFFFFF" backgroundColor="#000000" noWrap="1" transparent="1"></widget>
+    <ePixmap pixmap="/usr/lib/enigma2/python/Plugins/Extensions/webradioFS/skin/images/key_menu.png" position="1855,960" size="35,25" alphatest="blend" transparent="1"></ePixmap>
+    <ePixmap pixmap="/usr/lib/enigma2/python/Plugins/Extensions/webradioFS/skin/images/key_info.png" position="1750,960" size="35,25" alphatest="blend" transparent="1"></ePixmap>
+    <ePixmap pixmap="/usr/lib/enigma2/python/Plugins/Extensions/webradioFS/skin/images/key_help.png" position="1800,960" size="35,25" alphatest="blend" transparent="1"></ePixmap>
+<!--spezial, bottom in Screen for menu, ...-
+"buttons_abdeck": must non-transparent!, to cover yellow and blue buttons + ButtonText
+"key_red2" and "key_green2" cover the text box of "key_red "and key_green"
+-->
+    <widget name="buttons_abdeck" position="750,945" zPosition="2" size="970,40" font="Regular;26" valign="center" halign="center" foregroundColor="#00f47d19" backgroundColor="#000000"></widget>           
+    <widget name="key_red2" position="70,945" zPosition="3" size="250,40" font="Regular;28" foregroundColor="#FFFFFF" backgroundColor="#000000" noWrap="1" transparent="1"></widget>
+    <widget name="key_green2" position="500,945" zPosition="3" size="250,40" font="Regular;28" foregroundColor="#FFFFFF" backgroundColor="#000000" noWrap="1" transparent="1"></widget>
+<!--spezial end- -->
+	<eLabel position="1045,960" size="1080,40" zPosition="-10" backgroundColor="#000000"></eLabel>
+<!--lines-->
+    <eLabel zPosition="4" position="5,928" size="1920,2" backgroundColor="#D3D3D3"></eLabel>
+    <eLabel zPosition="3" position="1228,0" size="2,753" backgroundColor="#D3D3D3"></eLabel>
+	<eLabel zPosition="4" position="5,762" size="1920,2" backgroundColor="#D3D3D3"></eLabel>
+</screen>

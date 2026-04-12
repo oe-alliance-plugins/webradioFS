@@ -1,0 +1,9 @@
+<screen name="wbrScreenSaver_13" position="0,0" zPosition="5" size="1280,720" flags="wfNoBorder" backgroundColor="#00000000" title="" >
+                <widget name="background1" position="0,0" size="1280,720" zPosition="0" transparent="0" backgroundColor="#00000000"  />
+                <widget name="display_station" position="255,342" zPosition="1" size="400,40" font="Regular;32" halign="left" transparent="0" backgroundColor="#00000000" foregroundColor="#005B00" shadowColor="#000000" shadowOffset="-1,-1" noWrap="1" />
+                <widget name="display_time" position="255,282" zPosition="1" size="400,90" font="Regular;26" halign="left" transparent="0" backgroundColor="#00000000" foregroundColor="#007300" shadowColor="#000000" shadowOffset="-1,-1" />
+                <widget name="display_nplaying" position="255,382" zPosition="1" size="400,90" font="Regular;26" halign="left" transparent="0" backgroundColor="#00000000" foregroundColor="#007300" shadowColor="#000000" shadowOffset="-1,-1" />
+                <widget name="cover" zPosition="1" size="200,200" position="50,282" alphatest="blend" />
+                <widget name="cover2" zPosition="1" size="400,400" position="0,282" alphatest="blend" />
+
+</screen>

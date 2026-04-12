@@ -1,0 +1,114 @@
+<!--screen for: "WebradioFSScreen_13", "genre_anzeige_13", "menu_13", "groups_13"-->
+<!--
+****  important instructions  ****
+
+- z-positions  in all screens and widgets is important
+
+
+**** end of instructions  ****
+
+ -->
+  <screen name="WebradioFSScreen_16" position="43,71" zPosition="1" backgroundColor="#000000" size="640,460" title="webradioFS">
+
+  <!--left site in Screen for Streams, Genres...-->
+		<widget source="streamlist" render="Listbox" zPosition="2"  position="0,35" size="405,310" scrollbarMode="showOnDemand" backgroundColor="#000000" foregroundColor="#FFFFFF" enableWrapAround="1"  foregroundColorSelected="#FFFFFF" backgroundColorSelected="#204060">
+			<convert type="TemplatedMultiContent" transparent="0">
+				{"templates": 
+                                {"default": (28,[
+						MultiContentEntryPixmapAlphaTest(pos = (5, 1), size = (30, 30), png = 2), # index 2: picture
+						MultiContentEntryText(pos = (40, 1), size = (400, 28), font=0, flags = RT_HALIGN_LEFT|RT_VALIGN_CENTER, text = 1), # index 1: text
+						]),
+                                "default_without_picon": (28,[
+					        MultiContentEntryPixmapAlphaTest(pos = (5, 1), size = (30, 30), png = 2), # index 2: picture
+						MultiContentEntryText(pos = (40, 1), size = (400, 28), font=0, flags = RT_HALIGN_LEFT|RT_VALIGN_CENTER, text = 1), # index 1: text
+					],True),
+
+                                "info": (24,[
+						MultiContentEntryText(pos = (5, 2), size = (180, 24), font=0, flags = RT_HALIGN_LEFT|RT_VALIGN_CENTER, border_width = 0, text = 0), # index 1: text
+						MultiContentEntryText(pos = (180, 2), size = (380, 24), font=0, flags = RT_HALIGN_LEFT|RT_VALIGN_CENTER, color=0xf47d19,color_sel=0xf47d19, border_width = 0, text = 1)
+						],False),
+				"menus": (28,[
+						MultiContentEntryText(pos = (5, 2), size = (405, 24), font=0, flags = RT_HALIGN_CENTER|RT_VALIGN_CENTER, text = 1), # index 1: text
+						]),
+				"about": (22,[
+						MultiContentEntryText(pos = (1, 1), size = (405, 20), font=1, flags = RT_HALIGN_CENTER|RT_VALIGN_CENTER, color=0xf47d19,color_sel=0xf47d19, border_width = 0, text = 0)
+						],False),
+				"genre": (28,[
+						MultiContentEntryText(pos = (5, 2), size = (405, 24), font=0, flags = RT_HALIGN_LEFT|RT_VALIGN_CENTER, border_width = 0, text = 1)
+						])
+				},		
+				"fonts": [gFont("Regular", 22),gFont("Regular", 18)],
+				"itemHeight": 28
+				}
+			</convert>
+		</widget>
+  <!--top on left site in stream-list-Screen-->
+        <widget name="rec_pic" position="3,5" pixmap="/usr/lib/enigma2/python/Plugins/Extensions/webradioFS/skin/images/rec1.png" size="30,20" zPosition="2" backgroundColor="#000000" alphatest="blend" />
+
+	<widget source="rec_text_new" render="Listbox" position="0,5" size="405,60" zPosition="1" selectionDisabled="1" backgroundColor="#000000" foregroundColor="#FFFFFF" >
+		<convert type="TemplatedMultiContent">
+			{"templates": 
+                        {"default": (30,[
+					MultiContentEntryText(pos = (5, 0), size = (395, 30), font=0, flags = RT_HALIGN_CENTER|RT_VALIGN_CENTER, color=0xB5B5B5, text = 0), # top-line over list 
+					],False),
+                        "cache": (30,[
+					MultiContentEntryText(pos = (35, 0), size = (360, 30), font=0, flags = RT_HALIGN_CENTER|RT_VALIGN_CENTER, color=0x58B74, text = 0), #cache-info 
+					],False),
+			"record": (30,[
+					MultiContentEntryText(pos = (35, 0), size = (360, 30), font=0, flags = RT_HALIGN_CENTER|RT_VALIGN_CENTER, color=0xFF4500, text = 0), # record-info
+					],False),
+			"timer": (30,[
+					MultiContentEntryText(pos = (35, 0), size = (360, 30), font=0, flags = RT_HALIGN_CENTER|RT_VALIGN_CENTER, color=0xFFD800, text = 0), #record-timer-info
+					],False),
+
+			"titel": (30,[
+					MultiContentEntryText(pos = (5, 0), size = (395, 30), font=0, flags = RT_HALIGN_CENTER|RT_VALIGN_CENTER, color=0xf47d19, text = 0), #for list-titles
+					],False),
+				},		
+			"fonts": [gFont("Regular", 16),gFont("Regular", 16)],
+			"itemHeight": 30
+			}
+		</convert>
+		</widget>
+
+
+
+
+  <!--pics: extended help-->
+  <widget name="help" zPosition="0" position="0,0" size="400,350" foregroundColor="#FFFFFF" backgroundColor="#000000" font="Regular;16" />
+  <!--bottom left-->
+  <widget  source="playtext" render="Label"  position="5,370" zPosition="2" size="632,64" font="Regular;18" valign="center" halign="center" foregroundColor="#00f47d19" backgroundColor="#000000" transparent="0" />
+  <!--bottom in Screen -->
+  <ePixmap pixmap="skin_default/buttons/button_red.png" position="5,444" size="15,16" backgroundColor="#000000" alphatest="blend" />
+  <widget name="green_pic" pixmap="skin_default/buttons/button_green.png" position="140,444" size="15,16" backgroundColor="#000000" alphatest="blend" />
+  <ePixmap pixmap="skin_default/buttons/button_yellow.png" position="275,444" size="15,16" backgroundColor="#000000" alphatest="blend" />
+  <ePixmap pixmap="skin_default/buttons/button_blue.png" position="410,444" size="15,16" backgroundColor="#000000" alphatest="blend" />
+  <widget name="key_red" position="25,445" zPosition="1" size="115,30" font="Regular;16" foregroundColor="#FFFFFF" backgroundColor="#000000" noWrap="1" transparent="1" />
+  <widget name="key_green" position="160,445" zPosition="1" size="118,30" font="Regular;16" foregroundColor="#FFFFFF" backgroundColor="#000000" noWrap="1" transparent="1" />
+  <widget name="key_yellow" position="295,445" zPosition="1" size="115,30" font="Regular;16" foregroundColor="#FFFFFF" backgroundColor="#000000" noWrap="1" transparent="1" />
+  <widget name="key_blue" position="430,445" zPosition="1" size="85,30" font="Regular;16" foregroundColor="#FFFFFF" backgroundColor="#000000" noWrap="1" transparent="1" />
+  <ePixmap pixmap="/usr/lib/enigma2/python/Plugins/Extensions/webradioFS/skin/images/key_menu.png" position="524,440" size="35,30" alphatest="blend" transparent="1" />
+  <ePixmap pixmap="/usr/lib/enigma2/python/Plugins/Extensions/webradioFS/skin/images/key_info.png" position="564,440" size="35,30" alphatest="blend" transparent="1" />
+  <ePixmap pixmap="/usr/lib/enigma2/python/Plugins/Extensions/webradioFS/skin/images/key_help.png" position="603,440" size="35,30" alphatest="blend" transparent="1" />
+  <eLabel position="0,435" size="590,30" zPosition="-10" backgroundColor="#000000" />
+  <!--
+
+-->
+<!--spezial, bottom in Screen for menu, ...-
+"buttons_abdeck": must non-transparent!, to cover yellow and blue buttons + ButtonText
+"key_red2" and "key_green2" cover the text box of "key_red "and key_green"
+-->
+  <widget name="buttons_abdeck" position="271,441" zPosition="2" size="380,30" font="Regular;20" valign="center" halign="center" foregroundColor="#00f47d19" backgroundColor="#000000" />
+  <widget name="key_red2" position="25,445" zPosition="3" size="200,30" font="Regular;16" foregroundColor="#FFFFFF" backgroundColor="#000000" noWrap="1" transparent="1" />
+  <widget name="key_green2" position="160,445" zPosition="3" size="260,30" font="Regular;16" foregroundColor="#FFFFFF" backgroundColor="#000000" noWrap="1" transparent="1" />
+<!--spezial end-->
+
+  <eLabel position="0,367" size="640,2" backgroundColor="#D3D3D3" />
+  <eLabel position="410,1" size="2,366" backgroundColor="#D3D3D3" />
+  <eLabel position="0,438" size="640,2" backgroundColor="#D3D3D3" />
+</screen>
+    
+
+
+
+ 

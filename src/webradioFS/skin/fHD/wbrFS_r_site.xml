@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<screen name="wbrFS_r_site15" position="1240,75" zPosition="3" size="670,730" backgroundColor="#000000" flags="wfNoBorder" transparent="0">
+    <widget name="streamlogo" position="0,10" size="610,108" alphatest="blend" />
+	<widget name="fav_name" position="10,20" size="610,75" font="Regular;32" halign="left" foregroundColor="#FFFFFF" backgroundColor="#20343c4f" transparent="1" />
+	<widget name="zeile1" position="60,120" size="150,40" font="Regular;28" halign="left" foregroundColor="#FFFFFF" backgroundColor="#20343c4f" transparent="1" />
+    <widget name="zeile1b" position="215,120" size="380,40" font="Regular;30" halign="left" foregroundColor="#00f47d19" backgroundColor="#000000" transparent="1" noWrap="1" />
+    <widget name="zeile2" position="60,175" size="150,40" font="Regular;28" halign="left" foregroundColor="#FFFFFF" backgroundColor="#20343c4f" transparent="1" />
+    <widget name="zeile2b" position="215,175" size="380,40" font="Regular;30" halign="left" foregroundColor="#00f47d19" backgroundColor="#000000" transparent="1" noWrap="1" />
+    <widget name="zeile3" position="60,220" size="150,40" font="Regular;28" halign="left" foregroundColor="#FFFFFF" backgroundColor="#20343c4f" transparent="1" />
+    <widget name="zeile3b" position="215,220" size="380,40" font="Regular;30" halign="left" foregroundColor="#00f47d19" backgroundColor="#000000" transparent="1" noWrap="1" />
+    <widget name="zeile4" position="60,270" size="150,40" font="Regular;28" halign="left" foregroundColor="#FFFFFF" backgroundColor="#20343c4f" transparent="1" />
+    <widget name="zeile4b" position="215,270" size="380,40" font="Regular;30" halign="left" foregroundColor="#00f47d19" backgroundColor="#000000" transparent="1" />
+    <widget name="picture" zPosition="0" position="60,330" size="580,370" alphatest="blend" transparent="1"/>
+    <!--play files-->
+    <widget name="playline2" position="0,300" size="600,21" pointer="skin_default/position_pointer.png:540,0" transparent="1" foregroundColor="#20224f">
+		<convert type="ServicePosition">Gauge</convert>
+	</widget>
+    <widget name="random" position="150,40" size="50,30" alphatest="blend" />
+    <widget name="subdirs" position="300,40" size="50,30" alphatest="blend" />
+    <widget name="auto" position="450,40" size="50,30" alphatest="blend" />
+    <!--play files end-->
+</screen>

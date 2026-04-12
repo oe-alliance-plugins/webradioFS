@@ -1,0 +1,8 @@
+<screen name="wbrfs_set_we" position="center,center" size="1000,600" title="Info" zPosition="99">
+		<widget name="warn" position="10,5" zPosition="1" size="680,340" valign="center" halign="center" font="Regular;30" transparent="1" foregroundColor="white" shadowColor="black" shadowOffset="-1,-1" />
+                <widget name="config" position="10,350" size="960,200" scrollbarMode="showOnDemand" />
+                <ePixmap pixmap="skin_default/buttons/key_red.png" position="15,552" size="30,40" alphatest="on" />
+		<ePixmap pixmap="skin_default/buttons/key_green.png" position="280,552" size="30,40"  alphatest="on" />
+		<widget name="key_red" position="60,550" zPosition="1" size="240,40" valign="center" halign="left" font="Regular;28" transparent="1" foregroundColor="white" shadowColor="black" shadowOffset="-1,-1" />
+		<widget name="key_green" position="330,550" zPosition="1" size="250,40" valign="center" halign="left" font="Regular;28" transparent="1" foregroundColor="white" shadowColor="black" shadowOffset="-1,-1" />
+</screen>

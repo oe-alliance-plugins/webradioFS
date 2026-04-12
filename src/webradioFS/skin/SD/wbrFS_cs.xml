@@ -1,0 +1,17 @@
+		<screen name="wbrfs_cs" position="25,center" size="380,440" title="Save from cache" zPosition="99">
+                <widget source="song_liste" render="Listbox" zPosition="3" position="0,10" size="380,300" scrollbarMode="showOnDemand" >
+			<convert type="TemplatedMultiContent">
+				{"template": [ MultiContentEntryText(pos = (10, 2), size = (370, 29), flags = RT_HALIGN_LEFT, text = 0) ],
+				"fonts": [gFont("Regular", 22)],
+				"itemHeight": 30
+				}
+			</convert>
+		</widget>
+                <ePixmap pixmap="skin_default/buttons/key_red.png" position="5,382" size="30,30" alphatest="on" />
+		<ePixmap pixmap="skin_default/buttons/key_green.png" position="170,382" size="30,30"  alphatest="on" />
+		<ePixmap pixmap="skin_default/buttons/key_yellow.png" position="5,417" size="30,30"  alphatest="on" />
+		<widget name="key_red" position="40,380" zPosition="1" size="160,30" valign="center" halign="left" font="Regular;22" transparent="1" foregroundColor="white" shadowColor="black" shadowOffset="-1,-1" />
+		<widget name="key_green" position="205,380" zPosition="1" size="180,30" valign="center" halign="left" font="Regular;22" transparent="1" foregroundColor="white" shadowColor="black" shadowOffset="-1,-1" />
+		<widget name="key_yellow" position="40,415" zPosition="1" size="350,30" valign="center" halign="left" font="Regular;22" transparent="1" foregroundColor="white" shadowColor="black" shadowOffset="-1,-1" />
+
+</screen>

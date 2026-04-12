@@ -1,0 +1,1939 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: webradiorFS\n"
+"POT-Creation-Date: \n"
+"PO-Revision-Date: \n"
+"Last-Translator: shadowrider <plugins@fselbig.de>\n"
+"Language-Team: shadowrider <plugins@fselbig.de>\n"
+"Language: de\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Poedit-SourceCharset: iso-8859-1\n"
+"X-Generator: Poedit 3.8\n"
+
+msgid " (Press OK)"
+msgstr " (Taste OK)"
+
+msgid " (installed: "
+msgstr " (installiert: "
+
+msgid " (not installed)"
+msgstr " (nicht installiert)"
+
+msgid " (separate with commas)"
+msgstr " (trenne mit Komma)"
+
+msgid " >> select and press OK for edit >>"
+msgstr " >> auswählen und 'OK' drücken zum ändern <<"
+
+msgid " Database - all Streams"
+msgstr " Datenbank - alle Streams"
+
+msgid " is no longer supported, please update to the current version."
+msgstr " wird nicht länger unterstützt, bitte auf aktuelle Version updaten."
+
+msgid " min"
+msgstr " min"
+
+msgid "(Help press for explanations)"
+msgstr "(Hilfe-Taste für Erläuterungen)"
+
+msgid "(separate with commas)"
+msgstr "(trenne mit Komma)"
+
+msgid "(with red button try to update stream)"
+msgstr "(drücke rot zum Aktualisieren des Streams)"
+
+msgid "**recording in progress ..."
+msgstr "**Aufnahme läuft ..."
+
+msgid ", subfolders = Off"
+msgstr ", Unterverzeichnisse = Aus"
+
+msgid ""
+"A recording is in progress or is planned, terminate recording and stop "
+"stream?"
+msgstr ""
+"Aufnahme läuft oder ist geplant. Wirklich abbrechen und Stream stoppen?"
+
+msgid ""
+"A recording is in progress or is planned, terminate recording for switch?"
+msgstr "Aufnahme läuft - Beenden zum Umschalten?"
+
+msgid "Actions-Menu"
+msgstr "Aktionen"
+
+msgid "Add Stream"
+msgstr "Stream hinzufügen"
+
+msgid "Add new stream to favorites"
+msgstr "Neuen Stream zu Favoriten hinzufügen"
+
+msgid "Additional functions on / off"
+msgstr "Funktionen ein/aus"
+
+msgid "Auto play"
+msgstr "Auto-Wiedergabe"
+
+msgid "Auto play endless"
+msgstr "Auto-Play endlos"
+
+msgid "Automatically caching Tracks"
+msgstr "Tracks autom. zwischenspeichern"
+
+msgid "Autostart this Stream"
+msgstr "Diesen Stream autom. abspielen"
+
+msgid "Back to Startscreen"
+msgstr "Bildschirmschoner beenden"
+
+msgid "Backup ConfFS-Dir"
+msgstr "Sicherung vom ConfFS-Verzeichnis"
+
+msgid "Backup created successfully"
+msgstr "Sicherung erfolgreich erstellt"
+
+msgid "Backup failed"
+msgstr "Sicherung fehlgeschlagen"
+
+msgid "Backup webradioFS Favs and settings"
+msgstr "Sicherung der Favoriten und Einstellungen"
+
+msgid "Begin recording immediately, recording time specify in minutes"
+msgstr "Aufnahme sofort beginnen, Aufnahmedauer in Minuten angeben"
+
+msgid "Bitrate failed"
+msgstr "Bitrate des Steams fehlerhaft!"
+
+msgid "Bitrate of this Station failed"
+msgstr "Bitrate des Steams fehlerhaft"
+
+msgid "Bitrate:"
+msgstr "Bitrate:"
+
+msgid "Blocking inactivity off timer (system):"
+msgstr "Blockiere Abschalttimer (System)"
+
+msgid "Cancel"
+msgstr "Abbrechen"
+
+msgid "Change color with: left,right, up,down"
+msgstr "Farbe wechseln mit: hoch, runter, links, rechts"
+
+msgid "Change order of streams"
+msgstr "Reihenfolge der Sender ändern"
+
+msgid "Change setup xml"
+msgstr "wechsle Setup.xml (skindatei)"
+
+msgid "Change the Box-Volume"
+msgstr "Lautstärke der Box ändern"
+
+msgid "Check for update, show info for plugin and contact"
+msgstr "Prüfe auf Updates, Informationen zum Plugin und Kontakt"
+
+msgid "Check if the required modules are available"
+msgstr "Prüfe benötigte Module"
+
+msgid "Check required Module"
+msgstr "Prüfe benötigte Module"
+
+msgid "Check version and info on startup:"
+msgstr "Beim Start auf aktuelle Version und Info prüfen:"
+
+msgid "Chillen"
+msgstr "Chillen"
+
+msgid "Close and restart webradioFS for activate settings"
+msgstr "webradioFS beenden und neu starten zum aktivieren der Einstellungen"
+
+msgid "Color random"
+msgstr "Farbe zufällig?"
+
+msgid "Color screensaver background"
+msgstr "Farbe Screensaver Hintergrund"
+
+msgid "Color screensaver labels"
+msgstr "Farbe Screensaver Text"
+
+msgid ""
+"Color-Setting\n"
+"(left,right, up,down, menu)"
+msgstr ""
+"Farb-Einstellung\n"
+"links,rechts   hoch,runter   Menü"
+
+msgid "Colors from skin"
+msgstr "Farbe vom Skin"
+
+msgid "Connection attempt"
+msgstr "Verbindungsversuch"
+
+msgid "Copy"
+msgstr "Kopieren"
+
+msgid "Cover saved"
+msgstr "Bild erfolgreich gespeichert"
+
+msgid "Create a new subdirectory?"
+msgstr "Neues Unterverzeichnis erstellen?"
+
+msgid "Creating a subdirectory for Stream"
+msgstr "in Unterverzeichnis (Stream-Name) aufzeichnen "
+
+msgid "Crossing Connection time"
+msgstr "Zeitüberschreitung"
+
+msgid "Current record keeping?"
+msgstr "aktuelle Aufnahme behalten?"
+
+msgid "Current version: "
+msgstr "Aktuelle Version: "
+
+msgid "Data successfully restored"
+msgstr "Daten erfolgreich wiederhergestellt"
+
+msgid "Database - The last uploads"
+msgstr "Datenbank - neueste Uploads"
+
+msgid "Database - Top last month"
+msgstr "Datenbank - Top letzter Monat"
+
+msgid "Database - Top this month"
+msgstr "Datenbank - Top aktueller Monat"
+
+msgid "Database - all Streams"
+msgstr "Datenbank - alle Streams"
+
+msgid "Database - list all Streams"
+msgstr "Datenbank -Liste \"alle Streams\""
+
+msgid "Database:"
+msgstr "Datenbank:"
+
+msgid "Delete Favs-File and restart"
+msgstr "Lösche Fav-Datei und starte neu"
+
+msgid "Delete Stream-Picons"
+msgstr "Stream-Logos löschen"
+
+msgid "Delete all Picons in /etc/ConfFS/streamlogos/ (e.g. for refresh)"
+msgstr "Alle Picons löschen (z.B. zum Aktualisieren)"
+
+msgid "Delete all the streams of this group?"
+msgstr "Alle Streams dieser gruppe wirklich löschen?"
+
+msgid "Delete all your favorites and make new file"
+msgstr "Lösche alle Favoriten und erstelle neue Datei"
+
+msgid "Delete group"
+msgstr "Gruppe löschen"
+
+msgid "Delete selected file"
+msgstr "markierte Datei löschen"
+
+msgid "Delete selected stream"
+msgstr "Lösche gewählten Stream"
+
+msgid "Delete this stream from Favorites"
+msgstr "Diesen Stream aus Favoriten entfernen"
+
+msgid "Description of this Station failed"
+msgstr "Beschreibung des Streams fehlerhaft!"
+
+msgid "Description:"
+msgstr "Beschreibung:"
+
+msgid "Dir:"
+msgstr "Verz.:"
+
+msgid "Discard scheduled timer?"
+msgstr "Geplanten Timer verwerfen?"
+
+msgid "Display-Len:"
+msgstr "Display-Länge:"
+
+msgid "Display-Scroll-Speed (0=Off):"
+msgstr "Display-Laufgeschwindigkeit (0=Aus):"
+
+msgid "Display-Settings"
+msgstr "Display-Einstellungen"
+
+msgid "Distance from the left:"
+msgstr "Abstand von links:"
+
+msgid "Distance from the top"
+msgstr "Abstand von oben:"
+
+msgid "Do you really want to delete this file?"
+msgstr "Diese Aufnahme wirklich löschen?"
+
+msgid "Do you really want to stop the recording?"
+msgstr "Aufnahme wirklich abbrechen?"
+
+msgid "Down"
+msgstr "Runter"
+
+msgid "Download failed"
+msgstr "Download fehlgeschlagen"
+
+msgid "Edit"
+msgstr "Bearbeiten"
+
+msgid "Edit selected stream"
+msgstr "Editiere gewählten Stream"
+
+msgid "Edit/Info"
+msgstr "Bearbeiten/Info"
+
+msgid "Enable Audio-file playing menu"
+msgstr "Aktiviere Menü Audiodatei-Funktionen"
+
+msgid "Enable Expert settings"
+msgstr "Aktiviere erweiterte Einstellungen"
+
+msgid "Enable LCD4Linux settings menu"
+msgstr "Aktiviere Menü LCD4Linux Einstellungen"
+
+msgid "Enable Screensaver options menu"
+msgstr "Aktiviere Menü Bildschirmschoner-Einstellungen"
+
+msgid "Enable Settings view / appearance"
+msgstr "Aktiviere Einstellungen Optik/Aussehen"
+
+msgid "Enable change assignment of keys menu"
+msgstr "Aktiviere Menü Einstellungen Tastenbelegung"
+
+msgid "Enable display settings menu"
+msgstr "Aktiviere Menü Einstellungen für Display"
+
+msgid "Enable external display settings menu"
+msgstr "Aktiviere LCD4Linux-Einstellungen"
+
+msgid "Enable record functions menu"
+msgstr "Aktiviere Menü Aufnahme-Funktionen"
+
+msgid "Enable sispmctl settings menu"
+msgstr "Aktiviere Menü sispmctl Einstellungen"
+
+msgid "End-time:"
+msgstr "Uhrzeit Aufnahme Stop"
+
+msgid "Enter search text:"
+msgstr "Suchtext eingeben"
+
+msgid "Enter streams or read from DB and then delete these dummy stream"
+msgstr ""
+"Streams eintragen oder aus Datenbank übernehmen, dann den dummy-Stream "
+"löschen"
+
+msgid "Enter the minutes to shutdown:"
+msgstr "Minuten bis zum Abschalten eingeben:"
+
+msgid "Error, Cover no saved"
+msgstr "Fehler, Bild nicht gespeichert"
+
+msgid "Error, Title no saved"
+msgstr "Fehler, Titel nicht gespeichert"
+
+msgid "Error-Messages:"
+msgstr "Fehler:"
+
+msgid "Error: "
+msgstr "Fehler: "
+
+msgid "Exclude search word"
+msgstr "Begriffe bei Suche ausschließen"
+
+msgid "Exit"
+msgstr "abbrechen"
+
+msgid "Exit if auto shutdown?"
+msgstr "Abschalten bei AutoShoutDown?"
+
+msgid "Exit or OK for exit"
+msgstr "Exit oder OK zum Beenden"
+
+msgid "Exit prog"
+msgstr "webradioFS beenden"
+
+msgid "Exit the program?"
+msgstr "webradioFS beenden?"
+
+msgid "Extras"
+msgstr "Extras"
+
+msgid "Failed to start automatically"
+msgstr "Fehler beim automatischen Start"
+
+msgid "Favorite name"
+msgstr "Favoriten-Name"
+
+msgid "Favoriten"
+msgstr "Favoriten"
+
+msgid "Favoriten new, delete, copy / save settings and files"
+msgstr "Favoriten-Datei: Neu, Löschen, Kopieren, Sichern und Einstellungen"
+
+msgid "Favoriten: "
+msgstr "Favoriten:  "
+
+msgid "File Options"
+msgstr "Datei-Optionen"
+
+msgid "File Play-Settings"
+msgstr "Einstellungen Dateien abspielen"
+
+msgid "File path for Favorites:"
+msgstr "Speicherort der Favoriten-Datei:"
+
+msgid "File path for PVR-logos:"
+msgstr "Verzeichnis für PVR-Logos"
+
+msgid "File path for Picons:"
+msgstr "Speicherort der Sender-Logos:"
+
+msgid "File-Menu"
+msgstr "Datei-Tools"
+
+msgid "File:"
+msgstr "Datei:"
+
+msgid "Files"
+msgstr "Dateien"
+
+msgid "Find and add streams"
+msgstr "Sender suchen und hinzufügen"
+
+msgid "Fixed position for text and cover"
+msgstr "Feste Position für Text und Bilder"
+
+msgid "Font in setups too small? then change"
+msgstr "Schrift im Setup zu klein? Dann bitte wechseln."
+
+msgid "Font size in streamlists:"
+msgstr "Schriftgröße in Streamliste:"
+
+msgid "Font-Size"
+msgstr "Schrift-Größe:"
+
+msgid "Friday"
+msgstr "Freitag"
+
+msgid "Genre 2"
+msgstr "Genre 2:"
+
+msgid "Genre 2 (optional):"
+msgstr "Genre 2 (optional):"
+
+msgid "Genre failed"
+msgstr "Genre fehlt oder falsch"
+
+msgid "Genre of this Station failed/not in Database"
+msgstr "Genre fehlt oder nicht in Datenbank!"
+
+msgid "Genre to Player"
+msgstr "Genre zum Player"
+
+msgid "Genre:"
+msgstr "Genre:"
+
+msgid "Genres"
+msgstr "Genres"
+
+msgid "Google-search: only photos"
+msgstr "Google-Suche: nur Fotos"
+
+msgid "Group tools"
+msgstr "Gruppen-Tools"
+
+msgid "Group-Menu"
+msgstr "Favoriten-Gruppen"
+
+msgid "Group:"
+msgstr "Gruppe:"
+
+msgid "Hide all sub-genres"
+msgstr "Alle Untergruppen ausblenden"
+
+msgid "I agree and would like to continue using the plugin:"
+msgstr "Ich bin damit einverstanden und möchte das Plugin weiter nutzen:"
+
+msgid "I miss functions"
+msgstr "ich vermisse Funktionen"
+
+msgid "If you do not agree, uninstall this plugin and do not use it anymore."
+msgstr ""
+"Sofern Sie nicht damit einverstanden sind, deinstallieren Sie dieses Plugin "
+"und nutzen es nicht mehr."
+
+msgid "Images Additional search word"
+msgstr "Cover-Suchwort-Zusatz vorn"
+
+msgid "Images Additional search word at the end"
+msgstr "Cover-Suchwort-Zusatz hinten"
+
+msgid "Import all old Fav-Files from etc/confFS"
+msgstr "Alle Favoriten einer älteren Version aus /etc/ConfFS- importieren"
+
+msgid "Individually adjustable"
+msgstr "Funktionen auswählbar"
+
+msgid "Info"
+msgstr "Info"
+
+msgid "Info for continuous stream:"
+msgstr "Info für laufenden Stream:"
+
+msgid "Info for selected stream:"
+msgstr "Info für ausgewählten Stream:"
+
+msgid "Input color string"
+msgstr "Farbcode direkt-Eingabe"
+
+msgid "Input failed, color sample for with: ffffff, for black: 000000"
+msgstr "Eingabe fehlerhaft, Beispiel für weiß: ffffff, für schwarz 000000"
+
+msgid "Install rec-Modules"
+msgstr "Installiere benötigte Module"
+
+msgid "Installation finished."
+msgstr "Installation beendet."
+
+msgid "Instant recording, endless"
+msgstr "Sofortaufnahme, endlos"
+
+msgid "Instant recording, recording with special settings, check modules"
+msgstr "Sofortaufnahme, Aufnahme mit speziellen Einstellungen, Module prüfen"
+
+msgid "Keyword(s) for Picture:"
+msgstr "Stichwort für Screensaver-Bilder"
+
+msgid "LAST INFO: "
+msgstr "Letzte Info zum Plugin: "
+
+msgid "Left/Right for select"
+msgstr "auswählen mit Links/Rechts"
+
+msgid "Len:"
+msgstr "Länge:"
+
+msgid "Line"
+msgstr "Zeile"
+
+msgid "Line without text can not be saved"
+msgstr "Zeile ohne Text kann nicht gespeichert werden"
+
+msgid "List Favoriten and Genres"
+msgstr "Liste der Favoriten, Genres"
+
+msgid "List Genres"
+msgstr "Genre-Listen anzeigen"
+
+msgid "List all streams re-read from database"
+msgstr "\"Alle Streams\" aus Datenbank  neu einlesen"
+
+msgid "List streams of genre in Player"
+msgstr "Streamliste vom Genre in den Player"
+
+msgid "Logo Pos. left"
+msgstr "Position links"
+
+msgid "Logo Pos. top"
+msgstr "Position oben"
+
+msgid "Logo Settings"
+msgstr "Einstellungen für Logo"
+
+msgid "Logo high"
+msgstr "Logo Höhe"
+
+msgid "Logo widht"
+msgstr "Logo Breite"
+
+msgid "Make subdir for record"
+msgstr "Unterverzeichnisse für Aufnahmen erstellen?"
+
+msgid "Mark as broken?"
+msgstr "als defekt markieren?"
+
+msgid "Media player setting may interfere with viewing station text and images"
+msgstr ""
+"Mediaplayer-Einstellung kann Anzeige von Sendertext und Bildern behindern"
+
+msgid "Menu->Settings->System->Media Playback = original"
+msgstr "Menü->Einstellungen->System->Medienwiedergabe = original"
+
+msgid "Minimum bitrate in all streams list:"
+msgstr "Bitrate in \"Alle Streams aus Datenbank\" mind.:"
+
+msgid "Monday"
+msgstr "Montag"
+
+msgid "Move"
+msgstr "Verschieben"
+
+msgid "Multi-line display:"
+msgstr "Mehrzeiliges Display:"
+
+msgid "My Favorites and database"
+msgstr "Meine Favoriten und Datenbank"
+
+msgid "My files"
+msgstr "Meine Dateien"
+
+msgid "My records"
+msgstr "Meine Aufnahmen"
+
+msgid "Name failed, not Special characters on first position"
+msgstr "Als erstes Zeichen im Namen sind keine Sonderzeichen erlaubt"
+
+msgid "Name for new subdirectory"
+msgstr "Name für neues Unterverzeichnis"
+
+msgid "Name/Title:"
+msgstr "Name/Bezeichnung:"
+
+msgid "New Update is online"
+msgstr "Neues Update ist online"
+
+msgid "New group"
+msgstr "Neue Gruppe"
+
+msgid "New uploaded by users"
+msgstr "Neu von Usern hochgeladen"
+
+msgid "New uploaded by users, unchecked"
+msgstr "neu von Usern hochgeladen, ungeprüft"
+
+msgid "Next Favorit-File"
+msgstr "Nächste Favoriten-Datei"
+
+msgid "Next Picture"
+msgstr "nächstes Bild"
+
+msgid "Nickname (optional):"
+msgstr "Username (optional):"
+
+msgid "No"
+msgstr "Nein"
+
+msgid "No Stream running to be recorded!"
+msgstr "es läuft kein Stream für die Aufnahme...."
+
+msgid "No effect on displays white LCD4Linux!"
+msgstr "keine LCD4Linux-Anzeigen generieren!"
+
+msgid "No match is found, new search?"
+msgstr "Keine Streams gefunden, neue Suche?"
+
+msgid "Not found Favorites file in etc/ConfFS"
+msgstr "Keine Favoriten-Datei in /etc/ConfFS gefunden"
+
+msgid "Not record if at least one of the words in the title"
+msgstr "Nicht aufnehmen, wenn der Titel mindestens einen der Begriffe enthält"
+
+msgid "Not record in directory"
+msgstr "Keine Aufnahmen im Verzeichnis"
+
+msgid "Not recording when in title"
+msgstr "Aufnahme-Filter (ausschließen)"
+
+msgid "Not sort"
+msgstr "nicht sortieren"
+
+msgid "Note on text from sender/pictures"
+msgstr "Info zu Sendertext/Bildern"
+
+msgid "Nothing is displayed in VFD(text) displays"
+msgstr "in VFD(Text)-Displays wird dies nicht angezeigt"
+
+msgid "Now playing for 10 minutes"
+msgstr "Stream wird 10 Minuten abgespielt"
+
+msgid "Now save?"
+msgstr "Jetzt speichern?"
+
+msgid "Number of connection attempts:"
+msgstr "Anzahl Verbindungsversuche"
+
+msgid "Number of lines:"
+msgstr "Wieviele Zeilen anzeigen (1-3):"
+
+msgid "Off"
+msgstr "Ausschalten"
+
+msgid "Off Timer (minutes):"
+msgstr "Ausschalt-Timer (Minuten):"
+
+msgid "Off-Timer"
+msgstr "Abschalt-Timer"
+
+msgid "Only running streamings can be recorded!"
+msgstr "es kann nur eine Aufnahme laufen...."
+
+msgid "Open PictureCenterFS"
+msgstr "Plugin PictureCenterFS starten"
+
+msgid "Optional, but useful e.g. with problem reports"
+msgstr "Optional, hilfreich bei Problemmeldungen"
+
+msgid "Options enable / disable"
+msgstr "Optionen ein/aus"
+
+msgid "Overwrite existing Backup?"
+msgstr "Bestehendes Backup überschreiben?"
+
+msgid "Overwrite existing Files?"
+msgstr "Bestehende Datei(en) überschreiben?"
+
+msgid "Path"
+msgstr "Verzeichnis"
+
+msgid "Path 'mpd' for Music Player Daemon-Files:"
+msgstr "Pfad zum MPD-Verzeichnis (mpd)"
+
+msgid "Path for Music Player Daemon-Files:"
+msgstr "Pfad zum MPD-Verzeichnis (mpd):"
+
+msgid "Path for caching"
+msgstr "Verzeichnis für Zwischenspeichern"
+
+msgid "Path for record"
+msgstr "Pfad für Aufnahmen"
+
+msgid "Path-options"
+msgstr "Verzeichnisse"
+
+msgid "Pause / Resume Slideshow"
+msgstr "Diashow Pause/Weiter"
+
+msgid "Period must be greater than 2 minutes"
+msgstr "Zeit muss länger als 2 Minuten sein"
+
+msgid "Picons for Streams:"
+msgstr "Logos für Streams:"
+
+msgid "Picons in List:"
+msgstr "Logos in der Liste:"
+
+msgid "Picture restrictions:"
+msgstr "Einstellung Cover-Suche:"
+
+msgid "Picture search"
+msgstr "Bilder Suche"
+
+msgid "Play"
+msgstr "Abspielen"
+
+msgid "Play Stream"
+msgstr "Stream abspielen"
+
+msgid "Play Video"
+msgstr "Video abspielen"
+
+msgid "Play Video random"
+msgstr "Videos zufällig aus Verzeichnis"
+
+msgid "Play Video sorted"
+msgstr "alle Videos aus Verzeichnis"
+
+msgid "Play after restart?"
+msgstr "Abspielen bei Neustart?"
+
+msgid "Play files from sub-dirs"
+msgstr "Unterverzeichnisse einschließen"
+
+msgid "Play random"
+msgstr "zufällig abspielen"
+
+msgid "Play settings"
+msgstr "Einstellungen Dateien abspielen"
+
+msgid "Play stream must be saved before"
+msgstr "Es kann nur gespeichert werden, wenn der Stream läuft..."
+
+msgid "Played-Stream Info"
+msgstr "Info zu laufendem Stream"
+
+msgid "Please always use the latest version ..."
+msgstr "Bitte die aktuelle Version benutzen..."
+
+msgid "Please enter a name for the Favorit"
+msgstr "Name für Favoriten-Datei festlegen"
+
+msgid "Please install new Version, old version are no longer supported"
+msgstr ""
+"Diese Version ist veraltet und wird nicht mehr unterstützt, bitte "
+"installiere die aktuelle Version"
+
+msgid "Please play Stream befor sending"
+msgstr "Stream vor dem senden starten"
+
+msgid "Please restart GUI to apply the setting"
+msgstr "Zum Aktivieren der Einstellungen bitte GUI neu starten"
+
+msgid "Please save the stream in your favorites for endless playing"
+msgstr ""
+"Der Stream muss als Favorit gespeichert werden um ihn dauerhaft zu nutzen."
+
+msgid "Please select path for caching..."
+msgstr "Bitte Verzeichnis zum Zwischenspeichern wählen..."
+
+msgid "Please select the backup path..."
+msgstr "Wohin soll die Backup-Datei gespeichert werden?"
+
+msgid "Please select the restore path..."
+msgstr "Pfad der Backup-Datei wählen"
+
+msgid "Please set first volume parameters in the basic settings"
+msgstr ""
+"Bitte zuerst die Lautsärke-Einstellungen in den Grundeinstellungen setzen"
+
+msgid "Please update!"
+msgstr "Bitte Aktualisieren!"
+
+msgid "Plugin PictureCenterFS not installed or Path failed"
+msgstr "Plugin 'PictureCenterFS' ist nicht installiert"
+
+msgid "Plugin for screensaver not installed"
+msgstr "gewähltes Plugin für Bildschirmschoner ist nicht installiert"
+
+msgid "Press OK for edit"
+msgstr "'OK' drücken zum ändern"
+
+msgid "Press OK for open/close select sub-genres"
+msgstr "'OK' drücken um Unter-Genre zu Öffnen/Schliessen"
+
+msgid "Press OK for select"
+msgstr "'OK' drücken zum Auswählen"
+
+msgid "Prev. Picture"
+msgstr "vorheriges Bild"
+
+msgid "Preview Favorit-File"
+msgstr "Vorherige Favoriten-Datei"
+
+msgid "Question before exiting?"
+msgstr "Sicherheitsabfrage bei Beenden?"
+
+msgid "RC-Buttons -Settings"
+msgstr "FB-Tasten Einstellungen"
+
+msgid "Random"
+msgstr "zufällig"
+
+msgid "Random by Folder"
+msgstr "zufällig je Ordner"
+
+msgid "Read from database"
+msgstr "Neu einlesen"
+
+msgid "Record On/Off"
+msgstr "Aufnahme An/Aus"
+
+msgid "Record only from your Favorites"
+msgstr "Aufnahmen sind nur in einer Favoriten-Datei möglich"
+
+msgid "Record only if at least one of the words in the title"
+msgstr "Nur aufnehmen, wenn der Titel mindestens einen der Begriffe enthält"
+
+msgid "Record, time remaining:"
+msgstr "Aufnahme, Restzeit:"
+
+msgid "Record-Menu"
+msgstr "Aufnahme-Menü"
+
+msgid "Record-Settings"
+msgstr "Aufnahme-Einstellungen"
+
+msgid "Record-Stream-Error"
+msgstr "Aufnahme-Fehler bei diesem Stream"
+
+msgid "Recording / switching at a certain time, edit start time"
+msgstr "Aufnahme/Umschalten zu bestimmter Uhrzeit, Startzeit angeben"
+
+msgid "Recording and switching timer, additional settings"
+msgstr "Aufnahme/Umschalten mit speziellen weiteren Einstellungen"
+
+msgid "Recording is scheduled in"
+msgstr "Aufnahme beginnt in"
+
+msgid "Recording length (minutes)"
+msgstr "Aufnahme-Länge (Minuten)"
+
+msgid "Recording stopped, interrupted stream"
+msgstr "Aufnahme gestoppt, Stream abgebrochen"
+
+msgid "Recording when in title"
+msgstr "Aufnahme-Filter (einschließen)"
+
+msgid "Remember last used"
+msgstr "Letzten Sender merken"
+
+msgid "Reread from database"
+msgstr "Alles neu von Datenbank lesen"
+
+msgid "Restart must be performed"
+msgstr "Neustart ist erforderlich, jetzt neu starten?"
+
+msgid "Restarting to activate the settings"
+msgstr "zum aktivieren ist ein GUI Neustart notwendig, jetzt neu starten?"
+
+msgid "Restore ConfFS-Dir"
+msgstr "Sicherung vom ConfFS-Verzeichnis zurückspielen"
+
+msgid "Restore all files for webradioFS, PictureCenterFS, PlanerFS, CamoFS"
+msgstr ""
+"Sicherung der Dateien von webradioFS, CamoFS, PlanerFS, PictureCenterFS usw. "
+"zurückspielen"
+
+msgid "Restore webradioFS Favs and settings"
+msgstr "Favoriten und Einstellungen aus Sicherung zurückspielen"
+
+msgid "Result for Off-Timer (Standby/Deepstandby):"
+msgstr "Ziel vom Ausschalt-Timer (Standby/Deepstandby):"
+
+msgid "Run directly endlessly recording"
+msgstr "Sofort endlos-Aufnahme starten"
+
+msgid "Saturday"
+msgstr "Samstag"
+
+msgid "Save"
+msgstr "Speichern"
+
+msgid "Save Favorites and settings"
+msgstr "Favoriten und Einstellungen sichern"
+
+msgid "Save Path:"
+msgstr "Speicher-Verzeichnis für Cover und Titeldatei:"
+
+msgid "Save Picture"
+msgstr "Bild speichern"
+
+msgid "Save Title"
+msgstr "Titel speichern"
+
+msgid "Save Title-Info"
+msgstr "Titel speichern"
+
+msgid "Save all files for webradioFS, PictureCenterFS, PlanerFS, CamoFS"
+msgstr ""
+"Sichere alle Dateien für webradioFS, CamoFS, PlanerFS, PictureCenterFS..."
+
+msgid "Save found image automatically"
+msgstr "gefundene Bilder automtisch speichern?"
+
+msgid "Save genre"
+msgstr "Genre speichern"
+
+msgid "Save genre as Fav-File"
+msgstr "Genre als Favoriten-Datei speichern"
+
+msgid "Save list in random order"
+msgstr "zufällige Reihenfolge in Liste speichern"
+
+msgid "Save on recording a found image automatically"
+msgstr "Bei Aufnahme automtisch gefundene Bilder speichern?"
+
+msgid "Save position in list"
+msgstr "Abspielposition merken"
+
+msgid "Save selected stream as Favorit"
+msgstr "Ausgewählten Stream in Favoriten-Datei speichern"
+
+msgid "Save selected stream in a favorite file"
+msgstr "Ausgewählten Stream in Favoriten-Datei speichern"
+
+msgid "Save stream"
+msgstr "Stream speichern"
+
+msgid "Save stream in Fav-File"
+msgstr "Ausgewählten Stream in Favoriten-Datei speichern"
+
+msgid "Save the genre as a new favorites file"
+msgstr "Genre als neue Favoriten-Datei speichern"
+
+msgid "Scope of possible options / settings"
+msgstr "Umfang der angezeigten Einstellungen"
+
+msgid "Screensaver Video:"
+msgstr "Bildschirmschoner-Video-Datei:"
+
+msgid "Screensaver-Art:"
+msgstr "Bildschirmschoner-Art:"
+
+msgid "Screensaver-Settings"
+msgstr "Bildschirmschoner-Einstellungen"
+
+msgid "Screensaver-Video-File"
+msgstr "Bildschirmschoner-Video-Datei"
+
+msgid "Screensaver:"
+msgstr "Bildschirmschoner-Art:"
+
+msgid "Scroll-Speed:"
+msgstr "Display-Laufgeschwindigkeit (0=Aus):"
+
+msgid "Scroll-line:"
+msgstr "Zeile mit Laufschrift:"
+
+msgid "Search in Database"
+msgstr "Suche in Datenbank"
+
+msgid "Search the database by name or partial name"
+msgstr "Datenbank durchsuchen nach Namen oder Teil-Namen"
+
+msgid "Second to recurrence:"
+msgstr "Sekunden bis Wiederholung:"
+
+msgid "Selceted File is:"
+msgstr "Gewählte Datei:"
+
+msgid "Select Screensaver-Art"
+msgstr "wähle Bildschirmschoner-Art:"
+
+msgid "Select a recording mode"
+msgstr "Aufnahme-Art wählen"
+
+msgid "Select genre"
+msgstr "Genres wählen"
+
+msgid "Select type"
+msgstr "Wähle Typ"
+
+msgid "Selected Stream copy,move,edit,new,delete"
+msgstr "Stream: Löschen, Bearbeiten, Verschieben, neuen Stream einfügen"
+
+msgid "Send played stream to Database"
+msgstr "Stream an die Datenbank senden"
+
+msgid "Send to Database or Save"
+msgstr "Speichern bzw. an Datenbank senden"
+
+msgid "Set Saver-Type"
+msgstr "Art des Bildschirmschoners temporär wechseln"
+
+msgid "Set caching individually in stream settings"
+msgstr "Aufnahme-Cache bei jedem Stream einstellen"
+
+msgid "Set permanently"
+msgstr "dauerhaft einstellen"
+
+msgid "Set sispmctl on exit:"
+msgstr "sispmctl bei Exit:"
+
+msgid "Set sispmctl on start:"
+msgstr "sispmctl bei Start:"
+
+msgid "Set sispmctl when saver off:"
+msgstr "sispmctl wenn der Bildschirmschoner endet:"
+
+msgid "Set sispmctl when saver on:"
+msgstr "sispmctl wenn der Bildschirmschoner startet:"
+
+msgid "Set this stream for automatically play on plugin-start"
+msgstr "Diesen Stream bei Plugin-Start automatisch abspielen"
+
+msgid "Settings"
+msgstr "Einstellungen"
+
+msgid "Settings-basics"
+msgstr "Grundeinstellungen"
+
+msgid "Show *rec* when record"
+msgstr "Zeige *rec* bei Aufnahme"
+
+msgid "Show Exif-Data"
+msgstr "zeige EXIF-Daten"
+
+msgid "Show Menu"
+msgstr "Menü anzeigen"
+
+msgid "Show Stored Pictures"
+msgstr "Gespeicherte Bilder anzeigen"
+
+msgid "Show Stored Titles List"
+msgstr "Gespeicherte Titel ansehen"
+
+msgid "Show Streamlist of selected genre"
+msgstr "Zeige Streams vom Genre"
+
+msgid "Show all options"
+msgstr "Zeige alle"
+
+msgid "Show database genres list (or use yellow button for more options)"
+msgstr ""
+"Genres-Liste der Datenbank (oder im Hauptscreen gelbe Taste für mehr "
+"Optionen nutzen)"
+
+msgid "Show genres"
+msgstr "Genres anzeigen"
+
+msgid "Show live what you set"
+msgstr "Einstellung gleich sehen"
+
+msgid "Show logos"
+msgstr "Logos anzeigen"
+
+msgid "Show logos/pics"
+msgstr "Zeige Logos/Bilder"
+
+msgid "Show sub-genres of selected"
+msgstr "Zeige Untergruppen vom gewählten Genre"
+
+msgid "Show subdirs:"
+msgstr "Bilder aus Unterverzeichnissen anzeigen"
+
+msgid "Show the cover images stored"
+msgstr "gespeicherte Cover-Bilder ansehen"
+
+msgid "Show the title stored"
+msgstr "gespeicherte Titel ansehen"
+
+msgid "Show webradioFS in extensionsmenu:"
+msgstr "webradioFS im Erweiterungsmenü anzeigen"
+
+msgid "Show webradioFS in mainmenu:"
+msgstr "webradioFS im Hauptmenü anzeigen"
+
+msgid "Show/Hide Text"
+msgstr "Infotext anzeigen/ausblenden"
+
+msgid "Skin and xml file have no effect!"
+msgstr "Skin und XML-Datei ohne Wirkung!"
+
+msgid "Sleeptimer"
+msgstr "Sleeptimer"
+
+msgid "Slide-time faster"
+msgstr "Bildwechsel schneller"
+
+msgid "Slide-time slower"
+msgstr "Bildwechsel langsamer"
+
+msgid "Slideshow Path:"
+msgstr "Diashow-Verzeichnis für Bildschrimschoner:"
+
+msgid ""
+"Sorry your path destination is not writeable.\n"
+"Please choose an other one."
+msgstr ""
+"Sorry, Verzeichnis ist nicht beschreibbar.\n"
+"Bitte ein anders wählen."
+
+msgid "Sorry, Video-Screensaver not possible on this box"
+msgstr "Video-Screensaver ist auf dieser Box leider nicht möglich...."
+
+msgid "Sort streams"
+msgstr "Streams sortieren"
+
+msgid "Sorting Stream List:"
+msgstr "Sortierung Streamliste: "
+
+msgid "Special thanks to:"
+msgstr "Besonderer Dank gilt:"
+
+msgid "Split recording with event"
+msgstr "Aufnahme automatisch teilen bei Event?"
+
+msgid "Split recordings by title"
+msgstr "Aufnahme teilen bei neuem Titel"
+
+msgid "Ssearch Results"
+msgstr "Suchergebnis"
+
+msgid "Standby"
+msgstr "Standby"
+
+msgid "Standby,Deepstandby,Chillmodus,Sleeptimer"
+msgstr "Standby, Ausschalten, Chillmodus, Sleeptimer"
+
+msgid "Start"
+msgstr "Start"
+
+msgid "Start Sleeptimer"
+msgstr "Start Sleeptimer"
+
+msgid "Start the playing stream automatically at startup"
+msgstr "gewählten Stream bei Start automatisch abspielen"
+
+msgid "Start-time:"
+msgstr "Uhrzeit Aufnahme Start"
+
+msgid "Station is not currently accessible"
+msgstr "Sender ist momentan nicht erreichbar"
+
+msgid "Station-Name"
+msgstr "Station-Name"
+
+msgid "Steadiness:"
+msgstr "Zuverlässigkeit:"
+
+msgid "Stop Playing"
+msgstr "Abspielen stoppen"
+
+msgid "Stop Screensaver"
+msgstr "Bildschirmschoner stoppen"
+
+msgid "Stop Sleeptimer"
+msgstr "Stop Sleeptimer"
+
+msgid "Stop Slideshow"
+msgstr "Diashow anhalten"
+
+msgid ""
+"Stop trying to connect?\n"
+"(wait to check update from DB)"
+msgstr ""
+"Verbindunsversuche abbrechen?\n"
+"(bitte warten, um von DB zu aktualisieren)"
+
+msgid "Stopped"
+msgstr "gestoppt"
+
+msgid "Storage path for cover and title:"
+msgstr "Speicherort für Cover / Titel:"
+
+msgid "Stream Actions"
+msgstr "Stream-Tools"
+
+msgid "Stream Edit or Info"
+msgstr "Stream bearbeiten bzw. Info"
+
+msgid "Stream delete?"
+msgstr "Stream wirklich löschen?"
+
+msgid "Stream edit"
+msgstr "Stream bearbeiten "
+
+msgid "Stream failed"
+msgstr "Streamen fehlgeschlagen"
+
+msgid "Stream from this group plays, please stop before the group delete"
+msgstr ""
+"ein Stream aus dieser Gruppe wird abgespielt, bitte erst stoppen vor dem "
+"löschen der Gruppe"
+
+msgid "Stream has a limited number of users\n"
+msgstr "Sender begrenzt die Zahl gleichzeitiger Nutzer\n"
+
+msgid "Stream is difficult to reach\n"
+msgstr "Stream ist schlecht erreichbar\n"
+
+msgid "Stream must play before information can be displayed"
+msgstr "Informationen nur für laufenden Stream"
+
+msgid "Stream often changes address\n"
+msgstr "Stream wechselt oft die URL\n"
+
+msgid "Stream recording is not allowed from radio station"
+msgstr "Sorry, der Sender erlaubt keine Aufzeichnung des Streams..."
+
+msgid "Stream sends only temporary / seasonal\n"
+msgstr "Stream sendet nur zeitweise/saisonal.....\n"
+
+msgid "Stream should play...."
+msgstr "Stream muss spielen..."
+
+msgid "Stream to MusicPlacerDaemon"
+msgstr "gewählten Stream in mpd-Verzeichnis einfügen"
+
+msgid "Stream-Bitrate"
+msgstr "Stream-Bitrate"
+
+msgid "Stream-Name"
+msgstr "Stream-Name"
+
+msgid "Stream-Typ:"
+msgstr "Stream-Typ:"
+
+msgid "Stream-URL"
+msgstr "Stream-URL"
+
+msgid "Stream-description"
+msgstr "Stream-Beschreibung:"
+
+msgid "Stream:"
+msgstr "Stream:"
+
+msgid "Streaming sends only temporarily\n"
+msgstr "Stream sendet nur zeitweise\n"
+
+msgid "Streaming sends stable and reliable\n"
+msgstr "Stream sendet stabil und zuverlässig\n"
+
+msgid "Streamlist"
+msgstr "Streamliste"
+
+msgid "Streamname exist in Fav-File, overwrite?"
+msgstr "Name schon in Favoriten vorhanden, überschreiben?"
+
+msgid "Streamname in this group exist, overwrite?"
+msgstr "Stream-Name in dieser Gruppe vorhanden, überschreiben?"
+
+msgid "Streamname:"
+msgstr "Streamname:"
+
+msgid "Sunday"
+msgstr "Sonntag"
+
+msgid "Switch off images search?"
+msgstr "Bilder-Suche abschalten?"
+
+msgid "TV"
+msgstr "TV"
+
+msgid "TV or Video: next"
+msgstr "TV oder Video->Vor"
+
+msgid "TV or Video: prev"
+msgstr "TV oder Video->Zurück"
+
+msgid "TV-next"
+msgstr "TV - Sender vor"
+
+msgid "TV-prev"
+msgstr "TV - Sender zurück"
+
+msgid "Temporarily no connection to the database is possible"
+msgstr "Verbindung zur Datenbank vorübergehend nicht möglich"
+
+msgid "Text"
+msgstr "Text"
+
+msgid "Text-space:"
+msgstr "Abstand Infotext:"
+
+msgid "The 20 last uploads"
+msgstr "Die neuesten 20 Uploads"
+
+msgid ""
+"The new URL is flagged and will be accepted after positive test - thank you!"
+msgstr ""
+"Die neue URL ist vorgemerkt und wird bei positiver Prüfung übernommen, danke"
+
+msgid "The stream is already stored: "
+msgstr "Der Stream ist bereits gespeichert: "
+
+msgid "These settings are only for this one recording!"
+msgstr "Die Einstellungen gelten nur für diese Aufnahme!"
+
+msgid "This can include plugin version, box type, image type and user ID."
+msgstr "Dies kann Pluginversion, Boxtype, Imagetype und User-ID beinhalten."
+
+msgid "This plugin sends data to www.fs-plugins.de."
+msgstr "Dieses Plugin sendet Daten an www.fs-plugins.de."
+
+msgid "This version "
+msgstr "Diese Version "
+
+msgid "This version is to old or obsolete"
+msgstr "Diese Version ist veraltet oder obsolet"
+
+msgid "Thursday"
+msgstr "Donnerstag"
+
+msgid "Time (sec) to screen saver:"
+msgstr "Zeit bis Bildschirmschoner (Sek):"
+
+msgid "Time for auto-volume steps (0=off):"
+msgstr "Zeit (sek) für Lautstärke-Schritte (0=aus)"
+
+msgid "Time, when to stop recording"
+msgstr "Ende-Zeit der Aufnahme eingeben"
+
+msgid "Timeout for connection attempt:"
+msgstr "Zeit für Verbindungsversuch"
+
+msgid "Timeout for stream termination:"
+msgstr "max Zeit bis Zeitüberschreitung"
+
+msgid "Timer and Record (set preferences)"
+msgstr "Aufnahme /  Timer (Einstellungen festlegen)"
+
+msgid "Title saved in titel_list.txt"
+msgstr "Titel in 'title_list.txt' gespeichert"
+
+msgid "Toggle Picture"
+msgstr "Bild wechseln"
+
+msgid "Toggle list"
+msgstr "Liste wechseln"
+
+msgid "Toggle-Time:"
+msgstr "Bildwechsel-Zeit (sek):"
+
+msgid "Tools and extras"
+msgstr "Tools und Extras"
+
+msgid "Tools for selected Stream"
+msgstr "Tools für ausgewählten Stream: "
+
+msgid "Top 20 last month"
+msgstr "Top 20 (letzter Monat)"
+
+msgid "Top 20 this month"
+msgstr "Top 20 (aktueller Monat)"
+
+msgid "Try to get new URL from the database?"
+msgstr "In der Datenbank neue URL suchen?"
+
+msgid "Tuesday"
+msgstr "Dienstag"
+
+msgid "Type (mp3 or pls):"
+msgstr "Typ (mp3 oder pls):"
+
+msgid "Type of setting:"
+msgstr "Art der Einstellung:"
+
+msgid "URL unreachable"
+msgstr "URL nicht erreichbar"
+
+msgid "URL:"
+msgstr "URL: "
+
+msgid "Up"
+msgstr "Hoch"
+
+msgid "Update"
+msgstr "Aktualisieren"
+
+msgid "Update check and About"
+msgstr "Updateprüfung & Über"
+
+msgid "Update later"
+msgstr "später aktualisieren"
+
+msgid "Update-check can be disabled"
+msgstr "Versionsprüfung kann abgeschaltet werden"
+
+msgid "Uploader:"
+msgstr "hochgeladen von:"
+
+msgid "Versions-check is off:"
+msgstr "Versions-Check ist aus:"
+
+msgid "Video File:"
+msgstr "Video-Datei:"
+
+msgid "Video Path:"
+msgstr "Video-Verzeichnis:"
+
+msgid "Video or live TV are not available on all boxes"
+msgstr "Live-TV oder Video ist nicht auf allen Geräten möglich...."
+
+msgid "View"
+msgstr "Ansicht"
+
+msgid "View a list of genres"
+msgstr "Liste der Genres anzeigen"
+
+msgid "Volume"
+msgstr "Start-Lautstärke:"
+
+msgid "Volume on exit:"
+msgstr "Lautstärke beim Beenden:"
+
+msgid ""
+"Volume on exiting the plugin - with volume control on the TV or amplifier, "
+"please set this to 100 (0=all volume actions off)"
+msgstr ""
+"Lautstärke beim Beenden des Plugin - bei Lautstärkeregelung am TV oder "
+"Verstärker, bitte auf 100 einstellen..."
+
+msgid "Volume on start:"
+msgstr "Start- Lautstärke"
+
+msgid "Volume-options"
+msgstr "Lautstärke"
+
+msgid ""
+"Warning! The recordings are saved to '/tmp' and can overload the memory, it "
+"is better in the settings of a directory to put on hdd or usb stick\n"
+"Save recordings to tmp really?"
+msgstr ""
+"Warnung! Die Aufnahmen werden in das tmp-Verzeichnis gespeichert und können "
+"den Speicher überlasten! Es ist besser, in den Einstellungen hdd oder usb "
+"einzustellen\n"
+"Dennoch aufnehmen?"
+
+msgid "Warning: This function can changes the volume"
+msgstr "Warnung! Diese Funktion kann die Lautstärke der Box ändern"
+
+msgid ""
+"Warning: This function can changes the volume\n"
+"(the volume should be low later, please start webradioFS again, increase the "
+"volume\n"
+"and the setting 'volume on exit' correct!)"
+msgstr ""
+"Warnung: Diese Funktion kann die Lautstärke ändern!\n"
+"(wenn später die Lautstärke zu gering ist, bitte Plugin erneut starten, "
+"Lautstärke ändern\n"
+" und Einstellung 'Lautstärke bei Beenden' anpassen!)"
+
+msgid "Wednesday"
+msgstr "Mittwoch"
+
+msgid "What show"
+msgstr "Was anzeigen"
+
+msgid "When activated: block automatic shutdown from system when inactive"
+msgstr "Wenn aktiviert: automatisches Abschalten der Box wird blockiert"
+
+msgid ""
+"When activated: set the options for this in the settings!\n"
+"When deactivated: the settings remain active!"
+msgstr ""
+"Wenn aktiviert: Einstellungen im jeweiligen Bereich vornehmen, bei "
+"deaktiviert bleiben die dort gesetzten Einstellungen aktiv"
+
+msgid "With the stream there is always connection issues\n"
+msgstr "Immer wieder Verbindungsprobleme\n"
+
+msgid "Write debug:"
+msgstr "Debug schreiben:"
+
+msgid "Yellow for new group"
+msgstr "Gelb für neue Gruppe"
+
+msgid "Yes"
+msgstr "Ja"
+
+msgid "Your have"
+msgstr "Es sind"
+
+msgid "Zap down"
+msgstr "Zap runter"
+
+msgid "Zap up"
+msgstr "Zap hoch"
+
+msgid "add more text"
+msgstr "weiteren Text hinzufügen"
+
+msgid "add, delete groups"
+msgstr "Gruppe(n) hinzufügen oder löschen"
+
+msgid "alert time"
+msgstr "Weckzeit"
+
+msgid "all"
+msgstr "Alle Größen"
+
+msgid "alphabetically"
+msgstr "alphabetisch"
+
+msgid "always ask"
+msgstr "Immer fragen"
+
+msgid "always store"
+msgstr "Immer speichern"
+
+msgid "and"
+msgstr "und"
+
+msgid "and not have access to the database!"
+msgstr "kein Datenbankzugriff und kein Support!"
+
+msgid "and subfolders"
+msgstr "und Unterordner"
+
+msgid "at least one group must be present!"
+msgstr "mindestens eine Gruppe muss vorhanden sein!"
+
+msgid "at least one row must contain text"
+msgstr "mindestens eine Zeile muss Text enthalten"
+
+msgid "back"
+msgstr "Zurück"
+
+msgid "backround color:"
+msgstr "Hintergrund-Farbe:"
+
+msgid "big"
+msgstr "mind 800x800"
+
+msgid "by Folder"
+msgstr "je Ordner"
+
+msgid "by settings"
+msgstr "hier einstellen"
+
+msgid "by user"
+msgstr "Benutzerdefiniert"
+
+msgid "by xml-file"
+msgstr "verwende wbrFS_display.xml"
+
+msgid "can not copy Fav-File on new path"
+msgstr "Kopieren in den gewählten Pfad nicht möglich"
+
+msgid "change keyword for Picture"
+msgstr "Stichwort für Bilder ändern"
+
+msgid "checked: "
+msgstr "geprüft: "
+
+msgid "chill volume"
+msgstr "Lautstärke für Chillen"
+
+msgid "chill-timer"
+msgstr "Chill-Timer"
+
+msgid "connection Error"
+msgstr "Verbindungsfehler"
+
+msgid "connection Errors"
+msgstr "Verbindungsfehler"
+
+msgid "convert Favorites file, please wait:"
+msgstr "Favoriten-Datei wird konvertiert, bitte warten:"
+
+msgid "current Info:"
+msgstr "Aktuelle Info: "
+
+msgid "current data stored in the database successfully - thank you!"
+msgstr "Daten erfolgreich in der Datenbank gespeichert, Danke!"
+
+msgid "default"
+msgstr "Standard"
+
+msgid "default directory"
+msgstr "Startverzeichnis"
+
+msgid "delete Group"
+msgstr "Gruppe löschen"
+
+msgid "down or left for lower"
+msgstr "runter oder links: leiser"
+
+msgid "edit settings, backup, restore,groups"
+msgstr "Einstellungen, Sichern, Wiederherstellen, Gruppen löschen"
+
+msgid "edit settings, backup, restore,groups,import"
+msgstr "Einstellungen, Sichern, Wiederherstellen, Gruppen löschen, Import"
+
+msgid "edit the recording directory"
+msgstr "Aufnahmeverzeichnis ändern"
+
+msgid "erroneous entry in Fav-File"
+msgstr "Stream ist fehlerhaft in Favoriten-Datei eingetragen"
+
+msgid "file incorrect"
+msgstr "Datei nicht korrekt übertragen"
+
+msgid "for many work invested in the database"
+msgstr "für die investierte Freizeit zur Pflege der Stream-Datenbank"
+
+msgid "green for update, red for exit"
+msgstr "Grün für Update, Rot für Abbrechen"
+
+msgid "groups"
+msgstr "Gruppe(n)"
+
+msgid "height"
+msgstr "Höhe"
+
+msgid "if you upload streams, is your user name listed"
+msgstr "von dir hochgeladene Streams werden mit deinem Usernamen gelistet"
+
+msgid "in the settings"
+msgstr "in den Einstellungen"
+
+msgid "information transmitted"
+msgstr "übertragene Informationen"
+
+msgid "installed"
+msgstr "installiert: "
+
+msgid "is not available in the database or blocked\n"
+msgstr "ist leider nicht in der Datenbank vorhanden oder gesperrt\n"
+
+msgid "line breaks"
+msgstr "Zeilenumbruch"
+
+msgid "list all Streams"
+msgstr "Alle Streams"
+
+msgid "mainmenu"
+msgstr "Hauptmenü"
+
+msgid "make all other settings in the xml-file!"
+msgstr "Alle Einstellungen in der XML_Datei vornehmen!"
+
+msgid "make m3u in mpd-Path"
+msgstr "von gewähltem Stream m3u anlegen für MusicPlayerDaemon"
+
+msgid "manual Update"
+msgstr "manuelles Update"
+
+msgid "max Volume on chill-end:"
+msgstr "Maximale Lautstärke bei Chillen beenden"
+
+msgid "max volume"
+msgstr "max Lautstärke beim Wecken"
+
+msgid "middle"
+msgstr "mind. 300x300"
+
+msgid "minimum bitrate in all streams list"
+msgstr "Bitrate in \"Alle Streams aus Datenbank\" mind.:"
+
+msgid "mp3-Streams from Web"
+msgstr "MP3/PLS- Streams aus dem Internet"
+
+msgid "must be at least"
+msgstr "Version zu alt, mind. "
+
+msgid "never store"
+msgstr "nie speichern"
+
+msgid "new Version: "
+msgstr "Neue Version: "
+
+msgid "new and unchecked"
+msgstr "neu und ungeprüft"
+
+msgid "next back color"
+msgstr "nächste Hintergrundfarbe:"
+
+msgid "next text color"
+msgstr "nächste Textfarbe"
+
+msgid "no picture in path for slideshow"
+msgstr "Keine Bilder im Verzeichnis gefunden"
+
+msgid "no playable files found in folder"
+msgstr "keine abspielbaren Dateien im Ordner"
+
+msgid "no proper Internet URL!"
+msgstr "keine korrekte Internet-URL!"
+
+msgid "no recording is in progress or timer planned"
+msgstr "Keine laufende  Aufnahme oder geplante Timer"
+
+msgid "no stream at this address"
+msgstr "kein Stream unter dieser URL gefunden"
+
+msgid "no stream exist, read from database (yellow)"
+msgstr "kein Streameintrag vorhanden, lese von Datenbank (gelb)"
+
+msgid "no streams in this group"
+msgstr "kein Stream in dieser Gruppe"
+
+msgid "no support and no database access for outdated version!"
+msgstr "Kein Support und kein Datenbankzugriff für veraltete Versionen!"
+
+msgid "no video-files found (the setting is changed then please re-start)"
+msgstr "keine Video-Datei gefunden (bei neuer Einstellung bitte neu starten)"
+
+msgid "not a new URL in the database, Replacement in progress\n"
+msgstr "keine neue URL in der Datenbank, Ersatz in Bearbeitung\n"
+
+msgid "not assigned"
+msgstr "nicht zugeordnet"
+
+msgid "not exist"
+msgstr "existiert nicht"
+
+msgid "not random color"
+msgstr "keine zufälliige Farbe"
+
+msgid "not writable!"
+msgstr "nicht beschreibbar (Schreibschutz?)"
+
+msgid "now edit?"
+msgstr "Jetzt editieren?"
+
+msgid "one line must show information transmitted"
+msgstr "eine Zeile muss die übertragenen Informationen anzeigen"
+
+msgid "only show big pictures"
+msgstr "nur große Bilder anzeigen"
+
+msgid "only switch"
+msgstr "nur umschalten"
+
+msgid "other"
+msgstr "sonstige Einstellungen"
+
+msgid "please restart webradioFS"
+msgstr "Bitte webradioFS beenden und neu starten"
+
+msgid "press Channel/Bouquet for open/close all sub-genres"
+msgstr "mit ChannelBouquet alle Untergenres schliessen"
+
+msgid "preview back color"
+msgstr "vorherige Hintergrundfarbe"
+
+msgid "preview text color"
+msgstr "vorherige Textfarbe"
+
+msgid "pure black"
+msgstr "schwarzer Bildschirm"
+
+msgid "query"
+msgstr "Frage"
+
+msgid "random color for background"
+msgstr "zufällige Farbe für Hintergrund"
+
+msgid "random color for labels"
+msgstr "zufällige Farbe für Text"
+
+msgid "random color for labels and background"
+msgstr "zufällige Farbe für Text und Hintergrund"
+
+msgid "record by minutes"
+msgstr "Länge in Minuten"
+
+msgid "record by time"
+msgstr "Uhrzeit planen"
+
+msgid "record endless"
+msgstr "Sofortaufnahme, endlos"
+
+msgid "record, len: "
+msgstr "Endlos-Aufnahme, Länge: "
+
+msgid "record, length: "
+msgstr "Endlos-Aufnahme, Länge: "
+
+msgid "recording has finished"
+msgstr "Aufnahme erfolgreich beendet"
+
+msgid "recording in progress"
+msgstr "Aufnahme läuft"
+
+msgid ""
+"red = save picture\n"
+"yellow = save title\n"
+"blue = if cover: set saver-art\n"
+"left & right = toggle picture"
+msgstr ""
+"rot = Bild speichern\n"
+"gelb = Titel speichern\n"
+"links & rechts = Bild wechseln\n"
+"blau = Screensaver-Art wechseln"
+
+msgid "required modules for records"
+msgstr "benötigte Module für Aufnahmen:"
+
+msgid "restore failed"
+msgstr "Wiederherstellung fehlgeschlagen"
+
+msgid "rotation"
+msgstr "Anzeige wechseln"
+
+msgid "save in favorites for all functions"
+msgstr "in Favoriten speichern um alle Funktionen zu nutzen"
+
+msgid "send"
+msgstr "Hochladen"
+
+msgid "show all options"
+msgstr "alle Einstellungen und Optionen anzeigen"
+
+msgid "show no big pictures"
+msgstr "keine großen Bilder anzeigen"
+
+msgid "show no pictures"
+msgstr "keine Bilder anzeigen"
+
+msgid "show saved titles and pictures"
+msgstr "Gespeicherte Titel und Bilder ansehen"
+
+msgid ""
+"show saved titles and pictures, Backup, restore, reset picons, show new "
+"streams"
+msgstr ""
+"gespeicherte Titel und Bilder ansehen, Einstellungen sichern und "
+"wiederherstellen, Senderlogos zurücksetzen, neu hochgeladene Streams anzeigen"
+
+msgid "single-line"
+msgstr "einzeilig"
+
+msgid "sispmctl Menu Name 1:"
+msgstr "sispmctl Bezeichnung 1. Menüeintrag:"
+
+msgid "sispmctl Menu Name 2:"
+msgstr "sispmctl Bezeichnung 2. Menüeintrag:"
+
+msgid "sispmctl Switching Menu 1:"
+msgstr "sispmctl Schaltung 1. Menüeintrag:"
+
+msgid "sispmctl Switching Menu 2:"
+msgstr "sispmctl Schaltung 2. Menüeintrag:"
+
+msgid "start stream automatically:"
+msgstr "Stream automatisch starten:"
+
+msgid "starting the update"
+msgstr "Update ausführen"
+
+msgid "store recordings of incompleteness"
+msgstr "abgebrochene Aufnahmen speichern"
+
+msgid "stream stopped"
+msgstr "Stream gestoppt "
+
+msgid "stream switching is scheduled in"
+msgstr "Sender umschalten in"
+
+msgid "streams in"
+msgstr "Streams in"
+
+msgid "streams successfully imported"
+msgstr "Streams erfolgreich importiert"
+
+msgid "successfully converted"
+msgstr "Erfolgreich konvertiert"
+
+msgid "temporary Record-Settings"
+msgstr "temporäre Aufnahme-Einstellungen"
+
+msgid "the sender does not allow recording"
+msgstr "Der Sender erlaubt das Aufzeichnen nicht"
+
+msgid "theme images"
+msgstr "Bilder nach Stichwort"
+
+msgid "time"
+msgstr "Uhrzeit"
+
+msgid "timing art"
+msgstr "Aufnahme-Art"
+
+msgid "to change it, please change over:"
+msgstr "zum Ändern bitte umstellen:"
+
+msgid "toggle Slideshow random/sorted"
+msgstr "Diashow zufällig/sortiert umschalten"
+
+msgid "trying to establish connection"
+msgstr "Versuche, Verbindung herzustellen"
+
+msgid "unknown\n"
+msgstr "unbekannt\n"
+
+msgid "up or right for higher"
+msgstr "hoch oder rechts: lauter"
+
+msgid "update"
+msgstr "Aktualisieren"
+
+msgid "url not readable"
+msgstr "URL existiert scheinbar nicht"
+
+msgid "url timeout"
+msgstr "Zeitüberschreitung"
+
+msgid "webradioFS - Settings"
+msgstr " webradioFS - Einstellungen"
+
+msgid "webradioFS Record-Menu"
+msgstr "webradioFS Aufnahme-Menü"

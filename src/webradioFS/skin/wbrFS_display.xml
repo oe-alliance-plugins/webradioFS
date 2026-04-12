@@ -1,0 +1,9 @@
+<!-- 
+Set the desired info per line in the plugin / gewuenschte Info je Zeile im Plugin einstellen
+-->
+<screen name="webradioFSdisplay13" position="0,0" size="302,264" >
+                        <widget source="Zeile1" render="Label" position="4,0" size="302,30" font="Regular;30" noWrap="1"/>
+                        <widget source="Zeile2" render="Label" position="4,38" size="302,40" font="Regular;40" noWrap="1"/>
+                        <widget source="Zeile3" render="Label" position="4,85" size="302,30" font="Regular;30" noWrap="1"/>
+                        <widget name="picon" position="center,130" size="100,100" alphatest="blend"/>
+</screen>

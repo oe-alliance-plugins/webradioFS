@@ -1,0 +1,21 @@
+<screen name="WebradioFS_FB_Setup_12" zPosition="2" position="43,71" backgroundColor="#000000" size="640,460" title="webradioFS">
+  <!--top on left site in stream-list-Screen-->
+  <widget name="rec_txt" position="0,5" size="640,20" font="Regular;16" halign="center" valign="center" foregroundColor="#00f47d19" zPosition="2" backgroundColor="#20343c4f" transparent="1" />
+  <!--left site in Screen for Streams, Genres...-->
+  <widget name="config" position="0,35" zPosition="4" size="640,325" foregroundColor="#FFFFFF" backgroundColor="#000000" scrollbarMode="showOnDemand" />
+  <!--bottom left-->
+  <widget  source="playtext" render="Label"  position="5,370" zPosition="2" size="632,64" font="Regular;18" valign="center" halign="center" foregroundColor="#FFD700" backgroundColor="#000000" transparent="0" />
+  <!--bottom in Screen for streams and genres, ... (button-line)-->
+  <ePixmap pixmap="skin_default/buttons/button_red.png" position="5,444" size="15,16" backgroundColor="#000000" alphatest="blend" />
+  <widget name="green_pic" pixmap="skin_default/buttons/button_green.png" position="140,444" size="15,16" backgroundColor="#000000" alphatest="blend" />
+  <ePixmap pixmap="skin_default/buttons/button_yellow.png" position="275,444" size="15,16" backgroundColor="#000000" alphatest="blend" />
+  <ePixmap pixmap="skin_default/buttons/button_blue.png" position="410,444" size="15,16" backgroundColor="#000000" alphatest="blend" />
+  <ePixmap pixmap="/usr/lib/enigma2/python/Plugins/Extensions/webradioFS/skin/images/wbrl_sd.png" position="530,445" size="100,18" alphatest="blend" zPosition="5" transparent="1" />
+  <widget name="key_red" position="25,445" zPosition="1" size="115,30" font="Regular;16" foregroundColor="#FFFFFF" backgroundColor="#000000" noWrap="1" transparent="1" />
+  <widget name="key_green" position="160,445" zPosition="1" size="118,30" font="Regular;16" foregroundColor="#FFFFFF" backgroundColor="#000000" noWrap="1" transparent="1" />
+  <widget name="key_yellow" position="295,445" zPosition="1" size="115,30" font="Regular;16" foregroundColor="#FFFFFF" backgroundColor="#000000" noWrap="1" transparent="1" />
+  <widget name="key_blue" position="430,445" zPosition="1" size="85,30" font="Regular;16" foregroundColor="#FFFFFF" backgroundColor="#000000" noWrap="1" transparent="1" />
+  <eLabel position="0,367" size="640,2" backgroundColor="#D3D3D3" />
+  <eLabel position="0,1" size="0,0" backgroundColor="#D3D3D3" />
+  <eLabel position="0,438" size="640,2" backgroundColor="#D3D3D3" />
+</screen>
