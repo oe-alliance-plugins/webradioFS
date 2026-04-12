@@ -390,7 +390,7 @@ def autostart(reason, **kwargs):
             from .webradioFSSite import webradioFSweb
             from twisted.web import static
             root = static.File("/usr/lib/enigma2/python/Plugins/Extensions/webradioFS")
-            root.putChild("", webradioFSweb())
+            root.putChild(b"", webradioFSweb())
             if os.path.exists("/usr/lib/enigma2/python/Plugins/Extensions/WebInterface/web/external.xml"):
                 try:
                     addExternalChild(("webradiofs", root, "webradiofs", myversion, True))
