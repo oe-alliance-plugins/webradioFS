@@ -2,7 +2,7 @@
 
 # <p align="center">webradioFS Plugin for Enigma2 (E²) ![GitHub repo size](https://img.shields.io/github/repo-size/oe-alliance-plugins/webradioFS.svg)</p>
 
-**Perform the cuts specified with the Cutlist editor**
+**ip-Radio and Audio for enigma2**
 
 
 ## Github status
@@ -30,6 +30,19 @@
 [![Maintainability Rating](https://sonarcloud.io/api/project_badges/measure?project=oe-alliance-plugins_webradioFS&metric=sqale_rating)](https://sonarcloud.io/summary/new_code?id=oe-alliance-plugins_webradioFS)
 
 [![SonarQube Cloud](https://sonarcloud.io/images/project_badges/sonarcloud-light.svg)](https://sonarcloud.io/summary/new_code?id=oe-alliance-plugins_webradioFS)
+
+---
+
+### 🙏 Credits
+
+**👨‍💻 Author:**
+
+- original Idea and Created by <a href="https://github.com/fs-plugins">**shadowrider**</a>
+
+**Special Thanks**
+- All contributors and testers
+- Open source community
+- Enigma2 developers
 
 ---
 
