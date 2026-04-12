@@ -5,18 +5,11 @@ from Screens.MessageBox import MessageBox
 from Screens.HelpMenu import HelpableScreen
 from skin import parseColor
 from Components.Label import Label
-from Components.Sources.StaticText import StaticText
-from Components.ActionMap import HelpableActionMap, ActionMap
+from Components.ActionMap import HelpableActionMap
 from Components.Pixmap import Pixmap
-from Components.ConfigList import ConfigListScreen, ConfigList
-from Components.config import getConfigListEntry, ConfigText, NoSave
-from GlobalActions import globalActionMap
 from Tools.LoadPixmap import LoadPixmap
-from enigma import getDesktop
-from time import *
+from time import localtime, strftime
 import time
-import datetime
-import os
 
 plugin_path = "/usr/lib/enigma2/python/Plugins/Extensions/webradioFS"
 
@@ -162,7 +155,7 @@ class wbrfs_col_13(Screen, HelpableScreen):
                 self["display_station"].instance.setForegroundColor(parseColor(tx_farbe))
                 self["display_time"].instance.setForegroundColor(parseColor(tx_farbe))
                 self.setTime()
-            except:
+            except Exception:
                 self.session.open(MessageBox, _("failed, not a regular color-string"), type=MessageBox.TYPE_INFO)
 
     def setTime(self):

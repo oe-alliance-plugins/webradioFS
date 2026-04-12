@@ -8,9 +8,6 @@ from Components.Pixmap import Pixmap
 from Components.ServicePosition import ServicePositionGauge
 from Components.Sources.List import List
 
-from enigma import getDesktop
-from enigma import ePicLoad
-
 from Tools.LoadPixmap import LoadPixmap
 from sqlite3 import dbapi2 as sqlite
 
@@ -20,14 +17,13 @@ from Screens.VirtualKeyBoard import VirtualKeyBoard
 
 #from skin import parseColor
 
-from .wbrfs_funct import webradioFSdisplay13, read_einzeln
+from .wbrfs_funct import webradioFSdisplay13
 #skin_ignore=read_einzeln().reading((("grund","skin_ignore"),))[0]
 
 try:
     from Plugins.Extensions.LCD4linux.module import L4Lelement
     MyElements = L4Lelement()
-
-except:
+except Exception:
     l4l = None
 
 plugin_path = "/usr/lib/enigma2/python/Plugins/Extensions/webradioFS"
@@ -55,7 +51,7 @@ class menu_13(Screen):
         try:
                    if l4ls[0] == "True":
                       self.l4ls = l4ls
-        except:
+        except Exception:
                     pass
 
         self["streamlist"] = List([])
@@ -122,7 +118,7 @@ class menu_13(Screen):
 
     def run(self):
           auswahl = self["streamlist"].getCurrent()[0]
-          if len(auswahl) > 4 and auswahl[4] != None and auswahl[1] == None:
+          if len(auswahl) > 4 and auswahl[4] is not None and auswahl[1] is None:
              from .wbrfs_funct import filemenu
              filemenu(self.session).start(auswahl[4])
           else:
@@ -162,7 +158,7 @@ class menu_13(Screen):
             if self.display:
                 for cb in self.onChangedEntry:
                     cb(text1, text2)
-        except:
+        except Exception:
                  pass
 
 
@@ -222,9 +218,9 @@ class groups_13(Screen):
                 #self.g_list2=[]
                 self.cursor.execute("select * from groups;")
                 for row in self.cursor:
-                    l = (row[0], row[1])
-                    if l not in self.g_list:
-                            self.g_list.append((row[0], row[1]))
+                    item = (row[0], row[1])
+                    if item not in self.g_list:
+                            self.g_list.append(item)
                             #self.g_list2.append(row[0])
                 #self.group_len=len(self.g_list2)
                 self.cursor.execute("SELECT COUNT (*) from streams where group1 NOT IN ( select group_id from groups );")
@@ -251,9 +247,9 @@ class groups_13(Screen):
           auswahl = self["streamlist"].getCurrent()[1]  # [0]
           groups = []
           for row in self.g_list:
-               l = (row[0], row[1])
-               if l not in groups:
-                   groups.append(l)
+               item = (row[0], row[1])
+               if item not in groups:
+                   groups.append(item)
           self.cursor.close()
           self.connection.close()
 
@@ -262,9 +258,9 @@ class groups_13(Screen):
     def exit(self):
           groups = []
           for row in self.g_list:
-               l = (row[0], row[1])
-               if l not in groups:
-                   groups.append(l)
+               item = (row[0], row[1])
+               if item not in groups:
+                   groups.append(item)
                #groups.append((row[0],row[1]))
           self.cursor.close()
           self.connection.close()
@@ -288,7 +284,7 @@ class groups_13(Screen):
             self.session.open(MessageBox, _("at least one group must be present!"), type=MessageBox.TYPE_ERROR)
 
     def del_2(self, answer):
-         if answer == True and self.group:
+         if answer is True and self.group:
             if self.group_len > 1 or self["streamlist"].getCurrent()[1] == _("not assigned"):
                #if self.group[1] != "5000" and self.group[1] != "6000":
                #self.cursor.execute("delete from groups where group_id = %d" % (self.group[1]))
@@ -303,6 +299,6 @@ class groups_13(Screen):
                       self.cursor.execute("delete from streams where group1 = %d" % (grp_num))
                       self.cursor.execute("delete from groups where group_id = %d" % (grp_num))
                       self.connection.commit()
-                   except:
+                   except Exception:
                       self.session.open(MessageBox, _("Group can not be deleted"), type=MessageBox.TYPE_ERROR)
                self.updateList()

@@ -1,12 +1,12 @@
 from . import _
 from Screens.Screen import Screen
 from Screens.MessageBox import MessageBox
-from enigma import eWindowStyleManager, eDVBVolumecontrol
+from enigma import eWindowStyleManager, eDVBVolumecontrol, eListboxPythonConfigContent, eWindowStyleSkinned
 from Components.ConfigList import ConfigListScreen
 
 from Components.ActionMap import ActionMap
 from Components.Label import Label
-from Components.config import getConfigListEntry, ConfigInteger, ConfigClock, ConfigNumber, ConfigSequence, config, NoSave
+from Components.config import getConfigListEntry, ConfigInteger, ConfigClock, NoSave
 
 from time import localtime, mktime
 from datetime import datetime, timedelta
@@ -69,15 +69,15 @@ class wbrfs_set_we(ConfigListScreen, Screen):
                 self['config'].instance.setFont(fontlist[3])
                 self['config'].instance.setItemHeight(fontlist[2])  # (int((font+10)*font_scale))
             else:
-                    from skin import parseFont
-                    stylemgr = eWindowStyleManager.getInstance()
-                    skinned = eWindowStyleSkinned()
-                    eListboxPythonConfigContent.setDescriptionFont(parseFont(self.fontlist[3], ((1, 1), (1, 1))))
-                    eListboxPythonConfigContent.setValueFont(parseFont(self.fontlist[3], ((1, 1), (1, 1))))
-                    eListboxPythonConfigContent.setItemHeight(self.fontlist[2])
-                    stylemgr.setStyle(0, styleskinned)
-          except:
-             pass
+                from skin import parseFont
+                stylemgr = eWindowStyleManager.getInstance()
+                skinned = eWindowStyleSkinned()
+                eListboxPythonConfigContent.setDescriptionFont(parseFont(self.fontlist[3], ((1, 1), (1, 1))))
+                eListboxPythonConfigContent.setValueFont(parseFont(self.fontlist[3], ((1, 1), (1, 1))))
+                eListboxPythonConfigContent.setItemHeight(self.fontlist[2])
+                stylemgr.setStyle(0, skinned)
+          except Exception:
+                pass
 
     def ok(self):
         lt = localtime()

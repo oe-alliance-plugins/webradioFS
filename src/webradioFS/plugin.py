@@ -199,7 +199,7 @@ def f_start(session):
 
 def autostarter():
          if session and not running:
-            run = 1
+            run = 1  # noqa F841
             if Standby.inStandby:
                  if autoTimes[0][1] == "on_from_standby":
                     Standby.inStandby.Power()
@@ -232,7 +232,7 @@ def make_autoT():
                     args = x[3]
                     active = True
                     if not args['active']:
-                        activ = False
+                        activ = False  # noqa F841
                     if active and args['datum']:
                        if datetime.date.today() != datetime.date.fromtimestamp(args['datum']):
                             active = False

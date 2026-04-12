@@ -4,10 +4,10 @@
 ###############################################################################
 
 from . import _, __version__
-import codecs
+import requests
 import Screens.Standby
 from Screens.Screen import Screen
-from Screens.Standby import Standby, TryQuitMainloop
+from Screens.Standby import TryQuitMainloop
 from Screens.ChoiceBox import ChoiceBox
 from Screens.InputBox import InputBox
 from Screens.VirtualKeyBoard import VirtualKeyBoard
@@ -16,16 +16,15 @@ from Screens.LocationBox import LocationBox
 try:
     from Screens.HelpMenu import HelpableScreen, HelpMenu
     menu_ok = True
-except:
+except ImportError:
     menu_ok = None
 try:
     from Screens.VolumeControl import Volume
-except:
-    from Screens.Volume import Volume
-from Screens.InfoBarGenerics import InfoBarSeek, NumberZap
+except ImportError:
+    from Screens.Volume import Volume  # noqa F401
+from Screens.InfoBarGenerics import InfoBarSeek
 from Screens.InfoBarGenerics import InfoBarChannelSelection, InfoBarNotifications
 from Screens.ChannelSelection import service_types_radio
-from Screens import Standby
 
 from ServiceReference import ServiceReference
 
@@ -36,49 +35,37 @@ from Components.ActionMap import ActionMap
 from Components.ScrollLabel import ScrollLabel
 from Components.Label import Label
 from Components.Sources.List import List
-from Components.MenuList import MenuList
 from Components.Sources.StaticText import StaticText
 from Components.Pixmap import Pixmap
-from Components.config import *
 from Components.Input import Input
-from Components.ConfigList import ConfigListScreen, ConfigList
-from Components.config import getConfigListEntry, ConfigInteger, ConfigYesNo, ConfigText, ConfigSelection, ConfigNumber, ConfigSubList, config, NoSave, configfile, ConfigSequence, ConfigSubsection, ConfigNothing, ConfigOnOff
+from Components.ConfigList import ConfigListScreen
+from Components.config import getConfigListEntry, ConfigInteger, ConfigYesNo, ConfigText, ConfigSelection, config, NoSave, configfile, ConfigSequence, ConfigSubsection, ConfigNothing, ConfigDateTime, ConfigClock, ConfigLocations, ConfigDirectory, ConfigSet
 from Components.ServiceEventTracker import ServiceEventTracker
 from Components.ServicePosition import ServicePositionGauge
 from Components.SystemInfo import SystemInfo
-from Components.Sources.ServiceList import ServiceList
 from Components.Slider import Slider
 from Components.VolumeControl import VolumeControl
 #+++++++++++++++++++++++++++#
 
-from enigma import eSlider, ePoint, eSize, eListbox, eTimer, ePicLoad
-from enigma import getDesktop, quitMainloop, eActionMap
-from enigma import eDVBVolumecontrol
-from enigma import iPlayableService, iServiceInformation, eServiceReference, eServiceCenter, getBestPlayableServiceReference, iRdsDecoder
-from enigma import eConsoleAppContainer
-from enigma import eEPGCache, gFont, RT_HALIGN_LEFT, RT_HALIGN_CENTER, RT_VALIGN_CENTER, RT_WRAP
-from enigma import eServiceCenter, iRdsDecoder, gRGB
+from enigma import ePoint, eSize, eTimer, ePicLoad, getDesktop, quitMainloop, eActionMap, eDVBVolumecontrol
+from enigma import iPlayableService, iServiceInformation, eServiceReference, eServiceCenter, iRdsDecoder
+from enigma import eConsoleAppContainer, gRGB, gFont, RT_HALIGN_LEFT, RT_HALIGN_CENTER, RT_VALIGN_CENTER, RT_WRAP
 try:
-    from enigma import eWindowStyleManager
-except:
+    from enigma import eWindowStyleManager, eWindowStyleSkinned, eListboxPythonConfigContent
+except Exception:
     pass
 from GlobalActions import globalActionMap
-from Plugins.Plugin import PluginDescriptor
 
 from Tools.LoadPixmap import LoadPixmap
 from Tools.BoundFunction import boundFunction
 from Tools import Notifications
-from Tools.Directories import copyfile, resolveFilename, SCOPE_PLUGINS, fileExists, SCOPE_CURRENT_SKIN, SCOPE_SKIN_IMAGE, pathExists
-import threading
-import uuid
-import fnmatch
+from Tools.Directories import copyfile, resolveFilename, fileExists, SCOPE_CURRENT_SKIN, pathExists
 from sqlite3 import dbapi2 as sqlite
 
 from twisted.internet.reactor import callInThread
-from requests import exceptions, get
+from requests import get
 from configparser import ConfigParser
-from urllib.parse import quote, quote_plus, unquote, urlparse
-from urllib import error as u_err
+from urllib.parse import quote, quote_plus, unquote
 from skin import parseColor
 import os
 import re
@@ -89,9 +76,7 @@ import random
 import time
 import datetime
 import base64
-import codecs
 import xml.etree.cElementTree
-from xml.etree.cElementTree import fromstring, ElementTree
 
 import socket
 
@@ -100,6 +85,7 @@ from .ext import ext_l4l
 l4l_set = ext_l4l()
 
 myname = "webradioFS"
+myversion = "22.06"
 wbrfs_saver = None
 versiondat = (2026, 21, 1)
 
@@ -142,7 +128,7 @@ rs.close()
 extplayer = False
 try:
     extplayer = config.plugins.serviceapp.servicemp3.replace.value
-except:
+except Exception:
    pass
 ###########################################
 pcfs = False
@@ -164,16 +150,14 @@ try:
     saver_list.append(("pcfs_slideshow", _("Start Plugin PictureCenterFS")))
     pcfs = True
     pcfs2 = (23, _("Open PictureCenterFS"))
-except:
-      saver_list.append(("not2", "PictureCenterFS" + _(" (not installed)")))
-      pcfs2 = (23, _("None"))
+except ImportError:
+    saver_list.append(("not2", "PictureCenterFS" + _(" (not installed)")))
+    pcfs2 = (23, _("None"))
 
 if os.path.exists("/usr/lib/enigma2/python/Plugins/Extensions/sispmctl"):
-        sispmctl = True
+    sispmctl = True
 
 DPKG = False
-
-import requests
 
 
 def threadGetPage(url, success, fail, art):
@@ -182,7 +166,7 @@ def threadGetPage(url, success, fail, art):
         response.raise_for_status()
     except Exception as error:  # exceptions.RequestException as error:
         if write_debug > 1:
-               d = debug("pic failed:" + error)
+               d = debug("pic failed:" + error)  # noqa F841
         fail(error)
     else:
         if art == 2:
@@ -201,11 +185,12 @@ def set_l4l():
     from Plugins.Extensions.LCD4linux.module import L4Lelement
     L4LwbrFS = L4Lelement()
     l4l = True
-  except:
+  except ImportError:
     l4l = None
     L4LwbrFS = None
     l4ls = None
     l4lR = None
+
   if L4LwbrFS:
             l4lsa = ("True", "1", "True", "3", "True", "0", "30", "20", "1", "True", "0", "0", "20", "1", "True", "0", "60", "20", "1", "True", "2", "0", "200", "True", "0", "100", "200", "40", "22", "white")
             l4ls = sets_view["l4l"].split(",")
@@ -215,7 +200,7 @@ def set_l4l():
                 while i < 30:
                    try:
                        set.append(l4ls[i])
-                   except:
+                   except Exception:
                        set.append(l4lsa[i])
                    i += 1
                 l4ls = set
@@ -338,13 +323,13 @@ class stylemanager():
                 conf_font2 = gFont(self.c2_font[0], int(self.c2_font[1]))
             if self.c3:
                 conf_item = int(self.c3)
-        fontlist = [font, font_scale, conf_item, conf_font1, DPKG, skin_ext, DWide, DHoehe, wbrfs_no_scinned]
+        fontlist = [font, font_scale, conf_item, conf_font1, DPKG, skin_ext, DWide, DHoehe, wbrfs_no_scinned]  # noqa F841
 
     def check_skinned(self, skin_path):
             conf = None
             try:
                 conf = xml.etree.cElementTree.parse(skin_path)
-            except Exception as e:
+            except Exception:
                     pass
             sk1 = True
             if conf:
@@ -353,7 +338,7 @@ class stylemanager():
                     if x.tag == "screen" and x.get("name") in ("wbrfs_cs", "WebradioFSSetup_13", "wbrfs_set_we", "wbrfs_message"):
                         sk1 = None
                         break
-                except:
+                except Exception:
                     pass
             return sk1
 
@@ -364,7 +349,7 @@ class stylemanager():
                   conf = None
                   try:
                       conf = xml.etree.cElementTree.parse(skin_path)
-                  except Exception as e:
+                  except Exception:
                       pass
                   dict_col = {}
                   bcr_farb = None
@@ -383,7 +368,7 @@ class stylemanager():
                                         if x.tag == "font" and x.get("name") == "Regular":
                                             self.scale = int(x.get("scale"))
                         elif x.tag == "windowstyle" and x.get("id") == "0":
-                                offset = eSize(20, 5)
+                                offset = eSize(20, 5)  # noqa F841
                                 windowstyle = x
                                 for x in windowstyle:
                                         if self.font is None and x.tag == "title":
@@ -419,7 +404,7 @@ class stylemanager():
                                                 if name and value:
                                                         if name == "config_item_height":
                                                                 self.c3 = int(value)
-                     except:
+                     except Exception:
                          if write_debug:
                              rs = open("/var/webradioFS_debug.log", "a")
                              rs.write("parse-error(2) found in " + skin_path)
@@ -430,14 +415,14 @@ class stylemanager():
                           skin_lfr = dict_col[lfr_farb]
 
 
-from .wbrfsmenu import menu_13, groups_13
-from .wbrfs_funct import wbrfs_message, StreamPlayer, Streamlist, load_rf, webradioFSdisplay13, wbrfs_filelist, webradioFSsetDisplay, write_settings, read_einzeln, read_plan
+from .wbrfsmenu import menu_13, groups_13  # noqa E402
+from .wbrfs_funct import wbrfs_message, StreamPlayer, Streamlist, load_rf, webradioFSdisplay13, wbrfs_filelist, webradioFSsetDisplay, write_settings, read_einzeln, read_plan  # noqa E402
 skin_ignore = read_einzeln().reading((("grund", "skin_ignore"),))[0]
 
 if fileExists("/etc/ConfFS/wbrfs_ignore_skin"):
-     skin_ignore = True
+    skin_ignore = True
 if not skin_ignore:
-     stylemanager()
+    stylemanager()
 fontlist = [font, font_scale, conf_item, conf_font1, DPKG, skin_ext, DWide, DHoehe, wbrfs_no_scinned, skin_ignore, conf_font2]
 
 #################################
@@ -446,7 +431,11 @@ fontlist = [font, font_scale, conf_item, conf_font1, DPKG, skin_ext, DWide, DHoe
 def mycmp(version1, version2):
     def normalize(v):
         return [int(x) for x in re.sub(r'(\.0+)*$', '', v).split(".")]
-    return cmp(normalize(version1), normalize(version2))
+
+    v1 = normalize(version1)
+    v2 = normalize(version2)
+
+    return (v1 > v2) - (v1 < v2)
 
 
 auto_png_off = plugin_path + "/skin/images/autoplay_off.png"
@@ -558,14 +547,14 @@ class WebradioFSScreen_15(Screen, InfoBarSeek, HelpableScreen, InfoBarNotificati
         global sets_opt, sets_grund, sets_view, sets_scr, sets_rec, sets_audiofiles, sets_prog, sets_sismctl
         read_list = ["grund", "opt", "rec", "audiofiles", "scr", "sispmctl", "prog", "view"]
         sets2 = read_settings1().reading(read_list)
-        num1 = 0
+        num1 = 0  # noqa F841
         self.aktstop = 0
         sets_grund = sets2[0]
         sets_opt = sets2[1]
         try:
             if str(sets_grund["zs"]).lower() == "true":
                zs = True
-        except:
+        except Exception:
             pass
         if str(sets_opt["expert"]).lower() == "true":
                sets_opt["expert"] = 1
@@ -612,7 +601,7 @@ class WebradioFSScreen_15(Screen, InfoBarSeek, HelpableScreen, InfoBarNotificati
                 subdirs_pic = plugin_path + "/skin/images/subdirs.png"
         else:
                 subdirs_pic = plugin_path + "/skin/images/subdirs_off.png"
-        streamlist = []
+        streamlist = []  # noqa F841
 
         melde_screen = self.session.instantiateDialog(wbrfs_message)
         right_site = self.session.instantiateDialog(wbrFS_r_site15)
@@ -632,7 +621,7 @@ class WebradioFSScreen_15(Screen, InfoBarSeek, HelpableScreen, InfoBarNotificati
                 if l4ls[2] == "True":
                     L4LwbrFS.setHoldKey(True)
                 L4LwbrFS.setScreen(l4ls[3], l4ls[1], True)
-            except:
+            except Exception:
                l4lR = None
         self.wecker = 0
         if sispmctl:
@@ -645,7 +634,7 @@ class WebradioFSScreen_15(Screen, InfoBarSeek, HelpableScreen, InfoBarNotificati
             self.servicelist = None
         try:
             self.auto_play = sets_audiofiles["autoplay"]
-        except:
+        except Exception:
             self.auto_play = False
         self.pcfs_run = False
         self.db_meld = ""
@@ -767,7 +756,7 @@ class WebradioFSScreen_15(Screen, InfoBarSeek, HelpableScreen, InfoBarNotificati
                    self.cache_timer.timeout.get().append(self.check_cache)
                if self.containerwbrfs_rec.running():
                    self.playServiceStream("http://localhost:9555")
-            except:
+            except Exception:
                pass
 
         self.__event_tracker = ServiceEventTracker(screen=self, eventmap={
@@ -834,7 +823,7 @@ class WebradioFSScreen_15(Screen, InfoBarSeek, HelpableScreen, InfoBarNotificati
         }
 
         self.tasten.update(tasten3)
-        if ripper_installed == True:
+        if ripper_installed is True:
            tasten2 = {"record_extended": (self.rec_menu, _("Record-Menu")), }
            self.tasten.update(tasten2)
         if menu_ok:
@@ -916,7 +905,7 @@ class WebradioFSScreen_15(Screen, InfoBarSeek, HelpableScreen, InfoBarNotificati
         self.startart = 0
         try:
             self.startart = int(self.startstream)
-        except:
+        except Exception:
            pass
 
         if self.startart > -2:
@@ -992,8 +981,8 @@ class WebradioFSScreen_15(Screen, InfoBarSeek, HelpableScreen, InfoBarNotificati
                                 self.favoriten()
                                 if self["streamlist"].getCurrent():
                                     self.ok()
-                        except:
-                            fehler = (_("Failed to start automatically"))
+                        except Exception:
+                            fehler = (_("Failed to start automatically"))  # noqa F841
                             self["playtext"].setText(_("Planer-Error"))
                 elif x[3]['art'] == "off":
                      on = None
@@ -1010,7 +999,7 @@ class WebradioFSScreen_15(Screen, InfoBarSeek, HelpableScreen, InfoBarNotificati
             self.utimers = []
             self.next_utime = None
             now = datetime.datetime.now()
-            now2 = [x for x in localtime()]
+            now2 = [x for x in time.localtime()]
             startstream = None
             ut = u_times
             ut.sort(key=lambda x: x[1], reverse=False)
@@ -1020,7 +1009,7 @@ class WebradioFSScreen_15(Screen, InfoBarSeek, HelpableScreen, InfoBarNotificati
                    z = x[1]
                    z2 = x[2]
                    t = args['time']
-                   now2 = [xl for xl in localtime()]
+                   now2 = [xl for xl in time.localtime()]
                    now2[3] = int(t[0])
                    now2[4] = int(t[1])
                    now2[5] = 0
@@ -1040,7 +1029,7 @@ class WebradioFSScreen_15(Screen, InfoBarSeek, HelpableScreen, InfoBarNotificati
                 zeit = time.time()
                 self.utimers.sort(key=lambda x: x[1], reverse=False)
                 for x in self.utimers:
-                    if x[0] != None:
+                    if x[0] is not None:
                         if x[0] > int(zeit):
                             self.next_utime = (int(x[0] - int(zeit)), x)
                             break
@@ -1052,7 +1041,7 @@ class WebradioFSScreen_15(Screen, InfoBarSeek, HelpableScreen, InfoBarNotificati
                         self.plan_timer.startLongTimer(self.next_utime[0])
 
     def show_planer(self):
-            termine = []
+            termine = []  # noqa F841
             stream_liste = []
             self.wbrScreenSaver_stop()
             if os.path.exists(myfav_file):
@@ -1069,7 +1058,7 @@ class WebradioFSScreen_15(Screen, InfoBarSeek, HelpableScreen, InfoBarNotificati
            self.screensaver_off = 0
            self.ResetwbrScreenSaverTimer()
            from .plugin import make_autoT
-           ppfs = make_autoT()
+           ppfs = make_autoT()  # noqa F841
 
     def set_rec_text(self, txt=None, art=None):
        if txt and art:
@@ -1167,11 +1156,11 @@ class WebradioFSScreen_15(Screen, InfoBarSeek, HelpableScreen, InfoBarNotificati
                             else:
                                 png = pngdb
 
-                    ptr = None
+                    ptr = None  # noqa F841
                     pngname = None
                     if len(text3) and str(akt_stream) != "db":
                       if ind < 100 and len(stream) > 7 and self.configfile2[0] != _("PVR-Radio all"):
-                          if (stream[7] == "pvr" or stream[7] == "radio") and sets_view["logos"] == True and sets_view["Listlogos"] == True:
+                          if (stream[7] == "pvr" or stream[7] == "radio") and sets_view["logos"] is True and sets_view["Listlogos"] is True:
                             pngname1 = None
                             pngname = "/usr/lib/enigma2/python/Plugins/Extensions/webradioFS/skin/images/wbrfsdeflogo.png"
                             if stream[9] > 0 and sets_exp["logopath"] and len(sets_exp["logopath"]) and os.path.exists(sets_exp["logopath"]):
@@ -1194,7 +1183,7 @@ class WebradioFSScreen_15(Screen, InfoBarSeek, HelpableScreen, InfoBarNotificati
                       res.append((stream, text3, png, stream[1], stream[0], pngname))
                 except Exception as e:
                     if write_debug:
-                        d = debug("exception (01):\n" + str(e) + "\n" + str(stream))
+                        d = debug("exception (01):\n" + str(e) + "\n" + str(stream))  # noqa F841
           self.show_list = res
           self.indexer = None
           if a_ind is not None and a_ind - 1 < len(str_list):
@@ -1230,7 +1219,7 @@ class WebradioFSScreen_15(Screen, InfoBarSeek, HelpableScreen, InfoBarNotificati
                          ida += 1
 
     def setLogoPic(self, pfad, ida):
-                if (os.path.exists(os.path.normcase(pfad)) == True) and self.listparas:
+                if (os.path.exists(os.path.normcase(pfad)) is True) and self.listparas:
                         vars(self)["picloads" + str(ida)] = ePicLoad()
                         if fontlist[4]:
                              vars(self)["picloads" + str(ida) + "_conn"] = vars(self)["picloads" + str(ida)].PictureData.connect(boundFunction(self.finish_decode, ida))
@@ -1241,7 +1230,7 @@ class WebradioFSScreen_15(Screen, InfoBarSeek, HelpableScreen, InfoBarNotificati
 
     def finish_decode(self, ida, info):
                 ptr = vars(self)["picloads" + str(ida)].getData()
-                if ptr != None and len(self.show_list) > ida:
+                if ptr is not None and len(self.show_list) > ida:
                         x = self.show_list[ida]
                         self.show_list[ida] = (x[0], x[1], x[2], x[3], x[4], ptr)
                         if self.e_help == "off":
@@ -1278,13 +1267,13 @@ class WebradioFSScreen_15(Screen, InfoBarSeek, HelpableScreen, InfoBarNotificati
     def pageDown(self):
         try:
            self["streamlist"].pageDown()
-        except:
+        except Exception:
            pass
 
     def pageUp(self):
         try:
             self["streamlist"].pageUp()
-        except:
+        except Exception:
             pass
 
     def downPressed(self):
@@ -1326,7 +1315,7 @@ class WebradioFSScreen_15(Screen, InfoBarSeek, HelpableScreen, InfoBarNotificati
            akt_stream = None
            if add == "add":
                   n_list = []
-                  m3us = []
+                  m3us = []  # noqa F841
                   n2_list = self.configfile2[2]
                   for x in n2_list:
                          if x[1].endswith("m3u"):
@@ -1390,7 +1379,7 @@ class WebradioFSScreen_15(Screen, InfoBarSeek, HelpableScreen, InfoBarNotificati
                        self.akt_pl_num += 1
               try:
                   sel = self.playlist2[2][self.akt_pl_num]
-              except:
+              except Exception:
                   sel = None
               if sel and (sel[1].endswith("m3u") or sel[7].endswith("Dir")):
                   self.auto_zap()
@@ -1454,7 +1443,7 @@ class WebradioFSScreen_15(Screen, InfoBarSeek, HelpableScreen, InfoBarNotificati
                           self.session.nav.playService(sref)
                       else:
                               if write_debug:
-                                  d = debug("exception (01):\n" + str(e) + "\n" + str(stream))
+                                  d = debug("exception (01):\n" + str(e) + "\n" + str(stream))  # noqa F841
                     else:
                       self.auto_fail()
                 else:
@@ -1479,10 +1468,10 @@ class WebradioFSScreen_15(Screen, InfoBarSeek, HelpableScreen, InfoBarNotificati
                           self.meld_screen(_("files in folder/m3u not found") + "\n" + str(self.playlist2[2][self.akt_pl_num][1]), "Info", 20, "ERROR")
                     except Exception as e:
                               if write_debug:
-                                  d = debug("exception (01):\n" + str(e) + "\n" + str(stream))
+                                  d = debug("exception (01):\n" + str(e) + "\n" + str(stream))  # noqa F841
 
     def play_file(self, ind=None, wfile=None):
-                  mcover = 0
+                  mcover = 0  # noqa F841
                   if wfile:
                       sel = wfile
                       self.anzeige_fav = _("Play file")
@@ -1551,7 +1540,7 @@ class WebradioFSScreen_15(Screen, InfoBarSeek, HelpableScreen, InfoBarNotificati
                 index = None
                 for x in self.configfile2[2]:
                      if x[0] == stream or x[1] == stream:
-                         found = True
+                         found = True  # noqa F841
                          if stream.endswith(".m3u"):
                              index = 1
                              self.web_if_listplay((0, x[1]))
@@ -1629,7 +1618,7 @@ class WebradioFSScreen_15(Screen, InfoBarSeek, HelpableScreen, InfoBarNotificati
 
     def webrec(self):
         if l4l_info["rec"] == 1:
-             if self.record and self.cache_list != None and self.rec_set_list and self.rec_set_list["rec_art"] == "caching":
+             if self.record and self.cache_list is not None and self.rec_set_list and self.rec_set_list["rec_art"] == "caching":
                   self.cache_list = "1"
                   self.check_cache()
              else:
@@ -1676,10 +1665,10 @@ class WebradioFSScreen_15(Screen, InfoBarSeek, HelpableScreen, InfoBarNotificati
                           mfile = "/tmp/wbrfs_playlist"
                           self.fav_name = _("Playlist") + " tmp"
                       else:
-                          if sets_audiofiles["audio_listpos"] == True:
+                          if sets_audiofiles["audio_listpos"] is True:
                               try:
                                   self.akt_pl_num = int(self.pl_nums[num - 1])
-                              except:
+                              except Exception:
                                  pass
                           mfile = "/etc/ConfFS/playlist" + str(num) + ".m3u"
                           self.fav_name = _("Playlist") + " " + str(num)
@@ -1757,7 +1746,7 @@ class WebradioFSScreen_15(Screen, InfoBarSeek, HelpableScreen, InfoBarNotificati
             return webradioFSdisplay13
 
     def selectionChanged(self):
-        if onwbrScreenSaver == None:
+        if onwbrScreenSaver is None:
             picon = def_pic
             if self.sets["logo"]:
                picon = self.sets["logo"]
@@ -1765,7 +1754,7 @@ class WebradioFSScreen_15(Screen, InfoBarSeek, HelpableScreen, InfoBarNotificati
             Zeile3 = ""
             Zeile2 = self.stream_info
             d_art = "normal"
-            if self.rec_anzeige == True and self.record:
+            if self.rec_anzeige is True and self.record:
                 if l4l_info["rec"] == 1:
                     Zeile2 = " *rec* " + self.stream_info
                 elif 1 < l4l_info["rec"] < 10:
@@ -1789,7 +1778,7 @@ class WebradioFSScreen_15(Screen, InfoBarSeek, HelpableScreen, InfoBarNotificati
                      if idx + 1 < len(self.fav_stream_list):
                        Zeile3 = str(self.fav_stream_list[idx + 1][0])
                      Zeile2 = self["streamlist"].getCurrent()[0][0]
-                   except:
+                   except Exception:
                      pass
                 elif self.fav_list:
                    self.display_art = "fav"
@@ -1801,7 +1790,7 @@ class WebradioFSScreen_15(Screen, InfoBarSeek, HelpableScreen, InfoBarNotificati
                      if idx + 1 < len(self.favoritenlist):
                        Zeile3 = str(self.favoritenlist[idx + 1][0])
                      Zeile2 = self["streamlist"].getCurrent()[0][0]
-                   except:
+                   except Exception:
                      pass
                 elif self.configfile2[1] in [2, 5, 6, 7]:
                       Zeile1 = "webradioFS - Database"
@@ -1993,7 +1982,7 @@ class WebradioFSScreen_15(Screen, InfoBarSeek, HelpableScreen, InfoBarNotificati
                     self.video3 = eServiceReference("1:0:0:0:0:0:0:0:0:0:" + self.v_list[self.v_index][1])
                 else:
                     self.video3 = eServiceReference("4097:0:0:0:0:0:0:0:0:0:%s" % self.v_list[self.v_index][1])
-                if self.video == None:
+                if self.video is None:
                     self.video = self.session.instantiateDialog(webradioFS_video)
                 if sets_scr["wbrvideorecurr"] > 0:
                     self.vidTimer.startLongTimer(sets_scr["wbrvideorecurr"])
@@ -2096,7 +2085,7 @@ class WebradioFSScreen_15(Screen, InfoBarSeek, HelpableScreen, InfoBarNotificati
               self.setTitle(self["streamlist"].getCurrent()[0][0] + "  (" + self.configfile2[0] + ")")
               self.stream_info = self["streamlist"].getCurrent()[0][0]
               idx = self["streamlist"].getIndex()
-              if self.rec_list == True:
+              if self.rec_list is True:
                   liste = self.filelist
                   num = 1
               else:
@@ -2125,7 +2114,7 @@ class WebradioFSScreen_15(Screen, InfoBarSeek, HelpableScreen, InfoBarNotificati
                    self.streamname = self.play_stream["name"]
                    self.fav_name = self.anzeige_fav  # self.play_fav
                    self.stream_info = "webradioFS"
-               except:
+               except Exception:
                    pass
            elif self.configfile2[1] in (2, 3, 4, 5, 6, 7) and self.play_stream:
                      self.streamname = self.play_stream["name"] + _(", add to fav for all functions")
@@ -2137,7 +2126,7 @@ class WebradioFSScreen_15(Screen, InfoBarSeek, HelpableScreen, InfoBarNotificati
 ## rip ###############################################
     def dataAvail(self, data):
         data2 = data.lower()
-        if (len(str(data2)) < 25 and data2.startswith("streamripper ")) or ("error" in data2 and not "terror" in data2):
+        if (len(str(data2)) < 25 and data2.startswith("streamripper ")) or ("error" in data2 and "terror" not in data2):
             f = open("/var/webradioFS_debug.log", "a")
             f.write(str(data) + "\n")
             f.close()
@@ -2163,18 +2152,18 @@ class WebradioFSScreen_15(Screen, InfoBarSeek, HelpableScreen, InfoBarNotificati
                                     delx = 1
                             if self.rec_set_list["pos_filter"]:
                                 if not re.search(self.rec_set_list["pos_filter"], name.lower()):
-                                              delx = 1
+                                    delx = 1
                             if delx == 0:
                                     if name.startswith(" -"):
-                                       dat = strftime("%d%m%Y_%H%M", localtime())
+                                       dat = time.strftime("%d%m%Y_%H%M", time.localtime())
                                        name2 = name.replace(" -", "incompled_" + dat)
                                     if name.endswith(".jpg"):
                                         if self.rec_set_list["rec_cover"]:
-                                           ret = copyfile(sets_exp["coversafepath"] + name, self.rec_path + "cover/" + name2)
+                                            ret = copyfile(sets_exp["coversafepath"] + name, self.rec_path + "cover/" + name2)
                                     else:
-                                        ret = copyfile(directory + name, self.rec_path + name2)
+                                        ret = copyfile(directory + name, self.rec_path + name2)  # noqa F841
                             os.unlink(directory + name)
-                except:
+                except Exception:
                     pass
 
     def rec_stop_a(self, answer=True):
@@ -2202,12 +2191,12 @@ class WebradioFSScreen_15(Screen, InfoBarSeek, HelpableScreen, InfoBarNotificati
          try:
            if self.containerwbrfs_rec and self.containerwbrfs_rec.running():
                self.containerwbrfs_rec.sendCtrlC()
-         except:
+         except Exception:
              pass
 
     def rec_stop2(self, ans=None):
         global l4l_info
-        if ripper_installed == True and not self.cache_list:
+        if ripper_installed is True and not self.cache_list:
            l4l_info["rec"] = 0
            l4l_set.set_l4l_info(l4l_info)
            self.time_text = None
@@ -2241,7 +2230,7 @@ class WebradioFSScreen_15(Screen, InfoBarSeek, HelpableScreen, InfoBarNotificati
 
     def wbrfs_recClosed2(self, retval=None):
             global l4l_info
-            cover_save = (None, None)
+            cover_save = (None, None)  # noqa F841
             self.rec_stop()
             l4l_info["rec"] = 0
             l4l_set.set_l4l_info(l4l_info)
@@ -2254,7 +2243,7 @@ class WebradioFSScreen_15(Screen, InfoBarSeek, HelpableScreen, InfoBarNotificati
                       os.unlink(os.path.join(self.rec_path, self.rec_filename + ".mp3"))
                       os.unlink(os.path.join(self.rec_path, self.rec_filename + ".cue"))
                       self.meld_screen(_("recording has deleted"), "webradioFS - Info", 20)
-                  except:
+                  except Exception:
                      self.meld_screen(_("error on delete"), "webradioFS - Info", 20)
               elif retval and self.rec_filename:
                      self.meld_screen(_("recording has finished"), "webradioFS - Info", 20)
@@ -2272,7 +2261,7 @@ class WebradioFSScreen_15(Screen, InfoBarSeek, HelpableScreen, InfoBarNotificati
                                    if retval == "save":
                                        name2 = name
                                        if name.startswith(" - ."):
-                                           dat = strftime("%d%m%Y_%H%M", localtime())
+                                           dat = time.strftime("%d%m%Y_%H%M", time.localtime())
                                            name2 = name.replace(" - ", dat)
                                        copyfile(cdr + "/" + name, sets_rec["path"] + name2)
                                    os.unlink(cdr + "/" + name)
@@ -2289,7 +2278,7 @@ class WebradioFSScreen_15(Screen, InfoBarSeek, HelpableScreen, InfoBarNotificati
                          f = open("/var/webradioFS_debug.log", "a")
                          f.write("record-error 2028:\n" + str(e) + "\n")
                          f.close()
-                     if self.cache_list == None:
+                     if self.cache_list is None:
                          self.rec_set_list["rec_art"] = "endless"
                          try:
                              if os.path.exists(cdr):
@@ -2322,7 +2311,7 @@ class WebradioFSScreen_15(Screen, InfoBarSeek, HelpableScreen, InfoBarNotificati
                             if retval == "save":
                                 name2 = name
                                 if name.startswith(" - ."):
-                                   dat = strftime("%d%m%Y_%H%M", localtime())
+                                   dat = time.strftime("%d%m%Y_%H%M", time.localtime())
                                    name2 = name.replace(" - ", dat)
                                 copyfile(directory + name, save_dir + "incomplete_" + name2)
                             os.unlink(directory + name)
@@ -2333,7 +2322,7 @@ class WebradioFSScreen_15(Screen, InfoBarSeek, HelpableScreen, InfoBarNotificati
                         os.rmdir(directory)
                         if self.rec_path1:
                             os.rmdir(self.rec_path1)
-                    except:
+                    except OSError:
                         pass
                 self.record = None
                 self.check_root_rec()
@@ -2345,9 +2334,9 @@ class WebradioFSScreen_15(Screen, InfoBarSeek, HelpableScreen, InfoBarNotificati
                     self.showConfigDone()
 
     def rec_endless(self):
-        if sets_opt["rec"] and ripper_installed == True:
+        if sets_opt["rec"] and ripper_installed is True:
             if streamplayer.is_playing and self.play_stream and self.stream_url and len(self.stream_url) != 0 and int(self.play_stream["defekt"]) == 0:
-              if self.cache_list != None:
+              if self.cache_list is not None:
                    self.caching_select()
               elif self.record:
                 self.meld_screen(_("Do you really want to stop the recording?"), "webradioFS- " + _("query"), 20, "??", self.rec_stop_a, False)
@@ -2399,7 +2388,7 @@ class WebradioFSScreen_15(Screen, InfoBarSeek, HelpableScreen, InfoBarNotificati
                   song_liste.sort(key=lambda x: x[0])
                   name = song_liste[len(song_liste) - 1][1]
                   self.caching_select2(("einzel", name))
-          elif self.cache_list != None:
+          elif self.cache_list is not None:
               self.cache_list = None
               self.wbrScreenSaver_stop()
               self.session.openWithCallback(self.caching_select2, cache_list_menu, self.rec_set_list["rec_path"], sets_rec["path"])
@@ -2439,24 +2428,24 @@ class WebradioFSScreen_15(Screen, InfoBarSeek, HelpableScreen, InfoBarNotificati
               self.showConfigDone()
 
     def rec_stopcachea(self, answer=False):
-            if answer == True:
+            if answer is True:
                self.rec_stopcache()
 
     def rec_stopcache(self, answer=False):
            self.rec_stop()
            self["rec_pic"].hide()
-           cover_save = (None, None)
+           cover_save = (None, None)  # noqa F841
            self.set_rec_text(_("no recording is in progress or timer planned"), "default")
            self.cache_list = None
 
-           if answer == False:
+           if answer is False:
                self.menu_on = False
            self.display_art = "normal"
            self.menu_back()
            self.rec_stop_a(True)
 
     def rec_time(self):
-       if self.cache_list == None:
+       if self.cache_list is None:
           if self.record:
               err = None
               root = self.check_root_rec()
@@ -2499,7 +2488,7 @@ class WebradioFSScreen_15(Screen, InfoBarSeek, HelpableScreen, InfoBarNotificati
                   self.rec_start()
 
     def rec_set(self):
-         if sets_opt["rec"] and ripper_installed == True:
+         if sets_opt["rec"] and ripper_installed is True:
              if self.record:
                  self.meld_screen(_("Do you really want to stop the recording?"), "webradioFS- " + _("query"), 20, "??", self.rec_stop_a, True)
              elif self.rec_timer.isActive():
@@ -2567,7 +2556,7 @@ class WebradioFSScreen_15(Screen, InfoBarSeek, HelpableScreen, InfoBarNotificati
                                break
                try:
                    self.keyNumberGlobal(self.rec_id)
-               except:
+               except Exception:
                   pass
           if self.rec_set_list["rec_art"] != "caching":
             if self.rec_set_list["rec_art"] == "only switch":
@@ -2586,7 +2575,7 @@ class WebradioFSScreen_15(Screen, InfoBarSeek, HelpableScreen, InfoBarNotificati
             cdr_dir = cdr_dir + "/"
         cdr_dir = cdr_dir + "wbrfs_cache"
         cdr = cdr_dir + "/incomplete"
-        cover_save = (None, None)
+        cover_save = (None, None)  # noqa F841
         self.cache_list = "1"
         if self.containerwbrfs_rec and self.containerwbrfs_rec.running():
                self.containerwbrfs_rec.sendCtrlC()
@@ -2663,8 +2652,8 @@ class WebradioFSScreen_15(Screen, InfoBarSeek, HelpableScreen, InfoBarNotificati
                             if recordingLength > 0:
                                 args += ' -l'
                                 args += " %d" % int(recordingLength)
-                            if self.rec_set_list["rec_split"] == False:
-                                self.rec_filename = self.play_stream["name"].replace(" ", "_") + strftime('_%Y%m%d_%H_%M_%S', localtime())
+                            if self.rec_set_list["rec_split"] is False:
+                                self.rec_filename = self.play_stream["name"].replace(" ", "_") + time.strftime('_%Y%m%d_%H_%M_%S', time.localtime())
                                 args += ' -a ' + self.rec_filename + ' -A'
                             args += ' --codeset-filesys=ISO-8859-15'
                             args += ' --codeset-metadata=ISO-8859-15'
@@ -2710,7 +2699,7 @@ class WebradioFSScreen_15(Screen, InfoBarSeek, HelpableScreen, InfoBarNotificati
         arm = None
         if not sets_opt["rec"]:
            self.meld_screen(_("Functions for record not activated"), "webradioFS - Info", 20)
-        elif ripper_installed == True:
+        elif ripper_installed is True:
             rd = open("/proc/cpuinfo", "r").readlines()
             for line in rd:
                 if line.startswith('model name') and 'ARM' in line:
@@ -2725,7 +2714,7 @@ class WebradioFSScreen_15(Screen, InfoBarSeek, HelpableScreen, InfoBarNotificati
             self.rs_info2()
 
     def rs_info2(self, vers=None):
-        if self.play_stream and vers and ("error" in vers and not "ARM" in vers):
+        if self.play_stream and vers and ("error" in vers and "ARM" not in vers):
                     rs_vers = "\n!! webradioFS record-error !!\n" + str(self.play_stream["name"]) + "\n" + str(vers) + "\n"
                     self.meld_screen(rs_vers, "webradioFS record-error", 0, "ERROR")
         else:
@@ -2741,7 +2730,7 @@ class WebradioFSScreen_15(Screen, InfoBarSeek, HelpableScreen, InfoBarNotificati
                 if "unexpected newline" in vers:
                     rs_vers = " >> " + "installed yes, can not read version\n" + vers
                     t1a = 1
-                elif "error" in vers and not "newline" in vers:
+                elif "error" in vers and "newline" not in vers:
                     rs_vers = "\n >> " + str(vers)
                 else:
                     vers = vers.replace('Streamripper', '').strip()
@@ -2750,7 +2739,7 @@ class WebradioFSScreen_15(Screen, InfoBarSeek, HelpableScreen, InfoBarNotificati
                         t1a = 1
                     else:
                         rs_vers = vers + " >> " + "must be at least" + " 1.64.6"
-            except:
+            except Exception:
                 pass
             for name in os.listdir('/usr/lib'):
                fullpath = os.path.join('/usr/lib', name)
@@ -2778,7 +2767,7 @@ class WebradioFSScreen_15(Screen, InfoBarSeek, HelpableScreen, InfoBarNotificati
                                t1c = 1
                            else:
                                l2_versb = l2_vers + " >> " + "must be at least" + " 2.0.5"
-                  except Exception as e:
+                  except Exception:
                       continue
             sr_vers_text = _("required modules for records") + "\n\n/usr/lib/libvorbis: " + l1_versb + "\n/usr/lib/libvorbisenc: " + l2_versb + "\n" + "/usr/bin/Streamripper: " + rs_vers
             if t1a + t1b + t1c == 3:
@@ -2787,7 +2776,7 @@ class WebradioFSScreen_15(Screen, InfoBarSeek, HelpableScreen, InfoBarNotificati
 #############################################################################
 
     def check_cache(self):
-      if self.cache_list != None:
+      if self.cache_list is not None:
        root = self.check_root_rec()
        free = 0
        s = os.statvfs(self.rec_path)
@@ -2798,7 +2787,7 @@ class WebradioFSScreen_15(Screen, InfoBarSeek, HelpableScreen, InfoBarNotificati
        elif root:
              self.rec_stopcache()
              self.meld_screen(_('Stopped caching, Error in system-modul GStreamer') + "\n" + _("show for update on your image"), "Info", 0, "ERROR")
-       elif self.cache_list != None:
+       elif self.cache_list is not None:
               global l4l_info
               found = None
               if self.rec_path and os.path.exists(self.rec_path):
@@ -2806,7 +2795,7 @@ class WebradioFSScreen_15(Screen, InfoBarSeek, HelpableScreen, InfoBarNotificati
                 if int(self.play_stream["cache"]) > 0:
                     canz = int(sets_rec["caching"])
                 song_liste = []
-                pic_liste = []
+                pic_liste = []  # noqa F841
                 search_path = self.rec_path
                 if not search_path.endswith("/"):
                     search_path = search_path + "/"
@@ -2844,26 +2833,26 @@ class WebradioFSScreen_15(Screen, InfoBarSeek, HelpableScreen, InfoBarNotificati
                                   if not name.endswith(".jpg"):
                                      song_liste.append((dtime, fullpath, name))
                    except Exception as e:
-                                  if write_debug:
-                                      d = debug("source:" + str(fullpath) + "\n" + "dest:" + str(sets_rec["path"] + name) + "\n" + str(e))
-                                  self.rec_stopcache()
-                                  self.meld_screen(('Stopped caching, error-text in /var/webradioFS_debug.log'), "Info", 0, "ERROR")
+                        if write_debug:
+                            d = debug("source:" + str(fullpath) + "\n" + "dest:" + str(sets_rec["path"] + name) + "\n" + str(e))
+                        self.rec_stopcache()
+                        self.meld_screen(('Stopped caching, error-text in /var/webradioFS_debug.log'), "Info", 0, "ERROR")
                 if not found:
-                                    if len(self.cache_list) > 6:
-                                        self.cache_list = "1"
-                                    self["rec_pic"].show()
-                                    recp = resolveFilename(SCOPE_CURRENT_SKIN, "/usr/lib/enigma2/python/Plugins/Extensions/webradioFS/skin/images/rc1.png")
-                                    self["rec_pic"].instance.setPixmap(LoadPixmap(recp))
-                                    self.set_rec_text(_("press record for save a title"), "cache")
-                                    l4l_info["rec"] = int(sets_rec["caching"]) + 1
-                                    l4l_set.set_l4l_info(l4l_info)
+                    if len(self.cache_list) > 6:
+                        self.cache_list = "1"
+                    self["rec_pic"].show()
+                    recp = resolveFilename(SCOPE_CURRENT_SKIN, "/usr/lib/enigma2/python/Plugins/Extensions/webradioFS/skin/images/rc1.png")
+                    self["rec_pic"].instance.setPixmap(LoadPixmap(recp))
+                    self.set_rec_text(_("press record for save a title"), "cache")
+                    l4l_info["rec"] = int(sets_rec["caching"]) + 1
+                    l4l_set.set_l4l_info(l4l_info)
                 danz = len(song_liste)
                 if danz:
                   if danz > canz + 1:
                     self.rec_stopcache()
                     txt = _("Stopped caching, can not delete files in the cache directory")
                     if write_debug:
-                        d = debug(txt)
+                        d = debug(txt)  # noqa F841
                     self.meld_screen(txt, "Info", 30, "ERROR")
                   else:
                     song_liste.sort(key=lambda x: x[0])
@@ -2872,7 +2861,7 @@ class WebradioFSScreen_15(Screen, InfoBarSeek, HelpableScreen, InfoBarNotificati
                              os.unlink(song_liste[0][1])
                              if os.path.isfile(song_liste[0][1].replace(".mp3", ".jpg")):
                                  os.unlink(song_liste[0][1].replace(".mp3", ".jpg"))
-                         except:
+                         except Exception:
                              continue
                          del song_liste[0]
               self.cache_timer.startLongTimer(10)
@@ -2912,17 +2901,17 @@ class WebradioFSScreen_15(Screen, InfoBarSeek, HelpableScreen, InfoBarNotificati
                 else:
                     return None
             except Exception as e:
-                                  f.write("error on root_check\n")
-                                  f.write(str(e) + "\n")
-                                  self.rec_stopcache()
-                                  self.meld_screen(('Stopped caching, error-text in /var/webradioFS_debug.log'), "Info", 0, "ERROR")
+                f.write("error on root_check\n")
+                f.write(str(e) + "\n")
+                self.rec_stopcache()
+                self.meld_screen(('Stopped caching, error-text in /var/webradioFS_debug.log'), "Info", 0, "ERROR")
             f.close()
 
     def __evUpdatedInfo(self):
        if Screens.Standby.inStandby:
            self.exit(True, 1)
-       elif self.display_art != "liste" and onwbrScreenSaver == None and onwbrInfoScreen == None and (streamplayer.is_playing or satradio) and self.play_stream["typ"] != "file" or self.configfile2[1] > 29:  # and self.configfile2[1] <30:
-           remaining = ""
+       elif self.display_art != "liste" and onwbrScreenSaver is None and onwbrInfoScreen is None and (streamplayer.is_playing or satradio) and self.play_stream["typ"] != "file" or self.configfile2[1] > 29:  # and self.configfile2[1] <30:
+           remaining = ""  # noqa F841
            if not satradio:
               self.new_event()
            else:
@@ -2939,7 +2928,7 @@ class WebradioFSScreen_15(Screen, InfoBarSeek, HelpableScreen, InfoBarNotificati
 
     def new_event(self, remaining=""):
         global l4l_info
-        if self.display_art != "liste" and onwbrScreenSaver == None:
+        if self.display_art != "liste" and onwbrScreenSaver is None:
             if self.configfile2[1] == 0 or self.configfile2[1] > 29:
                 currPlay = self.session.nav.getCurrentService()
                 sTitle = ""
@@ -2975,9 +2964,9 @@ class WebradioFSScreen_15(Screen, InfoBarSeek, HelpableScreen, InfoBarNotificati
                                         len1 = seek.getLength()
                                         duration = len1[1] / 90000
                                         mlen = "%d:%02d" % (duration / 60, duration % 60)
-                                except:
+                                except Exception:
                                   pass
-                              if tags[0] and tags[0] != None and tags[0] != "None":
+                              if tags[0] and tags[0] is not None and tags[0] != "None":
                                       mcover = tags[0]
                               if tags[2] != "n/a" and tags[1] != "n/a":
                                   sTitle = tags[2] + ": " + tags[1]
@@ -3029,20 +3018,20 @@ class WebradioFSScreen_15(Screen, InfoBarSeek, HelpableScreen, InfoBarNotificati
                 message = currPlay.info().getInfoString(iServiceInformation.sUser + 12)
                 try:
                     message = message + "\nName: " + self.play_stream["name"] + "\nStream-Url: " + self.play_stream["url"] + "\n"
-                except:
+                except Exception:
                     message = message
                 self.meld_screen(message, "Info", 30, "ERROR")
 
     def aktual2(self):
-      if onwbrScreenSaver == None:
+      if onwbrScreenSaver is None:
         if self.configfile2[1] > 29:
             if self.auto_play:
                 self.auto_zap()
             else:
                 self.stop_stream()
-        elif self.rec_list != True:
+        elif self.rec_list is not True:
             stoppen = 1
-            if self.pcfs_run == False:
+            if self.pcfs_run is False:
                  if sets_exp["conwait"]:
                      if self.reconnect == 0:
                          stoppen = 0
@@ -3092,8 +3081,8 @@ class WebradioFSScreen_15(Screen, InfoBarSeek, HelpableScreen, InfoBarNotificati
                     sAudioType = currPlay.info().getInfoString(iServiceInformation.sTagAudioCodec)
                     tst = sAudioType + stitle
                     if tst and tst != "" and self.typ_failed == 0:
-                        url = self.play_stream["url"]
-                        nam1 = self.play_stream["name"]
+                        url = self.play_stream["url"]  # noqa F841
+                        nam1 = self.play_stream["name"]  # noqa F841
                         if self.upadate_taste:
                             self.upadate_taste.setText(_("Stream Actions"))
                         self.red = "play_ok"
@@ -3102,7 +3091,7 @@ class WebradioFSScreen_15(Screen, InfoBarSeek, HelpableScreen, InfoBarNotificati
                           try:
                             self.db("Update streams SET defekt=0 WHERE stream_id=%d;" % self.play_stream["stream_id"])
                             self.read_new()
-                          except:
+                          except Exception:
                             pass
           elif streamplayer.is_playing and self.errorzaehler < len(self.stream_urls) + 1:
                 self.red = "play_false"
@@ -3110,7 +3099,7 @@ class WebradioFSScreen_15(Screen, InfoBarSeek, HelpableScreen, InfoBarNotificati
                     self.stream_info = _("trying to establish connection") + " (" + str(self.errorzaehler) + " " + _("of") + " " + str(len(self.stream_urls)) + ")"
                     self.errorzaehler += 1
                     self.ok(None, self.errorzaehler)
-                except:
+                except Exception:
                    self.favoriten()
           else:
                 self.check_defekt()
@@ -3124,7 +3113,7 @@ class WebradioFSScreen_15(Screen, InfoBarSeek, HelpableScreen, InfoBarNotificati
           try:
              if len(self["streamlist"].getCurrent()[0]) > 6 and self["streamlist"].getCurrent()[0][7] == 'radio':
                   self.showStreamMenu(0)
-          except:
+          except Exception:
             pass
       elif self.rec_list:
           self.del_rec()
@@ -3189,7 +3178,7 @@ class WebradioFSScreen_15(Screen, InfoBarSeek, HelpableScreen, InfoBarNotificati
                       if len(einles[-1].strip()):
                         l_add = "\n"
                       else:
-                        l_add = "#EXTM3U\n"
+                        l_add = "#EXTM3U\n"  # noqa F841
                    f2.close()
                    f2 = open(mfile, "a")
                    for x in listnew:
@@ -3225,14 +3214,14 @@ class WebradioFSScreen_15(Screen, InfoBarSeek, HelpableScreen, InfoBarNotificati
        try:
            h1 = self["dummy"].instance.size().height()
            w1 = int(round((h1 * 3.2) + 0.5))
-       except:
+       except Exception:
            pass
        self.listparas = (w1, h1, sc[0], sc[1], False, 1, self.listbgr)
        self.set_rec_text(_("no recording is in progress or timer planned"), "default")
        self.instance.setZPosition(1)
        try:
            self["streamlist"].setZPosition(2)
-       except:
+       except Exception:
            pass
        self.fav_index = 0
        if len(self.favoritenlist):
@@ -3300,8 +3289,8 @@ class WebradioFSScreen_15(Screen, InfoBarSeek, HelpableScreen, InfoBarNotificati
                         if self["streamlist"].getCurrent():
 
                             self.ok()
-             except:
-                    fehler = (_("Failed to start automatically"))
+             except Exception:
+                    fehler = (_("Failed to start automatically"))  # noqa F841
                     self["playtext"].setText(_("Startstream-Error"))
        if len(self.configfile2[2]) < 1:
            for x in self.favoritenlist:
@@ -3335,7 +3324,7 @@ class WebradioFSScreen_15(Screen, InfoBarSeek, HelpableScreen, InfoBarNotificati
          if art == 0 or art == 1 or art > 29 or admin:
             try:
                 web_liste_favs[0] = self.fav_name
-            except:
+            except Exception:
                 web_liste_favs[0] = _("No group selected")
          else:
             web_liste_favs[0] = _("No group selected")
@@ -3430,7 +3419,7 @@ class WebradioFSScreen_15(Screen, InfoBarSeek, HelpableScreen, InfoBarNotificati
          try:
              if self.configfile2[1] == 0 and not streamplayer.is_playing:
                  self.title2 = self.configfile2[0]
-         except:
+         except Exception:
              pass
          self.setTitle(self.configfile2[0])
          right_site.new_set(self.sets)
@@ -3472,7 +3461,7 @@ class WebradioFSScreen_15(Screen, InfoBarSeek, HelpableScreen, InfoBarNotificati
           if not self.new_imp:
                self.new_imp = 1
                from .wbrfs_funct import fav_import
-               zahl = fav_import().imp2()
+               zahl = fav_import().imp2()  # noqa F841
                self.read_new()
       else:
             stream_liste = self.getStreams(0)
@@ -3613,12 +3602,12 @@ class WebradioFSScreen_15(Screen, InfoBarSeek, HelpableScreen, InfoBarNotificati
         if self.configfile2[1] == 0:
             try:
                 self.alt_fav_index = self.favoritenlist.index(self.configfile2)
-            except:
+            except Exception:
                 pass
         elif self.configfile2[1] == 7:
              try:
                  self.allstreams_index = self["streamlist"].getIndex()
-             except:
+             except Exception:
                  pass
 
         if self.blaue_taste:
@@ -3652,10 +3641,10 @@ class WebradioFSScreen_15(Screen, InfoBarSeek, HelpableScreen, InfoBarNotificati
             self["key_red2"].show()
 
     def Favoriten_Wechsel2(self, result):
-        if result and result != None:
+        if result and result is not None:
             try:
                 self.fav_index = self.favoritenlist.index(result)
-            except:
+            except Exception:
                 self.fav_index = 0
 
             self.favoriten()
@@ -3711,7 +3700,7 @@ class WebradioFSScreen_15(Screen, InfoBarSeek, HelpableScreen, InfoBarNotificati
        if self.configfile2[1] == 10:
           if self["streamlist"].getCurrent() is not None:
              selectedStream = self["streamlist"].getCurrent()[0]
-             id1 = selectedStream[2]
+             id1 = selectedStream[2]  # noqa F841
 
              if len(self.configfile2[2]) < 2:
                 self.del_fav_eintrag(10)
@@ -3734,7 +3723,7 @@ class WebradioFSScreen_15(Screen, InfoBarSeek, HelpableScreen, InfoBarNotificati
             right_site.hide()
             self.wbrScreenSaver_stop()
             self.session.openWithCallback(self.play_sets, play_settings)
-       elif answer == True and not self.tv1 and not self.fav_list and not self.video and self.display_art != "info" and not self.rec_list:
+       elif answer is True and not self.tv1 and not self.fav_list and not self.video and self.display_art != "info" and not self.rec_list:
            if self["streamlist"].getCurrent():  # and self.configfile2[1] != 7:
                play = 0
                if streamplayer.is_playing and self.play_stream["name"] == self["streamlist"].getCurrent()[0][0]:
@@ -3768,7 +3757,7 @@ class WebradioFSScreen_15(Screen, InfoBarSeek, HelpableScreen, InfoBarNotificati
                               try:
                                   if stream:
                                     cursor.execute("INSERT INTO streams (name, descrip, url, typ, genre2, defekt,bitrate,genre,volume,uploader,rec,zuv,picon,group1,sscr,cache) VALUES(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?);", (stream["name"], stream["descrip"], stream["url"], stream["typ"], stream["genre2"], 0, int(stream["bitrate"]), stream["genre"], stream["volume"], stream["uploader"], int(stream["rec"]), stream["zuv"], int(stream["picon"]), grup, stream["sscr"], 0))
-                              except:
+                              except Exception:
                                     self.meld_screen(_("Fav-File-Error! file not exist? file read-only?"), "webradioFS - Info", 20, "ERROR")
                               cursor.execute("select name, group1,stream_id,defekt,sscr,pos,cache,bitrate,picon,url,typ from streams WHERE group1=1;")
                               for row in cursor:
@@ -3844,7 +3833,7 @@ class WebradioFSScreen_15(Screen, InfoBarSeek, HelpableScreen, InfoBarNotificati
                   cursor = self.connection.cursor()
                   cursor.execute('SELECT group_id from groups WHERE group1 = "%s";' % (fav_nam))
                   for row in cursor:
-                      g_num = row[0]
+                      g_num = row[0]  # noqa F841
                   cursor.execute("select name, group1,stream_id,defekt,sscr,pos,cache,bitrate,picon,url,typ from streams WHERE group1=1;")
                   for row in cursor:
                       nlist.append([row[0], row[1], row[2], row[3], 0, row[5], 0, "radio", row[6], row[8], ""])
@@ -3936,13 +3925,13 @@ class WebradioFSScreen_15(Screen, InfoBarSeek, HelpableScreen, InfoBarNotificati
               self.confail_timer.callback.remove(self.new_event)
               self.confail_timer.callback.remove(self.ok)
           self.reconnect = 0
-      except:
+      except Exception:
           pass
 
       if not self.meldung1 and self.e_help != "off":
           pass
 
-      elif self.sorting != None and self.configfile2[1] < 30:
+      elif self.sorting is not None and self.configfile2[1] < 30:
            self["playtext"].setText(_("Sort streams"))
            if self.sorting < 0:
               self.sorting = self["streamlist"].getIndex()
@@ -3975,7 +3964,7 @@ class WebradioFSScreen_15(Screen, InfoBarSeek, HelpableScreen, InfoBarNotificati
 
       elif self.playlist2 and self.configfile2[1] > 29 and self.configfile2[2] == self.playlist2[2] and not self["streamlist"].getCurrent()[0][7].startswith("Dir"):
 
-             if self.rec_set_list["rec_art"] == "caching" and self.cache_list != None:
+             if self.rec_set_list["rec_art"] == "caching" and self.cache_list is not None:
                    self["rec_pic"].hide()
                    self.set_rec_text(_("no recording is in progress or timer planned"), "default")
                    self.record = None
@@ -3991,7 +3980,7 @@ class WebradioFSScreen_15(Screen, InfoBarSeek, HelpableScreen, InfoBarNotificati
                self.sets["file"] = True
 
                if not ret and not play1[7].startswith("Dir") and not self["streamlist"].getCurrent()[0][1].endswith(".m3u"):
-                 if self.configfile2[0].startswith(_("Playlist")) and sets_audiofiles["audio_listpos"] == True:
+                 if self.configfile2[0].startswith(_("Playlist")) and sets_audiofiles["audio_listpos"] is True:
                    if self.playlist_num < 7:
                      self.pl_nums[self.playlist_num - 1] = self.playlist2_ind
                      audio_nums = ','.join([str(i) for i in self.pl_nums])
@@ -4001,13 +3990,13 @@ class WebradioFSScreen_15(Screen, InfoBarSeek, HelpableScreen, InfoBarNotificati
                  name = play1[0]
                  if play1[1].endswith(".m3u"):
                       self.web_if_listplay((8, play1[1]))
-                      name = play1[0]
+                      name = play1[0]  # noqa F841
                  else:
                    self.anzeige_fav = _("Play file")
                    self.play_file(ind)
 
       elif self.configfile2[1] > 29:
-           if self.rec_set_list["rec_art"] == "caching" and self.cache_list != None:
+           if self.rec_set_list["rec_art"] == "caching" and self.cache_list is not None:
                    self["rec_pic"].hide()
                    self.set_rec_text(_("no recording is in progress or timer planned"), "default")
                    self.record = None
@@ -4073,7 +4062,7 @@ class WebradioFSScreen_15(Screen, InfoBarSeek, HelpableScreen, InfoBarNotificati
       elif self.wecker == 1:   #lauter werden stoppen
                 self.wecker = 2
                 self.volume_timer.stop()
-      elif self.record and self.cache_list == None:
+      elif self.record and self.cache_list is None:
            self.meld_screen(_("A recording is in progress or is planned, terminate recording for switch?"), "webradioFS- " + _("query"), 20, "??", self.record_ok, False)
 
       elif self["streamlist"].getCurrent() is not None and len(self["streamlist"].getCurrent()) > 3:
@@ -4103,7 +4092,7 @@ class WebradioFSScreen_15(Screen, InfoBarSeek, HelpableScreen, InfoBarNotificati
                 streamplayer.stop()
             self.set_rec_text(_("no recording is in progress or timer planned"), "default")
             if self.fav_name == _("PVR-Radio all") or self.fav_name == _("PVR-Radio Favoriten"):
-                if self.pvrstartstream != None:
+                if self.pvrstartstream is not None:
                     self["streamlist"].setIndex(self.pvrstartstream - 1)
                     self.pvrstartstream = None
                 self.play_stream = {'sscr': 'default', 'genre2': 'Sat/Kabel/Antenne', 'zuv': 'unbekannt', 'name': self["streamlist"].getCurrent()[0][0], 'url': self["streamlist"].getCurrent()[0][6], 'bitrate': 0, 'picon': 0, 'volume': 0, 'stream_id': 3, 'group1': 1, 'uploader': 'nn', 'descrip': '', 'genre': 'PVR-Radio', 'rec': 0, 'typ': 'pvr', 'defekt': 0, 'cache': 0}
@@ -4128,10 +4117,10 @@ class WebradioFSScreen_15(Screen, InfoBarSeek, HelpableScreen, InfoBarNotificati
                 self["playtext"].setText(self.play_stream["name"])
                 type1 = self.play_stream["typ"]
                 if type1 == "":
-                    type = "mp3"
+                    type = "mp3"  # noqa F841
                 if type1 == "pvr":
                     self.stream_urls = ((self.play_stream["url"], self.play_stream["url"]), type1, self.play_stream["url"])
-                elif errversuch == None:
+                elif errversuch is None:
                     self.typ_failed = 0
                     if type1 == "mms" or type1 == "wma":
                        stream_m = self.play_stream["url"]
@@ -4154,7 +4143,7 @@ class WebradioFSScreen_15(Screen, InfoBarSeek, HelpableScreen, InfoBarNotificati
                         self.stream_info = _("not url")
                         set_defekt = _("not url")
                         streamdef = 1
-                elif self.stream_urls and self.stream_urls[0] == None:
+                elif self.stream_urls and self.stream_urls[0] is None:
                     status = str(self.stream_urls[1])
                     if not len(status):
                         status = ""
@@ -4177,7 +4166,7 @@ class WebradioFSScreen_15(Screen, InfoBarSeek, HelpableScreen, InfoBarNotificati
                   self.akt_defekt = self.play_stream["defekt"]
                   self.stream_wechsel = 1
                   self.start1 = 1
-                  if sets_view["logos"] == True and self.configfile2[1] == 0 and type1 != "pvr":
+                  if sets_view["logos"] is True and self.configfile2[1] == 0 and type1 != "pvr":
                     if os.path.isfile(os.path.join(sets_exp["logopath"], "/byName/" + self.play_stream["name"] + ".png")):
                           logo = os.path.join(sets_exp["logopath"], "/byName/" + self.play_stream["name"] + ".png")
                     elif self.play_stream["picon"] > 0 and os.path.exists(os.path.join(sets_exp["logopath"], "/big/" + str(self.play_stream["picon"]) + ".png")):
@@ -4206,7 +4195,7 @@ class WebradioFSScreen_15(Screen, InfoBarSeek, HelpableScreen, InfoBarNotificati
                                             if fileExists(pngname):
                                                 logo = pngname
                                                 break
-                            except:
+                            except Exception:
                                 pass
 
                             sat_stream = eServiceReference(unquote(self.stream_url))
@@ -4233,8 +4222,8 @@ class WebradioFSScreen_15(Screen, InfoBarSeek, HelpableScreen, InfoBarNotificati
                   kb_zusatz = ""
                   if type1 != "pvr":
                       self.sets["bitrat_text"] = str(self.play_stream["bitrate"]) + " kbit/s"
-                      kb_zusatz = " kbit/s"
-                      s_url = base64.standard_b64encode(self.play_stream["url"].encode())
+                      kb_zusatz = " kbit/s"  # noqa F841
+                      s_url = base64.standard_b64encode(self.play_stream["url"].encode())  # noqa F841
                   genr = self.play_stream["genre"].strip()
                   if len(self.play_stream["genre2"].strip()):
                      genr = genr + ", " + self.play_stream["genre2"].strip()
@@ -4253,7 +4242,7 @@ class WebradioFSScreen_15(Screen, InfoBarSeek, HelpableScreen, InfoBarNotificati
                       self.display_art = "normal"
                       self.selectionChanged()
                 else:
-                  if self.rec_list != True:
+                  if self.rec_list is not True:
                     self["playtext"].setText(_("Station is not currently accessible"))
                     txt = self.play_stream["name"] + "\n" + _("Station is not currently accessible1") + "\n" + status
 
@@ -4301,7 +4290,7 @@ class WebradioFSScreen_15(Screen, InfoBarSeek, HelpableScreen, InfoBarNotificati
                     if l4ls and l4ls[2] == "True":
                         L4LwbrFS.setHoldKey(True)
                     L4LwbrFS.setScreen(l4ls[3], l4ls[1], True)
-                except Exception as e:
+                except Exception:
                     L4LwbrFS = None
                     self.meld_screen(_("LCD4Linux-Version not compatible") + "\n(min = 4.x)", "webradioFS - Info", 20, "ERROR")
 
@@ -4309,7 +4298,7 @@ class WebradioFSScreen_15(Screen, InfoBarSeek, HelpableScreen, InfoBarNotificati
              logo2 = None
       try:
               self.sets["logo"] = logo2
-      except:
+      except Exception:
               pass
 
       if self.aktstop == 0:
@@ -4318,7 +4307,7 @@ class WebradioFSScreen_15(Screen, InfoBarSeek, HelpableScreen, InfoBarNotificati
           if not self.playlist2:
               self.new_event()
               self.ondisplayFinished()
-              if not self.configfile2[1] in (7, 3):
+              if self.configfile2[1] not in (7, 3):
                   self.showConfigDone()
       if self.versionsalter > 1:
                 self.veraltet2(True)
@@ -4333,7 +4322,7 @@ class WebradioFSScreen_15(Screen, InfoBarSeek, HelpableScreen, InfoBarNotificati
                 self.meld_timer.start(1000)
             self.stream_info_alt = self.stream_info
             self.stream_info = text.split("\n")[0]
-            if not "info" in self.display_art:
+            if "info" not in self.display_art:
                 self.selectionChanged()
             self.meldung1 = True
             melde_screen.start(text, titel, aktion, default, type1, timeout, sd, fontlist)
@@ -4341,7 +4330,7 @@ class WebradioFSScreen_15(Screen, InfoBarSeek, HelpableScreen, InfoBarNotificati
     def meldung_t_back(self):
           if self.meldetimeout > 1:
               self.meldetimeout -= 1
-              m1 = melde_screen.set_c_count(str(self.meldetimeout))
+              m1 = melde_screen.set_c_count(str(self.meldetimeout))  # noqa F841
               self.meld_timer.start(1000)
           else:
               self.meldung_back()
@@ -4352,18 +4341,18 @@ class WebradioFSScreen_15(Screen, InfoBarSeek, HelpableScreen, InfoBarNotificati
         if self.meld_timer.isActive():
             self.meld_timer.stop()
         self.stream_info = self.stream_info_alt
-        if not "info" in self.display_art:
+        if "info" not in self.display_art:
             self.selectionChanged()
         b1 = None
         if m1 and len(m1) and m1[1] != 0:
                 if m1[3] == "??":
                     b1 = m1[1](m1[2])
-                elif m1[2] == True:
+                elif m1[2] is True:
                     b1 = m1[1]()
                 else:
                    pass
 
-        elif self.menu_on and self.m_back != None:
+        elif self.menu_on and self.m_back is not None:
                self.m_back()
         if b1:
             b1
@@ -4379,7 +4368,7 @@ class WebradioFSScreen_15(Screen, InfoBarSeek, HelpableScreen, InfoBarNotificati
         if self.e_help == "ext_help":
             self.botton_on_off()
         if self.meldung1:
-            meld = 1
+            meld = 1  # noqa F841
             self.meldung_back()
         elif not self.configfile2 or len(self.configfile2[2]) < 1:
             self.exit()
@@ -4392,12 +4381,12 @@ class WebradioFSScreen_15(Screen, InfoBarSeek, HelpableScreen, InfoBarNotificati
             self.exit()
         elif self.e_help != "off":
             self.botton_on_off()
-            if self.m_back != None:
+            if self.m_back is not None:
                 self.showMainMenu()
         elif wbrfs_saver:
             try:
                 self.session.deleteDialog(wbrfs_saver)
-            except:
+            except Exception:
                 pass
             wbrfs_saver = None
             self.screensaver_off = 0
@@ -4418,7 +4407,7 @@ class WebradioFSScreen_15(Screen, InfoBarSeek, HelpableScreen, InfoBarNotificati
                         if self.aktstop == 0:
                             right_site.new_set(self.sets)
 
-                        if self.alt_fav_index != None:
+                        if self.alt_fav_index is not None:
                                         self.fav_index = self.alt_fav_index
                                         self.favoriten(1)
                         elif self.fav_list:
@@ -4437,19 +4426,19 @@ class WebradioFSScreen_15(Screen, InfoBarSeek, HelpableScreen, InfoBarNotificati
                             self.Favoriten_Wechsel2(None)
         elif self.back:
              self.back_s(self.back)
-        elif self.record and self.cache_list != None and self.rec_set_list and self.rec_set_list["rec_art"] == "caching":
+        elif self.record and self.cache_list is not None and self.rec_set_list and self.rec_set_list["rec_art"] == "caching":
               if len(self.cache_list) > 6:
                   self.cache_list = "1"
                   self.check_cache()
               else:
                   self.rec_stop_a()
                   self.exit(True)
-        elif self.record and self.cache_list == None:
+        elif self.record and self.cache_list is None:
            self.meld_screen(_("A recording is in progress or is planned, terminate recording and stop stream?"), "webradioFS- " + _("query"), 20, "??", self.rec_stop_a, True)
         elif self.rec_timer.isActive():
            self.meld_screen(_("Discard scheduled timer?"), "webradioFS- " + _("query"), 20, "??", self.rec_stop_c, True)
         else:
-            if self.record and self.cache_list == None:
+            if self.record and self.cache_list is None:
                self.meld_screen(_("Do you really want to stop the recording?"), "webradioFS- " + _("query"), 20, "??", self.exit_a, True)
             else:
                self.exit_b(True)
@@ -4496,11 +4485,11 @@ class WebradioFSScreen_15(Screen, InfoBarSeek, HelpableScreen, InfoBarNotificati
         if all_off or (not self.configfile2 or self.configfile2[1] < 2 or self.configfile2[1] > 29):
           if all_off:
              self.exit_art = all_off
-          if answer == True:
+          if answer is True:
             try:
                 if self.containerwbrfs_rec and self.containerwbrfs_rec.running():
                     self.containerwbrfs_rec.sendCtrlC()
-            except:
+            except Exception:
                 pass
             if self.record:
                    if all_off == "standby" or all_off == "off":
@@ -4526,7 +4515,7 @@ class WebradioFSScreen_15(Screen, InfoBarSeek, HelpableScreen, InfoBarNotificati
               try:
                    if self.tv1:
                        self.tv1 = self.session.deleteDialog(self.tv1)
-              except:
+              except Exception:
                   pass
               if self.video:
                   self.video = None
@@ -4542,7 +4531,7 @@ class WebradioFSScreen_15(Screen, InfoBarSeek, HelpableScreen, InfoBarNotificati
                       L4LwbrFS.setScreen(0)
                   if fileExists("/tmp/l4linfo"):
                       os.remove("/tmp/l4linfo")
-              except:
+              except Exception:
                   pass
 
               web_liste_favs = []
@@ -4550,7 +4539,7 @@ class WebradioFSScreen_15(Screen, InfoBarSeek, HelpableScreen, InfoBarNotificati
               web_liste_streams = []
               try:
                   self.session.deleteDialog(right_site)
-              except:
+              except Exception:
                   pass
 
               self.close(self.session)
@@ -4585,7 +4574,7 @@ class WebradioFSScreen_15(Screen, InfoBarSeek, HelpableScreen, InfoBarNotificati
                       os.remove("/tmp/.wbrfs_pic")
               except OSError:
                   pass
-              varis = ("myname", "myversion", "wbrfs_saver", "versiondat", "php_num", "streamplayer", "hashwert", "manuell", "online", "starter_stream", "startsets", "sets_exp", "web_liste_streams",
+              varis = ("myname", "myversion", "wbrfs_saver", "versiondat", "php_num", "streamplayer", "hashwert", "manuell", "online", "starter_stream", "startsets", "sets_exp", "web_liste_streams",  # noqa F841
                   "web_liste_favs", "right_site", "listenbreite,box", "web1", "web", "vumodel", "imagetyp", "pcfs", "sispmctl", "l4l_info", "saver_list", "L4LwbrFS", "FBts_liste",
                   "tasten_name", "schwarz", "weiss", "orange", "center", "left", "left_wrap", "streamtitel", "satradio", "onwbrScreenSaver", "onwbrInfoScreen", "ripper_installed", "plugin_path",
                   "def_pic", "offtimer", "DWide", "DHoehe", "skin_ext", "send_para2", "uploadinfo", "auto_png_off", "auto_png_on"
@@ -4706,9 +4695,9 @@ class WebradioFSScreen_15(Screen, InfoBarSeek, HelpableScreen, InfoBarNotificati
             menu.append((_("Record-Menu"), self.rec_menu, _("Instant recording, recording with special settings, check modules"), self.showMainMenu))
         al = 1
         for x in self.favoritenlist:
-                   if x[1] == 7 and len(x[2]):
-                        al = None
-                        break
+            if x[1] == 7 and len(x[2]):
+                al = None  # noqa F841
+                break
         self.menu_history = (1, 0, 0)
         self.menuStart(menu, _("mainmenu"), None)
 
@@ -4734,7 +4723,7 @@ class WebradioFSScreen_15(Screen, InfoBarSeek, HelpableScreen, InfoBarNotificati
         menu.append((_("Check required Module"), self.rs_info, _("Check if the required modules are available")))
         menu.append((_("Install rec-Modules"), load_rf(self.session).run, _("Install rec-Modules")))   #stremrip-version usw
         if ripper_installed:
-          if self.cache_list == None:
+          if self.cache_list is None:
             menu.append((_("Instant recording, endless"), self.rec_endless, _("Run directly endlessly recording")))
             anz = " (5"
             if self.play_stream and self.play_stream["typ"] != "pvr" and int(self.play_stream["cache"]) < 1:
@@ -4760,7 +4749,7 @@ class WebradioFSScreen_15(Screen, InfoBarSeek, HelpableScreen, InfoBarNotificati
             menu.append((_("File Play-Settings"), self.showConfig, _("File Play-Settings"), self.tools, "audiofiles"))
         if l4lR and sets_opt["lcr"]:
             menu.append((_("LCD4Linux Display-Settings"), self.showConfig, _("LCD4Linux Display-Settings"), self.tools, "l4l"))
-        if ripper_installed == True and sets_opt["rec"]:
+        if ripper_installed is True and sets_opt["rec"]:
             menu.append((_("Record-Settings"), self.showConfig, _("Record-Settings"), self.tools, "rec"))
         if sets_opt["tasten"]:
             menu.append((_("RC-Buttons -Settings"), self.rc_tasten, _("RC-Buttons -Settings"), self.tools, None))
@@ -4822,7 +4811,7 @@ class WebradioFSScreen_15(Screen, InfoBarSeek, HelpableScreen, InfoBarNotificati
         if choice and choice[1]:
             if len(choice) > 3 and choice[3]:
                 self.m_back = choice[3]
-            if len(choice) > 4 and choice[4] != None:
+            if len(choice) > 4 and choice[4] is not None:
                choice[1](choice[4])
             else:
                 choice[1]()
@@ -4873,10 +4862,10 @@ class WebradioFSScreen_15(Screen, InfoBarSeek, HelpableScreen, InfoBarNotificati
     def patch_ow(self, nummer):
             newwrite = ""
             start = 0
-            start2 = 1
+            start2 = 1  # noqa F841
             f = open("/usr/lib/enigma2/python/Plugins/Extensions/OpenWebif/controllers/views/main.tmpl", "r")
             for x in f.readlines():
-                 if not "webradioFS" in x:
+                 if "webradioFS" not in x:
                      newwrite += x
                  if nummer == 1:
                      if "#def extrasMenu" in x:
@@ -4889,13 +4878,13 @@ class WebradioFSScreen_15(Screen, InfoBarSeek, HelpableScreen, InfoBarNotificati
             try:
                 os.remove("main.py")
                 os.remove("main.pyo")
-            except:
+            except OSError:
                pass
             os.system("cheetah-compile main")
             self.meld_screen(_("Patch finished.") + " " + _("Restart must be performed"), "webradioFS- " + _("query"), 0, "??", self.patch_ow2, True)
 
     def patch_ow2(self, result):
-        if result == True:
+        if result is True:
             self.volctrl.setVolume(self.org_vol, self.org_vol)
             quitMainloop(3)
 
@@ -4968,7 +4957,7 @@ class WebradioFSScreen_15(Screen, InfoBarSeek, HelpableScreen, InfoBarNotificati
         self.session.openWithCallback(self.showConfigDone, WebradioFS_FB_Setup_13)
 
     def show_pictures(self):
-        if pcfs == True:
+        if pcfs is True:
             try:
                 path = sets_exp["coversafepath"]
                 self.wbrScreenSaver_stop()
@@ -4982,13 +4971,13 @@ class WebradioFSScreen_15(Screen, InfoBarSeek, HelpableScreen, InfoBarNotificati
             self.extras()
 
     def slideshow(self):
-        if pcfs == True:
+        if pcfs is True:
             try:
                 self.wbrScreenSaver_stop()
                 right_site.hide()
                 self.session.openWithCallback(self.showConfigDone, PictureCenter)
                 self.pcfs_run = True
-            except:
+            except Exception:
                 self.meld_screen(_("Plugin PictureCenterFS not installed or Path failed"), "webradioFS - Info", 20, "ERROR")
                 self.showConfigDone()
 
@@ -5020,7 +5009,7 @@ class WebradioFSScreen_15(Screen, InfoBarSeek, HelpableScreen, InfoBarNotificati
 
     def aktual_back(self, antwort):
         self.errorzaehler += 1
-        if antwort == True:
+        if antwort is True:
             self.aktual()
         else:
             self.ok(None, self.errorzaehler)
@@ -5028,7 +5017,7 @@ class WebradioFSScreen_15(Screen, InfoBarSeek, HelpableScreen, InfoBarNotificati
     def aktual(self, stream_ok="nein", answer=None):
         if self.rec_list or satradio or self.configfile2[1] > 29:
             self.showConfigDone()
-        elif stream_ok != False:
+        elif stream_ok is not False:
             if self.stream_urls and self.errorzaehler < len(self.stream_urls) and stream_ok != "aktual" and self["streamlist"].getCurrent()[0][1] == 0:
                 self.meld_screen(_('Connection attempt') + ' ' + str(self.errorzaehler + 1) + ' ' + _('of') + ' ' + str(len(self.stream_urls)) + ' \n\n' + _('Stop trying to connect?\n(wait to check update from DB)'), "webradioFS- " + _("query"), 5, "??", self.aktual_back, False)
 #            else:
@@ -5091,7 +5080,7 @@ class WebradioFSScreen_15(Screen, InfoBarSeek, HelpableScreen, InfoBarNotificati
         if self.e_help == "off":
             self.display_art = "info"
             self.ab_info = "About"
-            info = None
+            info = None  # noqa F841
             self["key_red2"].setText(_("exit"))
             #self.versionstest=self.online_vers_check()
             aboutlist = []
@@ -5127,7 +5116,7 @@ class WebradioFSScreen_15(Screen, InfoBarSeek, HelpableScreen, InfoBarNotificati
         if len(txt):
             self.update_txt = self.update_txt + txt + "\n"
             self["help"].setText(self.update_txt)
-            d = debug(str(txt))
+            d = debug(str(txt))  # noqa F841
 
 
 #### update ende ################################################
@@ -5144,7 +5133,7 @@ class WebradioFSScreen_15(Screen, InfoBarSeek, HelpableScreen, InfoBarNotificati
                s = self.play_stream
             t1 = _("Info for selected stream:")
             if played == 1:
-                t1 = _("Info for continuous stream:")
+                t1 = _("Info for continuous stream:")  # noqa F841
             self.text_list2 = []
             if s:
               self.text_list2.append((_("Streamname:"), s["name"]))
@@ -5202,13 +5191,13 @@ class WebradioFSScreen_15(Screen, InfoBarSeek, HelpableScreen, InfoBarNotificati
             self["streamlist"].setList(self.text_list2)
             try:
                 self["playtext"].setText(s["descrip"])
-            except:
+            except Exception:
                 self.meld_screen(_("Error in Stream-data, webradioFS.fav corrupted"), "webradioFS- " + _("ERROR"), 30, "ERROR")
             self["key_red2"].setText(_("back"))
 
     def showConfig(self, abteil):
         self.wbrScreenSaver_stop()
-        fav_datei = self.favoritenlist[self.fav_index]
+        fav_datei = self.favoritenlist[self.fav_index]  # noqa F841
         self.session.openWithCallback(self.showConfigDone, WebradioFSSetup_13, abteil)
 
     def set_all_options(self):
@@ -5224,8 +5213,8 @@ class WebradioFSScreen_15(Screen, InfoBarSeek, HelpableScreen, InfoBarNotificati
         if args == 2:
             self.m_back = None
             self.meld_screen(_("No Pictures in Path"), _("ERROR"), 20, "ERROR")
-        elif self.tv1 == None and self.video == None:
-            if self.menu_on and self.m_back != None:
+        elif self.tv1 is None and self.video is None:
+            if self.menu_on and self.m_back is not None:
                 if menu == "tools":
                     if sets_opt["expert"] == 0:
                         self.showMainMenu()
@@ -5281,7 +5270,7 @@ class WebradioFSScreen_15(Screen, InfoBarSeek, HelpableScreen, InfoBarNotificati
                     sispmctl_file.close()
         if onwbrInfoScreen and not self.tv1:
             self.ResetwbrScreenSaverTimer()
-        elif (self.anzeige_fav == _("Play file") or satradio or streamplayer.is_playing or self.playlist2 or self.einzelplay) and self.stream_info != _("trying to establish connection") and not self.tv1 and not self.video and not self.configfile2[1] in (7, 3):
+        elif (self.anzeige_fav == _("Play file") or satradio or streamplayer.is_playing or self.playlist2 or self.einzelplay) and self.stream_info != _("trying to establish connection") and not self.tv1 and not self.video and self.configfile2[1] not in (7, 3):
             rec_path = None
             rec_art = ""
             if self.record and l4l_info["rec"] > 0:
@@ -5335,13 +5324,13 @@ class WebradioFSScreen_15(Screen, InfoBarSeek, HelpableScreen, InfoBarNotificati
                 art = sets_scr["screensaver_art"]
                 arts = ((sets_scr["screensaver_art"], None))
 
-            if art == "pcfs_slideshow" and pcfs == True:
+            if art == "pcfs_slideshow" and pcfs is True:
                 if os.path.exists(sets_scr["slideshowpath"]):
                     right_site.hide()
                     self.session.openWithCallback(self.showConfigDone, Pic_Full_View, art2, "saver")
                 else:
                     self.meld_screen(_("Path not exist"), _("ERROR"), 20, "ERROR")
-            elif art == "picscreensaver" and picscreensaver == True:
+            elif art == "picscreensaver" and picscreensaver is True:
                 try:
                     from Plugins.Extensions.picscreensaver.plugin import picScreensaverScreen
                     right_site.hide()
@@ -5368,7 +5357,7 @@ class WebradioFSScreen_15(Screen, InfoBarSeek, HelpableScreen, InfoBarNotificati
                     self.session.openWithCallback(self.ResetwbrScreenSaverTimer, wbrScreenSaver_13, text, text2, rec_path, self.rec_set_list["rec_cover"], sets_scr["Keyword"], art, self.stream_info, logo, rec_art, self.display_on)
             elif art == "tv":
                  #right_site.hide()
-                 if self.tv1 == None:
+                 if self.tv1 is None:
                      self.live_tv()
             elif art == "Play_Video":
                  vid = None
@@ -5377,14 +5366,14 @@ class WebradioFSScreen_15(Screen, InfoBarSeek, HelpableScreen, InfoBarNotificati
                  else:
                     if len(art2):
                         vid = art2
-                 if self.video == None:
+                 if self.video is None:
                     self.pvideo(vid)
             elif art == "Play_Video_sort" or art == "Play_Video_rand":
                  self.pvideo()
             else:
                 coverpath = None
                 right_site.hide()
-                if cover_save["cache"] == None and l4l_info["rec"]:
+                if cover_save["cache"] is None and l4l_info["rec"]:
                     coverpath = cover_save["path"]
                 self.session.openWithCallback(self.ResetwbrScreenSaverTimer, wbrScreenSaver_13, text, text2, rec_path, coverpath, "", art, self.stream_info, playlist, logo, rec_art, self.display_on, self.exit_time, self.standby_aktion)
 
@@ -5398,58 +5387,58 @@ class WebradioFSScreen_15(Screen, InfoBarSeek, HelpableScreen, InfoBarNotificati
             right_site.show()
         if not self.tv1:
             pass
-    #        if self.wecker==1:
-    #                self.volume_timer.stop()
-    #                self.wecker=0
-    #                if self.chill_taste: self.chill_taste.setText(_("Chillen"))
-    #                offtimer = "starten"
-        if onwbrScreenSaver:
-            set_onwbrScreenSaver()
-        if sets_scr["timeout"] > 0 and self.screensaver_off == 0:
-            t1 = sets_scr["timeout"]
-            if self.wbrScreenSaverTimer.isActive():
-                self.wbrScreenSaverTimer.stop()
-            if len(self.favoritenlist):
-                if self.configfile2 and len(self.configfile2):
-                    if not satradio and self.configfile2[1] > 0 and self.configfile2[1] < 30:
-                        t1 = 300
-            self.wbrScreenSaverTimer.startLongTimer(t1)
-        if exit_art != "":
-            self.exit_art = exit_art
-            if exit_art == "stop":
-                self.stop_stream()
-            if exit_art == "sleep":
-                #self.exit_art=
-                #if self.standby_aktion==None or (self.standby_aktion != "chillen" and self.standby_aktion != "wecken"):
-                    #self.volume_timer.stop()
-                    #if self.standby_aktion !="chillen":
+#  		    if self.wecker==1:
+#                self.volume_timer.stop()
+#                self.wecker=0
+#                if self.chill_taste: self.chill_taste.setText(_("Chillen"))
+#                offtimer = "starten"
+            if onwbrScreenSaver:
+                set_onwbrScreenSaver()
+            if sets_scr["timeout"] > 0 and self.screensaver_off == 0:
+                t1 = sets_scr["timeout"]
+                if self.wbrScreenSaverTimer.isActive():
+                    self.wbrScreenSaverTimer.stop()
+                if len(self.favoritenlist):
+                    if self.configfile2 and len(self.configfile2):
+                        if not satradio and self.configfile2[1] > 0 and self.configfile2[1] < 30:
+                            t1 = 300
+                self.wbrScreenSaverTimer.startLongTimer(t1)
+            if exit_art != "":
+                self.exit_art = exit_art
+                if exit_art == "stop":
+                    self.stop_stream()
+                if exit_art == "sleep":
+                    #self.exit_art=
+                    #if self.standby_aktion==None or (self.standby_aktion != "chillen" and self.standby_aktion != "wecken"):
+                        #self.volume_timer.stop()
+                        #if self.standby_aktion !="chillen":
 
-                self.exit_art = "standby"
-                self.wecker = 2
-                self.vol_start()
+                    self.exit_art = "standby"
+                    self.wecker = 2
+                    self.vol_start()
 
-            if exit_art == "record":
-                self.rec_endless()
-            if exit_art == "nummer":
-                self.keyNumberGlobal(num)
-            if exit_art == "record2":
-                self.rec_menu()
-            if self.record and exit_art == "stopped":
-                if not self.rec_list:
-                    self.wbrfs_recClosed2("stopped")
-                else:
-                    self.rec_list = None
-                    self.Favoriten_Wechsel2(None)
-                    self.ok()
-            elif (self.record or self.rec_timer.isActive()) and exit_art == "off":
-                self.power_key_long()
-            elif (self.record or self.rec_timer.isActive()) and exit_art == "standby":
-                self.power_key()
-            elif exit_art != "record":
-                self.exit_art_b(True)
+                if exit_art == "record":
+                    self.rec_endless()
+                if exit_art == "nummer":
+                    self.keyNumberGlobal(num)
+                if exit_art == "record2":
+                    self.rec_menu()
+                if self.record and exit_art == "stopped":
+                    if not self.rec_list:
+                        self.wbrfs_recClosed2("stopped")
+                    else:
+                        self.rec_list = None
+                        self.Favoriten_Wechsel2(None)
+                        self.ok()
+                elif (self.record or self.rec_timer.isActive()) and exit_art == "off":
+                    self.power_key_long()
+                elif (self.record or self.rec_timer.isActive()) and exit_art == "standby":
+                    self.power_key()
+                elif exit_art != "record":
+                    self.exit_art_b(True)
 
     def exit_art_b(self, answer):
-        if answer == True:
+        if answer is True:
             try:
                 if self.exit_art == "standby":
                    self.power_key()
@@ -5529,11 +5518,11 @@ class WebradioFSScreen_15(Screen, InfoBarSeek, HelpableScreen, InfoBarNotificati
             self.chill_taste.setText(_("Chillen"))
         self.standby_aktion = None
         self.setTitle(self.vorgtitle)
-        offtimer = "starten"
+        offtimer = "starten"  # noqa F841
         self.volctrl.setVolume(self.akt_volume, self.akt_volume)
         try:
             self.chsltitel_timer.stop()
-        except:
+        except Exception:
             pass
 
     def sleep_chill_time(self):
@@ -5545,7 +5534,7 @@ class WebradioFSScreen_15(Screen, InfoBarSeek, HelpableScreen, InfoBarNotificati
                 self.standby_aktion = "wecken"
                 self.set_volume()
             elif self.exit_time:
-                if not "min." in self.getTitle().lower():
+                if "min." not in self.getTitle().lower():
                     self.vorgtitle = self.getTitle()
                 if self.standby_aktion == "chillen":
                     self.setTitle(self.vorgtitle + " (" + _("Chilling: still") + " " + str(e_time) + " " + _("min.") + ")")
@@ -5603,12 +5592,12 @@ class WebradioFSScreen_15(Screen, InfoBarSeek, HelpableScreen, InfoBarNotificati
         else:
             self.volume_timer.stop()
 
-        #self.setTitle(self.vorgtitle)
-        if self.standby_aktion != "chillen":
-            self.standby_aktion = None
-            self.setTitle(self.vorgtitle)
-            self.wecker = 2
-            self.vol_start()
+            #self.setTitle(self.vorgtitle)
+            if self.standby_aktion != "chillen":
+                self.standby_aktion = None
+                self.setTitle(self.vorgtitle)
+                self.wecker = 2
+                self.vol_start()
 
     def setStandardVolume(self):
         right_site.hide()
@@ -5728,13 +5717,13 @@ class WebradioFSScreen_15(Screen, InfoBarSeek, HelpableScreen, InfoBarNotificati
             try:
                 cursor = self.connection.cursor()
                 con1 = 1
-            except:
+            except Exception:
                 if db != "/etc/ConfFS/webradioFS_favs.db" and con_check == 0:
                     dbTimer = eTimer()
                     if fontlist[4]:
-                        dbTimer_conn = dbTimer.timeout.connect(self.getStreams, 1)
+                        dbTimer_conn = dbTimer.timeout.connect(self.getStreams, 1)  # noqa F841
                     else:
-                       dbTimer.callback.append(self.getStreams, 1)
+                        dbTimer.callback.append(self.getStreams, 1)
                     dbTimer.startLongTimer(120)
 #                else:
 
@@ -5757,7 +5746,7 @@ class WebradioFSScreen_15(Screen, InfoBarSeek, HelpableScreen, InfoBarNotificati
                 except Exception:
                     pass
                 cursor.execute("select * from groups;")
-                del_row = None
+                del_row = None  # noqa F841
                 for row in cursor:
                     if not str(row[1]).startswith("wbrfs"):
                         groups.append(row)
@@ -5767,13 +5756,13 @@ class WebradioFSScreen_15(Screen, InfoBarSeek, HelpableScreen, InfoBarNotificati
                     failed = []
                     for row in cursor:
                         try:
-                            test1 = int(row[3]) + int(row[2]) + int(row[5]) + int(row[7])
+                            test1 = int(row[3]) + int(row[2]) + int(row[5]) + int(row[7])  # noqa F841
                             pvr_pic = ""
                             if row[10] == "pvr":
                                 pos = row[9].rfind(':')
                                 pvr_pic = row[9][:pos].rstrip(':').replace(':', '_') + ".png"
                             stream_liste.append([row[0], row[1], row[2], row[3], art, row[5], 0, "radio", row[6], row[8], pvr_pic])
-                        except:
+                        except Exception:
                             failed.append(row[2])
                     if len(failed):
                         for x in failed:
@@ -5784,7 +5773,7 @@ class WebradioFSScreen_15(Screen, InfoBarSeek, HelpableScreen, InfoBarNotificati
                     cursor.execute("select * from playlists;")
                     for row in cursor:
                         playlists.append(row)
-                except:
+                except Exception:
                     cursor.execute('CREATE TABLE IF NOT EXISTS playlists (ID INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT, name TEXT NOT NULL,dir TEXT NOT NULL,subdirs INTEGER,random INTEGER, autoplay INTEGER,sscr TEXT );')
 
                 self.connection.commit()
@@ -5804,7 +5793,7 @@ class WebradioFSScreen_15(Screen, InfoBarSeek, HelpableScreen, InfoBarNotificati
                 cursor.execute("select name, descrip, url, typ, genre2, defekt,bitrate,genre,volume,uploader,rec,zuv,picon,group1,stream_id,sscr,cache from streams WHERE stream_id=%d;" % id)
                 for row in cursor:
                     try:
-                        r = int(row[5]) + row[6]
+                        r = int(row[5]) + row[6]  # noqa F841
                         single_stream = {"name": row[0], "descrip": row[1], "url": row[2], "typ": row[3], "genre2": row[4], "defekt": row[5], "bitrate": row[6], "genre": row[7], "volume": row[8], "uploader": row[9], "rec": row[10], "zuv": row[11], "picon": row[12], "group1": row[13], "stream_id": row[14], "sscr": row[15], "cache": row[16]}
                     except Exception:
                         cursor.execute("delete from streams where stream_id = %d" % row[14])
@@ -5903,9 +5892,9 @@ class WebradioFSScreen_15(Screen, InfoBarSeek, HelpableScreen, InfoBarNotificati
 
 
     def zs2(self, answer=None):
-        if answer != None:
+        if answer is not None:
             global my_settings
-            if answer == True:
+            if answer is True:
                 sets_grund["zs"] = True
                 write_settings((("grund", sets_grund),))
             else:
@@ -5963,7 +5952,7 @@ class Fav_edit_13(Screen, ConfigListScreen):
                     for row in self.cursor:
                         stream = {"name": row[0], "descrip": row[1], "url": row[2], "typ": row[3], "genre2": row[4], "defekt": row[5], "bitrate": row[6], "genre": row[7], "volume": row[8], "uploader": row[9], "rec": row[10], "zuv": row[11], "picon": row[12], "group1": row[13], "stream_id": row[14], "sscr": row[15], "cache": row[16]}
                     self.stream_id = stream["stream_id"]
-                except Exception as e:
+                except Exception:
                     self.les_err = 1
             if self.neu == 3:
                 titel1 = " webradioFS - " + _("Add Stream")
@@ -5984,7 +5973,7 @@ class Fav_edit_13(Screen, ConfigListScreen):
             sd["cache"] = int(stream["cache"])
             try:
                 sd["vid"] = stream["sscr"].split(",")[1]
-            except:
+            except Exception:
                 sd["vid"] = "tmp"
             for x in fav_groups:
                 if stream["group1"] == _("None"):
@@ -6039,7 +6028,7 @@ class Fav_edit_13(Screen, ConfigListScreen):
             "blue": self.dele,
         }, -2)
         self.setTitle(titel1)
-        webradioFSConfigList = []
+        webradioFSConfigList = []  # noqa F841
         self.configparser = ConfigParser()
         ConfigListScreen.__init__(self, [], session=session, on_change=self.load_list)
         self["config"].onSelectionChanged.append(self.setHelp)
@@ -6060,7 +6049,7 @@ class Fav_edit_13(Screen, ConfigListScreen):
                     eListboxPythonConfigContent.setDescriptionFont(parseFont(conf_font2, ((1, 1), (1, 1))))
                     eListboxPythonConfigContent.setValueFont(parseFont(conf_font2, ((1, 1), (1, 1))))
                     eListboxPythonConfigContent.setItemHeight(conf_item)
-                    stylemgr.setStyle(0, styleskinned)
+                    stylemgr.setStyle(0, skinned)
             except Exception as e:
                 f = open("/var/webradioFS_debug.log", "a")
                 f.write("set-fontin setup2:\n" + str(e) + "\n")
@@ -6114,7 +6103,7 @@ class Fav_edit_13(Screen, ConfigListScreen):
             self.conf_group.value = str(g)
 
     def meld_screen(self, text, titel, timeout=0, type1="INFO", aktion=None, default=True):
-        text_len = len(text.split("\n"))
+        text_len = len(text.split("\n"))  # noqa F841
         melde_screen.start(text, titel, aktion, default, type1, timeout, sd)
         self.meldung1 = True
 
@@ -6125,7 +6114,7 @@ class Fav_edit_13(Screen, ConfigListScreen):
         if m1 and len(m1) and m1[1] != 0:
             if m1[3] == "??":
                 b1 = m1[1](m1[2])
-            elif m1[2] == True:
+            elif m1[2] is True:
                 b1 = m1[1]()
         if b1:
             b1
@@ -6138,11 +6127,11 @@ class Fav_edit_13(Screen, ConfigListScreen):
 
     def new_groupFinished(self, ret):
         right_site.show()
-            if ret:
-                if ret in self.groups:
-                    self.meld_screen(_("Group exist"), "webradioFS - Info", 0, "ERROR")
-                else:
-                    self.add_g(ret)
+        if ret:
+            if ret in self.groups:
+                self.meld_screen(_("Group exist"), "webradioFS - Info", 0, "ERROR")
+            else:
+                self.add_g(ret)
 
     def path_wahl(self):
         right_site.hide()
@@ -6245,7 +6234,7 @@ class Fav_edit_13(Screen, ConfigListScreen):
              try:
                  self.cursor.execute('SELECT COUNT (*) from streams where name = "%s" and group1 = "%s";' % (self.conf_stream.value, self.g_n))
                  data = self.cursor.fetchone()
-             except:
+             except Exception:
                 data = [0]
              if data[0] > 0:
                     self.cursor.execute('SELECT stream_id from streams where name = "%s" and group1 = "%s";' % (self.conf_stream.value, self.g_n))
@@ -6336,7 +6325,7 @@ class WebradioFSSetup_13(Screen, ConfigListScreen):
         self.debug = NoSave(ConfigSelection(default=sets_exp["debug"], choices=[(0, "min"), (1, "on error"), (2, "max")]))
         vi = sets_exp["versions_info"]
         if str(sets_exp["versions_info"]) != "True" and str(sets_exp["versions_info"]) != "False":
-          vi = True
+          vi = True  # noqa F841
         self.stop_abschalt = NoSave(ConfigYesNo(default=sets_exp["stop_abschalt"]))
         self.pw1 = [(str(sets_exp["picwords1"]), str(sets_exp["picwords1"]))]
         self.pw2 = [(str(sets_exp["picwords2"]), str(sets_exp["picwords2"]))]
@@ -6348,9 +6337,9 @@ class WebradioFSSetup_13(Screen, ConfigListScreen):
 
 #if abteil=="opt":
         ansicht = sets_opt["expert"]
-        if ansicht == True:
+        if ansicht is True:
             ansicht = 1
-        elif ansicht == False:
+        elif ansicht is False:
             ansicht = 0
         self.opt_expert = NoSave(ConfigSelection(default=ansicht, choices=[(0, _("simple")), (2, _("Show all options"))]))  # ,(1,_("Individually adjustable"))
         self.opt_views = NoSave(ConfigYesNo(default=sets_opt["views"]))
@@ -6417,7 +6406,7 @@ class WebradioFSSetup_13(Screen, ConfigListScreen):
                 while i < 30:
                     try:
                         set.append(lcd_sets[i])
-                    except:
+                    except Exception:
                         set.append(l4lsa[i])
                     i += 1
                 lcd_sets = set
@@ -6425,7 +6414,7 @@ class WebradioFSSetup_13(Screen, ConfigListScreen):
             self.lcd_nr = NoSave(ConfigInteger(default=int(lcd_sets[1]), limits=(0, 10)))
             from Plugins.Extensions.LCD4linux.module import L4Lelement
             L4LwbrFS = L4Lelement()
-            display_size = L4LwbrFS.getResolution(self.lcd_nr.value)[0]
+            display_size = L4LwbrFS.getResolution(self.lcd_nr.value)[0]  # noqa F841
             AlignType = [(0, _("left")), (1, _("center")), (2, _("right")), ("5%", _("5%")), ("10%", _("10%")), ("15%", _("15%")), ("20%", _("20%")), ("25%", _("25%")), ("30%", _("30%")), ("35%", _("35%")), ("40%", _("40%")), ("45%", _("45%")), ("50%", _("50%")), ("55%", _("55%")), ("60%", _("60%")), ("65%", _("65%")), ("70%", _("70%")), ("75%", _("75%")), ("80%", _("80%")), ("85%", _("85%")), ("90%", _("90%")), ("95%", _("95%"))]
             self.lcd_stop = NoSave(ConfigYesNo(default=str2bool(lcd_sets[2])))
             self.lcd_screen = NoSave(ConfigInteger(default=int(lcd_sets[3]), limits=(0, 300)))
@@ -6548,19 +6537,19 @@ class WebradioFSSetup_13(Screen, ConfigListScreen):
                     eListboxPythonConfigContent.setDescriptionFont(parseFont(conf_font1, ((1, 1), (1, 1))))
                     eListboxPythonConfigContent.setValueFont(parseFont(conf_font2, ((1, 1), (1, 1))))
                     eListboxPythonConfigContent.setItemHeight(conf_item)
-                    stylemgr.setStyle(0, styleskinned)
-            except:
+                    stylemgr.setStyle(0, skinned)
+            except Exception:
                 pass
         self.refresh()
         self.reloadList()
         self.setTitle(_("webradioFS - Settings"))
 
     def startstream(self):
-        l = []
+        items = []
         for x in self.stream_liste:
-            l.append((x[1], x[0]))
+            items.append((x[1], x[0]))
         right_site.hide()
-        self.session.openWithCallback(self.startsel, ChoiceBox, _("Select Stream for automatic start"), list=(l))
+        self.session.openWithCallback(self.startsel, ChoiceBox, _("Select Stream for automatic start"), list=(items))
 
     def startsel(self, ret):
         right_site.show()
@@ -6647,7 +6636,7 @@ class WebradioFSSetup_13(Screen, ConfigListScreen):
                 getConfigListEntry(_("Set sispmctl when saver off:"), self.sismctl_ssr2),
                 ))
         elif self.abteil == "audiofiles":
-                if self.audio_save_random == True:
+                if self.audio_save_random is True:
                    self.audio_sort.value = False
                 self.list.extend((
                     getConfigListEntry(_("default directory") + _(" (Press OK)"), self.audiopath),
@@ -6688,7 +6677,7 @@ class WebradioFSSetup_13(Screen, ConfigListScreen):
                 elif art != "black" and art != "pcfs_slideshow" and art != "sispmctl" and art != "picscreensaver" and art != "tv":
                   self.list.append(getConfigListEntry(_("Fixed position for text and cover"), self.wbrSStextfix))
                   self.list.append(getConfigListEntry(_("Colors from skin"), self.colfromskin))
-                  if self.colfromskin.value != True:
+                  if self.colfromskin.value is not True:
                       self.list.append(getConfigListEntry(_("Color screensaver labels") + _(" (Press OK)"), self.wbrSScolor))
                       self.list.append(getConfigListEntry(_("Color screensaver background") + _(" (Press OK)"), self.wbrSSbgcolor))
                       self.list.append(getConfigListEntry(_("Color random"), self.wbrSSbgcolor_random))
@@ -6776,7 +6765,7 @@ class WebradioFSSetup_13(Screen, ConfigListScreen):
         if m1 and len(m1) and m1[1] != 0:
             if self.type1 == "??":
                 b1 = m1[1](m1[2])
-            elif m1[2] == True:
+            elif m1[2] is True:
                 b1 = m1[1]()
         self.stream_info = self.orig_stream_info
         self.selectionChanged()
@@ -6802,7 +6791,7 @@ class WebradioFSSetup_13(Screen, ConfigListScreen):
     def reloadList(self):
         if l4lR and self.abteil == "l4l":
           try:
-            if self.lcd_on.value == True:
+            if self.lcd_on.value is True:
                 L4LwbrFS.delete("wbrFS.02.pic1")
                 L4LwbrFS.delete("wbrFS.01.txt1")
                 L4LwbrFS.delete("wbrFS.03.txt3")
@@ -6815,15 +6804,15 @@ class WebradioFSSetup_13(Screen, ConfigListScreen):
                 lcd = str(self.lcd_nr.value)
                 screen = str(self.lcd_screen.value)
                 col = self.lcd_txt_color.value
-                if self.lcd_logo.value == True:
+                if self.lcd_logo.value is True:
                     L4LwbrFS.add("wbrFS.02.pic1", {"Typ": "pic", "Transp": "True", "Align": str(self.lcd_logo_align.value), "Pos": self.lcd_logo_pos.value, "File": self.logo, "Size": self.lcd_logo_size.value, "Screen": screen, "Lcd": lcd, "Mode": "OnMedia"})
-                if self.lcd_txt1.value == True:
+                if self.lcd_txt1.value is True:
                     L4LwbrFS.add("wbrFS.01.txt1", {"Typ": "txt", "Align": str(self.lcd_txt1_align.value), "Color": col, "Text": "Station", "Pos": self.lcd_txt1_pos.value, "Size": self.lcd_txt1_size.value, "Lines": self.lcd_txt1_lines.value, "Screen": screen, "Lcd": lcd, "Mode": "OnMedia"})
-                if self.lcd_txt3.value == True:
+                if self.lcd_txt3.value is True:
                     L4LwbrFS.add("wbrFS.03.txt3", {"Typ": "txt", "Align": str(self.lcd_txt3_align.value), "Color": col, "Text": "Fav-Group", "Pos": self.lcd_txt3_pos.value, "Size": self.lcd_txt3_size.value, "Lines": self.lcd_txt3_lines.value, "Screen": screen, "Lcd": lcd, "Mode": "OnMedia"})
-                if self.lcd_txt2.value == True:
+                if self.lcd_txt2.value is True:
                     L4LwbrFS.add("wbrFS.02.txt2", {"Typ": "txt", "Align": str(self.lcd_txt2_align.value), "Color": col, "Text": "Infotext", "Pos": self.lcd_txt2_pos.value, "Size": self.lcd_txt2_size.value, "Lines": self.lcd_txt2_lines.value, "Screen": screen, "Lcd": lcd, "Mode": "OnMedia"})
-                if self.lcd_cover.value == True:
+                if self.lcd_cover.value is True:
                     L4LwbrFS.add("wbrFS.01.pic2", {"Typ": "pic", "Align": str(self.lcd_cover_align.value), "Pos": self.lcd_cover_pos.value, "File": self.logo, "Size": self.lcd_cover_size.value, "Screen": screen, "Lcd": lcd, "Mode": "OnMedia"})
                 L4LwbrFS.setScreen(str(self.lcd_screen.value), str(self.lcd_nr.value), True)
                 L4LwbrFS.setHoldKey(True)
@@ -6832,7 +6821,7 @@ class WebradioFSSetup_13(Screen, ConfigListScreen):
              pass
         else:
           try:
-            if not self.cur[0] in (_("Color screensaver labels") + _(" (Press OK)"), _("Color screensaver background") + _(" (Press OK)"), _("backround color:")):
+            if self.cur[0] not in (_("Color screensaver labels") + _(" (Press OK)"), _("Color screensaver background") + _(" (Press OK)"), _("backround color:")):
                self.refresh()
                self["config"].setList(self.list)
           except Exception:
@@ -6858,7 +6847,7 @@ class WebradioFSSetup_13(Screen, ConfigListScreen):
             self.session.open(MessageBox, _("Sorry your path destination is not writeable.\nPlease choose an other one."), type=MessageBox.TYPE_INFO)
 
     def save(self):
-      sets = None
+      sets = None  # noqa F841
       global sets_opt
       global sets_scr
       global sets_rec
@@ -6921,8 +6910,8 @@ class WebradioFSSetup_13(Screen, ConfigListScreen):
               try:
                 if not os.path.exists(self.favpath.value + "webradioFS_favs.db"):
                     copyfile(myfav_file, self.favpath.value + "webradioFS_favs.db")
-                restart = 1
-              except:
+                restart = 1  # noqa F841
+              except Exception:
                 self.favpath.value = self.oldpath
                 self.session.open(MessageBox, _("can not copy Fav-File on new path"), type=MessageBox.TYPE_INFO)
       testcol = self.test_col()
@@ -6931,7 +6920,7 @@ class WebradioFSSetup_13(Screen, ConfigListScreen):
       elif testcol:
            self.session.openWithCallback(self.refresh, MessageBox, _("Sorry, color-Code is failed, settig default"), type=MessageBox.TYPE_INFO)
       else:
-            alles_gut = 1
+            alles_gut = 1  # noqa F841
       right_site.show()
       self.close(True, "tools")
 
@@ -6979,7 +6968,7 @@ class WebradioFSSetup_13(Screen, ConfigListScreen):
         col_err = 0
         for x in col_sets2:
             try:
-                cl = gRGB(int(str(x.value), 0x10))
+                cl = gRGB(int(str(x.value), 0x10))  # noqa F841
             except Exception:
                 x.value = col1[num]
                 col_err = 1
@@ -7028,25 +7017,25 @@ class WebradioFSSetup_13(Screen, ConfigListScreen):
         right_site.show()
         if path is not None:
             if os.path.exists(path):
-                if self["config"].getCurrent()[1] != self.favpath:
-                    self["config"].getCurrent()[1].value = path
-                else:
-                    try:
-                        if self["config"].getCurrent()[1] == self.favpath:
-                            if fileExists(path + "/webradioFS_favs.db"):
-                                self["config"].getCurrent()[1].value = path
+                    if self["config"].getCurrent()[1] != self.favpath:
+                        self["config"].getCurrent()[1].value = path
+                    else:
+                        try:
+                            if self["config"].getCurrent()[1] == self.favpath:
+                                if fileExists(path + "/webradioFS_favs.db"):
+                                    self["config"].getCurrent()[1].value = path
+                                else:
+                                    self.tmp_path = path
+                                    self.session.openWithCallback(self.u_path, MessageBox, _("Create a new subdirectory?"), MessageBox.TYPE_YESNO)
                             else:
                                 self.tmp_path = path
                                 self.session.openWithCallback(self.u_path, MessageBox, _("Create a new subdirectory?"), MessageBox.TYPE_YESNO)
-                        else:
-                            self.tmp_path = path
-                            self.session.openWithCallback(self.u_path, MessageBox, _("Create a new subdirectory?"), MessageBox.TYPE_YESNO)
-                    except:
-                        err = 1
-                        self.session.open(MessageBox, _("Path") + "\n" + path + "\n " + _("not writable!"), MessageBox.TYPE_ERROR)
+                        except Exception:
+                            err = 1  # noqa F841
+                            self.session.open(MessageBox, _("Path") + "\n" + path + "\n " + _("not writable!"), MessageBox.TYPE_ERROR)
 
     def u_path(self, answer):
-        if answer == True:
+        if answer is True:
             self.session.openWithCallback(self.u_path2, InputBox, title=_("Name for new subdirectory"), text="webradioFS", maxSize=False, type=Input.TEXT)
         else:
             self.u_path2()
@@ -7060,7 +7049,7 @@ class WebradioFSSetup_13(Screen, ConfigListScreen):
             self.tmp_path = self.tmp_path + answer
         self["config"].getCurrent()[1].value = self.tmp_path  # +"/"
         if not fileExists(self.tmp_path + "/webradioFS_favs.db") and self["config"].getCurrent()[1] == self.favpath:
-            ret = copyfile(self.oldpath + "webradioFS_favs.db", self.tmp_path + "/webradioFS_favs.db")
+            ret = copyfile(self.oldpath + "webradioFS_favs.db", self.tmp_path + "/webradioFS_favs.db")  # noqa F841
 
     def path_wahl(self):
         text = _("Please select Path")
@@ -7080,7 +7069,7 @@ class WebradioFSSetup_13(Screen, ConfigListScreen):
             savepath = self.audiopath.value
             text = _("Please select startpath for audiofiles...")
         elif self["config"].getCurrent()[1] == self.rec_caching_dir:
-            savepath = self.rec_caching_dir.value
+            savepath = self.rec_caching_dir.value  # noqa F841
             text = _("Please select path for caching...")
         right_site.hide()
         self.session.openWithCallback(self.callAuswahl, SaveLocationBox, text, "", "/", ConfigLocations(default=[self["config"].getCurrent()[1].value]))
@@ -7089,7 +7078,7 @@ class WebradioFSSetup_13(Screen, ConfigListScreen):
         for x in self["config"].list:
             try:
                 x[1].cancel()
-            except:
+            except Exception:
                 pass
         right_site.show()
         if self.abteil == "moduls":
@@ -7166,54 +7155,54 @@ class WebradioFS_FB_Setup_13(Screen, ConfigListScreen):
                     eListboxPythonConfigContent.setDescriptionFont(parseFont(conf_font1, ((1, 1), (1, 1))))
                     eListboxPythonConfigContent.setValueFont(parseFont(conf_font2, ((1, 1), (1, 1))))
                     eListboxPythonConfigContent.setItemHeight(conf_item)
-                    stylemgr.setStyle(0, styleskinned)
-          except:
+                    stylemgr.setStyle(0, skinned)
+          except Exception:
               pass
 
     def auswahl(self):
-                list7 = []
-                for x in FBts_liste:
-                    list7.append((_(x[1]), x[0]))
-                self.session.openWithCallback(self.auswahlFinished, ChoiceBox, title=_("fb"), list=list7)
+        list7 = []
+        for x in FBts_liste:
+            list7.append((_(x[1]), x[0]))
+        self.session.openWithCallback(self.auswahlFinished, ChoiceBox, title=_("fb"), list=list7)
 
     def auswahlFinished(self, ret):
-         if ret is not None and len(ret) == 2:
-             self["config"].getCurrent()[1].value = ret[1]
+        if ret is not None and len(ret) == 2:
+            self["config"].getCurrent()[1].value = ret[1]
 
     def defaults(self):
         FB_conf = []
         xnr = 0
         for x in self["config"].list:
-           x[1].value = xnr
-           FB_conf.append(x)
-           xnr = xnr + 1
-        FBts = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24]
+            x[1].value = xnr
+            FB_conf.append(x)
+            xnr = xnr + 1
+        FBts = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24]  # noqa F841
         self["config"].setList(FB_conf)
 
     def save(self):
         save_list = []
         for x in self["config"].list:
-             save_list.append(x[1].value)
+            save_list.append(x[1].value)
         sv1 = ','.join(str(i) for i in save_list)
         global sets_exp
         sets_exp["FBts_liste"] = sv1
         write_settings((("exp", sets_exp),))
 
     def save2(self, answer):
-        if answer == True:
-           self.session.open(TryQuitMainloop, 3)
+        if answer is True:
+            self.session.open(TryQuitMainloop, 3)
         else:
-           self.close(False, "tools")
+            self.close(False, "tools")
 
     def cancel(self):
         self.close(False, "tools")
 
 
 class SaveLocationBox(LocationBox):
-        def __init__(self, session, text, filename, dir, save_path, minFree=None):
-                inhibitDirs = ["/bin", "/boot", "/dev", "/lib", "/proc", "/sbin", "/sys"]   #, "/var"
-                LocationBox.__init__(self, session, text=text, currDir=dir, bookmarks=None, editDir=False, inhibitDirs=inhibitDirs, minFree=minFree)
-                self.skinName = "LocationBox"
+    def __init__(self, session, text, filename, dir, save_path, minFree=None):
+        inhibitDirs = ["/bin", "/boot", "/dev", "/lib", "/proc", "/sbin", "/sys"]   #, "/var"
+        LocationBox.__init__(self, session, text=text, currDir=dir, bookmarks=None, editDir=False, inhibitDirs=inhibitDirs, minFree=minFree)
+        self.skinName = "LocationBox"
 
 
 class wbrScreenSaver_13(Screen, HelpableScreen, InfoBarNotifications):
@@ -7230,7 +7219,7 @@ class wbrScreenSaver_13(Screen, HelpableScreen, InfoBarNotifications):
         self.onlyPhoto = ""
         self.display_on = display_on
         if sets_view["only_foto"]:
-                    self.onlyPhoto = "&imgtype=photo"
+            self.onlyPhoto = "&imgtype=photo"
         self.bildthema = thema
         self.logo = logo
         self.rec_cover = rec_cover
@@ -7246,7 +7235,7 @@ class wbrScreenSaver_13(Screen, HelpableScreen, InfoBarNotifications):
             if self.playlist:
                 self.sender = self.playlist[0]
                 self.num = self.playlist[2] + 1
-        except:
+        except Exception:
             self.playlist = None
         self.alttext = ""
         self.alt_url = ""
@@ -7259,7 +7248,7 @@ class wbrScreenSaver_13(Screen, HelpableScreen, InfoBarNotifications):
         self.tv = None
         Screen.__init__(self, session)
         if fontlist[9]:
-                    self.skinName = "wbrScreenSaver_e"
+            self.skinName = "wbrScreenSaver_e"
         else:
             self.skinName = "wbrScreenSaver_13"
         InfoBarNotifications.__init__(self)
@@ -7302,7 +7291,7 @@ class wbrScreenSaver_13(Screen, HelpableScreen, InfoBarNotifications):
              "halt": (self.stop_key, _("Stop and exit")),
              "zapdown": (self.play_next, _("Play next")),
              }
-        if ripper_installed == True and not playlist:
+        if ripper_installed is True and not playlist:
            tasten2 = {
              "record": (self.rec_menu, _("Record On/Off")),
              "record_extended": (self.rec_menu2, _("Record-Menu")),
@@ -7340,11 +7329,11 @@ class wbrScreenSaver_13(Screen, HelpableScreen, InfoBarNotifications):
             if fileExists("/tmp/mywbrfs_pic"):
                 self.mypicture = os.popen("md5sum " + "/tmp/mywbrfs_pic").read()
                 try:
-                     os.remove("/tmp/.wbrfs_pic")
-                     copyfile("/tmp/mywbrfs_pic", "/tmp/.wbrfs_pic")
-                     self.cover_ok = 1
-                except:
-                     pass
+                    os.remove("/tmp/.wbrfs_pic")
+                    copyfile("/tmp/mywbrfs_pic", "/tmp/.wbrfs_pic")
+                    self.cover_ok = 1
+                except OSError:
+                    pass
         if l4lR and l4ls[0] == "True" and l4ls[23] == "True":
             self.lcd_bilder = True
         if sets_grund["picsearch"] == "off":
@@ -7359,17 +7348,17 @@ class wbrScreenSaver_13(Screen, HelpableScreen, InfoBarNotifications):
         self.bg_color = None
         try:
             self.st_color = gRGB(int(str(sets_scr["color"]), 0x10))
-        except:
-           pass
+        except Exception:
+            pass
         try:
             self.bg_color = gRGB(int(str(sets_scr["bgcolor"]), 0x10))
-        except:
-           pass
+        except Exception:
+            pass
         self.random_color = str(sets_scr["bgcolor_random"])
         try:
-           self.wbrSStextfix = sets_scr["textfix"]
-        except:
-           self.wbrSStextfix = False
+            self.wbrSStextfix = sets_scr["textfix"]
+        except Exception:
+            self.wbrSStextfix = False
         self.newstart = True
         self.colfromskin = sets_scr["colfromskin"]
         self.onLayoutFinish.append(self.startRun)
@@ -7477,7 +7466,7 @@ class wbrScreenSaver_13(Screen, HelpableScreen, InfoBarNotifications):
                             r = 0
                             if tags:
                               if tags[0]:  # mcover=tags[0]
-                                  coverArtFile = file("/tmp/.wbrfs_pic", 'wb')
+                                  coverArtFile = open("/tmp/.wbrfs_pic", 'wb')
                                   coverArtFile.write(tags[0])
                                   coverArtFile.close()
                                   mcover = 1
@@ -7502,7 +7491,7 @@ class wbrScreenSaver_13(Screen, HelpableScreen, InfoBarNotifications):
                                      len1 = seek.getLength()
                                      duration = len1[1] / 90000
                                      r = "%d:%02d" % (duration / 60, duration % 60)
-                              except:
+                              except Exception:
                                      r = 0
                             l4l_info["Genres"] = self.streamname
                             l4l_info["akt_txt"] = self.stitle
@@ -7535,24 +7524,24 @@ class wbrScreenSaver_13(Screen, HelpableScreen, InfoBarNotifications):
                                           if len(self.url_list) > 0:
                                                self.cover_load(1)
                                       elif (len(self.stitle)):
-                                        typ = 1
-                                        self.t_name = self.stitle
-                                      if len(self.t_name.strip()) and self.hole_bild == None:
+                                            typ = 1
+                                            self.t_name = self.stitle
+                                      if len(self.t_name.strip()) and self.hole_bild is None:
                                             self.t_name = self.t_name.replace(":", "").replace("-", " ").replace("(", " ").replace(")", " ").split()
                                             self.t_name = '+'.join(self.t_name)
                                             url = None
                                             url = Codierung(self.t_name, self.streamname, typ)  # .encode("latin","ignore")
                                             if url:
-                                                    user_agent = 'Mozilla/5.0 (Macintosh; U; Intel Mac OS X 10_6_4; en-US) AppleWebKit/534.3 (KHTML, like Gecko) Chrome/6.0.472.63 Safari/534.3'
-                                                    headers = {'User-Agent': user_agent}
-                                                    callInThread(threadGetPage, url, self.GoogleImageCallback, self.no_cover, 1)
+                                                user_agent = 'Mozilla/5.0 (Macintosh; U; Intel Mac OS X 10_6_4; en-US) AppleWebKit/534.3 (KHTML, like Gecko) Chrome/6.0.472.63 Safari/534.3'
+                                                headers = {'User-Agent': user_agent}  # noqa F841
+                                                callInThread(threadGetPage, url, self.GoogleImageCallback, self.no_cover, 1)
                                             else:
                                                self.no_cover()
                                       else:
                                           self.no_cover()
                         else:
-                              self.stitle = self.streamname
-                              self.no_cover()
+                            self.stitle = self.streamname
+                            self.no_cover()
 
     def GoogleImageCallback(self, result=None):
          if self.zeige_bilder or self.lcd_bilder and not fileExists("/tmp/mywbrfs_pic"):
@@ -7567,17 +7556,17 @@ class wbrScreenSaver_13(Screen, HelpableScreen, InfoBarNotifications):
                     anz = 20
                 if sets_grund["picsearch"] != "var3":
                     if sets_grund["picsearch"] == "var1":
-                         begr = ('src="', '</div>')
+                        begr = ('src="', '</div>')
                     if sets_grund["picsearch"] == "var2":
-                         begr = ("murl&quot;:&quot;", "&amp;")
+                        begr = ("murl&quot;:&quot;", "&amp;")
                     founds = 1
                     laenge = len(result)
                     while founds and startPos < laenge and i < anz:
                         url1 = ''
                         bfoundPos = result.find(begr[0], startPos)
                         if bfoundPos == -1:
-                                anz = 100
-                                break
+                            anz = 100
+                            break
                         bfoundPos2 = result.find(begr[1], bfoundPos + 1)
                         if bfoundPos != -1 and bfoundPos2 != -1:
                             if sets_grund["picsearch"] == "var1":
@@ -7597,12 +7586,12 @@ class wbrScreenSaver_13(Screen, HelpableScreen, InfoBarNotifications):
                         else:
                             break
                         if not len(url1) or "blogspot" in url1:
-                                url1 = ''
+                            url1 = ''
                         else:
-                                url1 = url1.replace("&amp;", "&").replace("%25", "%")
-                                if url1 not in self.url_list and url1.startswith('http'):
-                                    self.url_list.append(url1)
-                                    i += 1
+                            url1 = url1.replace("&amp;", "&").replace("%25", "%")
+                            if url1 not in self.url_list and url1.startswith('http'):
+                                self.url_list.append(url1)
+                                i += 1
                         startPos = bfoundPos2 + 10
                 elif sets_grund["picsearch"] == "var3":
                     bfoundPos = result.find('artworkUrl100')
@@ -7611,27 +7600,27 @@ class wbrScreenSaver_13(Screen, HelpableScreen, InfoBarNotifications):
                         if bfoundPos != -1 and bfoundPos2 != -1:
                             url1 = result[bfoundPos + 16:bfoundPos2 - 1]
                             if url1 != '' and url1 not in self.url_list and url1.startswith('http'):
-                              self.url_list.append(url1)
+                                self.url_list.append(url1)
             if len(self.url_list) > 0:
-                    self.cover_load()
-                    self.hole_bild = None
+                self.cover_load()
+                self.hole_bild = None
             else:
                 self.no_cover()
 
     def cover_load(self, num=0):
-            if (self.zeige_bilder or self.lcd_bilder) and not fileExists("/tmp/mywbrfs_pic"):
-                if len(self.url_list) > 0:
-                    self.cover_ok = 1
-                    self.url_index = self.url_index + num
-                    if self.url_index > len(self.url_list) - 1:
-                       self.url_index = 0
-                    elif self.url_index < 0:
-                       self.url_index = len(self.url_list) - 1
-                    url = self.url_list[self.url_index]
-                    response = requests.head(url)
-                    callInThread(threadGetPage, url, self.coverDownloadFinished, self.coverDownloadFailed, 2)
-                else:
-                    self.no_cover()
+        if (self.zeige_bilder or self.lcd_bilder) and not fileExists("/tmp/mywbrfs_pic"):
+            if len(self.url_list) > 0:
+                self.cover_ok = 1
+                self.url_index = self.url_index + num
+                if self.url_index > len(self.url_list) - 1:
+                    self.url_index = 0
+                elif self.url_index < 0:
+                    self.url_index = len(self.url_list) - 1
+                url = self.url_list[self.url_index]
+                response = requests.head(url)  # noqa F841
+                callInThread(threadGetPage, url, self.coverDownloadFinished, self.coverDownloadFailed, 2)
+            else:
+                self.no_cover()
 
     def nextcover(self):
         if self.zeige_bilder and not fileExists("/tmp/mywbrfs_pic"):
@@ -7649,7 +7638,7 @@ class wbrScreenSaver_13(Screen, HelpableScreen, InfoBarNotifications):
                  del self.url_list[self.url_index]
                  self.url_index = 0
                  self.cover_load()
-             except:
+             except Exception:
                  self.no_cover()
 
     def no_cover(self):
@@ -7667,7 +7656,7 @@ class wbrScreenSaver_13(Screen, HelpableScreen, InfoBarNotifications):
                  if scover and self.zeige_bilder and self.rec_cover:
                      try:
                              copyfile("/tmp/.wbrfs_pic", self.rec_cover + self.stitle + ".jpg")  # +"cover/"
-                     except:
+                     except OSError:
                          pass
                  if self.lcd_bilder:
                        try:
@@ -7675,7 +7664,7 @@ class wbrScreenSaver_13(Screen, HelpableScreen, InfoBarNotifications):
                            L4LwbrFS.setScreen(l4ls[3], l4ls[1], True)
                            if l4ls[2] == "True":
                                L4LwbrFS.setHoldKey(True)
-                       except:
+                       except Exception:
                            L4LwbrFS = None
                            self.session.open(MessageBox, _("LCD4Linux-Version not compatible") + "\n(min = 4.x)", MessageBox.TYPE_ERROR)
                  if fileExists("/tmp/mywbrfs_pic"):
@@ -7713,7 +7702,7 @@ class wbrScreenSaver_13(Screen, HelpableScreen, InfoBarNotifications):
              f2.close()
              infile = None
              self.session.open(MessageBox, _("Cover saved"), MessageBox.TYPE_INFO, timeout=3)
-          except:
+          except Exception:
              self.session.open(MessageBox, _("Error, Cover no saved"), MessageBox.TYPE_ERROR, timeout=3)
 
     def titel_save(self):
@@ -7728,7 +7717,7 @@ class wbrScreenSaver_13(Screen, HelpableScreen, InfoBarNotifications):
         self.tfOffset = None
         self.bgcolor1 = None
         self.tbTr = None
-        if self.colfromskin != True:
+        if self.colfromskin is not True:
           if self["display_nplaying"].skinAttributes:
             for (attrib, value) in self["display_nplaying"].skinAttributes:
                         if (attrib == 'foregroundColor') and value[0] == "#":
@@ -7770,7 +7759,7 @@ class wbrScreenSaver_13(Screen, HelpableScreen, InfoBarNotifications):
             tage = [_('Monday'), _('Tuesday'), _('Wednesday'), _('Thursday'), _('Friday'), _('Saturday'), _('Sunday')]
             diezeit = time.localtime(time.time())
             self.TagesZahl = tage[diezeit[6]]
-            if self.colfromskin != True:
+            if self.colfromskin is not True:
               try:
                 if self.tfsColor:
                       self["display_nplaying"].instance.setShadowColor(parseColor("#000000"))
@@ -7790,14 +7779,14 @@ class wbrScreenSaver_13(Screen, HelpableScreen, InfoBarNotifications):
                     self["display_time"].instance.setBackgroundColor(self.bg_color)
                     self["background1"].instance.setBackgroundColor(self.bg_color)
                     self["background1"].instance.setForegroundColor(self.bg_color)
-              except:
+              except Exception:
                 pass
             self.moveTimer.start(5)
         self.__mevUpdatedInfo()
 
     def set_logo(self):
-                                  self["cover"].updateIcon(4, self.logo)
-                                  self["cover"].show()
+        self["cover"].updateIcon(4, self.logo)
+        self["cover"].show()
 
     def blue(self):
          saver_list = [(_("rotation"), "wechsel"), (_("only show big pictures"), "big"), (_("show no pictures"), "no picture"), (_("show no big pictures"), "no big"), (_("pure black"), "black"), (_("theme images"), "theme_images"), (_("Show logo"), "Show_logo")]
@@ -7805,33 +7794,33 @@ class wbrScreenSaver_13(Screen, HelpableScreen, InfoBarNotifications):
 
     def blue2(self, result=None):
         if result:
-           self.saver_art = result[1]
-           self.zeige_bilder = True
-           if self.saver_art in ("no picture", "black", "Show_logo"):
-               self.zeige_bilder = None
-           self.startRun()
+            self.saver_art = result[1]
+            self.zeige_bilder = True
+            if self.saver_art in ("no picture", "black", "Show_logo"):
+                self.zeige_bilder = None
+            self.startRun()
 
     def change_keyword(self):
         if self.zeige_bilder:
-          if self.bildthema != "":
-           self.session.openWithCallback(self.new_keyword, InputBox, title=_("change Keyword for Picture"), text=self.bildthema, maxSize=False, type=Input.TEXT)
-          else:
-            self.session.open(MessageBox, _("First select Screensaver-Art") + ": " + _("theme images"), MessageBox.TYPE_INFO, timeout=3)
+            if self.bildthema != "":
+                self.session.openWithCallback(self.new_keyword, InputBox, title=_("change Keyword for Picture"), text=self.bildthema, maxSize=False, type=Input.TEXT)
+            else:
+                self.session.open(MessageBox, _("First select Screensaver-Art") + ": " + _("theme images"), MessageBox.TYPE_INFO, timeout=3)
 
     def set_random(self):
         text = None
         if self.random_color == "0":
-           self.random_color = "1"
-           text = _("random color for labels")
+            self.random_color = "1"
+            text = _("random color for labels")
         elif self.random_color == "1":
-           self.random_color = "2"
-           text = _("random color for background")
+            self.random_color = "2"
+            text = _("random color for background")
         elif self.random_color == "2":
-           self.random_color = "3"
-           text = _("random color for labels and background")
+            self.random_color = "3"
+            text = _("random color for labels and background")
         elif self.random_color == "3":
-           self.random_color = "0"
-           text = _("not random color")
+            self.random_color = "0"
+            text = _("not random color")
         self.bg_color_b = self.bg_color
         if str(self.bg_color)[0] == "#":
             self.bg_color_b = parseColor(self.bg_color)
@@ -7842,26 +7831,26 @@ class wbrScreenSaver_13(Screen, HelpableScreen, InfoBarNotifications):
         self["display_station"].instance.setBackgroundColor(self.bg_color_b)
         self["display_time"].instance.setBackgroundColor(self.bg_color_b)
         if self.st_color and (self.random_color == "0" or self.random_color == "2"):
-           self["display_nplaying"].instance.setForegroundColor(self.st_color_b)
-           self["display_station"].instance.setForegroundColor(self.st_color_b)
-           self["display_time"].instance.setForegroundColor(self.st_color_b)
+            self["display_nplaying"].instance.setForegroundColor(self.st_color_b)
+            self["display_station"].instance.setForegroundColor(self.st_color_b)
+            self["display_time"].instance.setForegroundColor(self.st_color_b)
         if self.bg_color and (self.random_color == "0" or self.random_color == "1"):
-           self["background1"].instance.setBackgroundColor(self.bg_color_b)
-           self["background1"].instance.setForegroundColor(self.bg_color_b)
+            self["background1"].instance.setBackgroundColor(self.bg_color_b)
+            self["background1"].instance.setForegroundColor(self.bg_color_b)
         if text:
             self.session.open(MessageBox, text, MessageBox.TYPE_INFO, timeout=3)
 
     def new_keyword(self, ret):
-           if ret:
-               self.url_list = []
-               self.bildthema = ret
-               self.startRun()
+        if ret:
+            self.url_list = []
+            self.bildthema = ret
+            self.startRun()
 
     def moveTimer_Timeout(self):
       r_color = int(self.random_color)
       if r_color > 0:
           RGB = None
-          tf = None
+          tf = None  # noqa F841
           tfs = None
           if r_color > 1:
             a = 0
@@ -7919,8 +7908,8 @@ class wbrScreenSaver_13(Screen, HelpableScreen, InfoBarNotifications):
         if (self.saver_art == "big" or self.saver_art == "theme_images") and self.cover_ok > 0:
              self.big_cover = 3
         else:
-            uhrzeit = strftime("%H:%M", localtime()) + self.timetext_s
-            self.timewidget = "\n" + self.TagesZahl + ", " + strftime("%d.%m.%Y", localtime())
+            uhrzeit = time.strftime("%H:%M", time.localtime()) + self.timetext_s
+            self.timewidget = "\n" + self.TagesZahl + ", " + time.strftime("%d.%m.%Y", time.localtime())
             t00 = ""
             if not self.playlist:
                 if l4l_info["rec"] == 1:
@@ -7929,11 +7918,11 @@ class wbrScreenSaver_13(Screen, HelpableScreen, InfoBarNotifications):
                      t00 = " **" + _("recording in progress") + " ..."
             text01 = uhrzeit + t00 + self.timewidget
             self["display_time"].setText(text01)
-            titeltext = uhrzeit + "\n" + self.title2
+            titeltext = uhrzeit + "\n" + self.title2  # noqa F841
         if self.saver_art == "no big" or not self.zeige_bilder:
             self.big_cover = 0
         if self.saver_art == "Show_logo":
-               self.set_logo()
+            self.set_logo()
         if DWide == 720:
                 x = random.randint(10, 482)
                 y = random.randint(0, 338)
@@ -7981,7 +7970,7 @@ class wbrScreenSaver_13(Screen, HelpableScreen, InfoBarNotifications):
             self.tv = None
         try:
             del self.picload
-        except:
+        except Exception:
            pass
         if self.moveTimer.isActive():
             self.moveTimer.stop()
@@ -8094,7 +8083,7 @@ class titel_save():
              f.write(text + "\n")
              f.close()
              self.inf = _("Title saved in titel_list.txt")
-           except:
+           except OSError:
              self.inf = _("Error, Title no saved")
 
 
@@ -8116,14 +8105,14 @@ class file_list:
                                 fullpath = os.path.join(directory, name)
                                 if not name.startswith(".") and not fullpath.startswith("."):
                                     if os.path.isfile(fullpath) and os.path.getsize(fullpath) > 0:
-                                        if art == None:
+                                        if art is None:
                                             if name.lower().endswith((".jpg", "jpeg", "jpe", "bmp", "png")) and not name.startswith("."):
                                                 self.Dateiliste2.append((fullpath, name, "all", True, "file"))
                                         if art == "rec":
                                             if name.lower().endswith((".mp3")) and not name.startswith("."):
                                                 self.Dateiliste2.append((fullpath, name, "all", True, "file"))
                                     elif os.path.isdir(fullpath):
-                                        if subdirs1 == True:
+                                        if subdirs1 is True:
                                             directories.append(fullpath)
                                         elif subdirs1 == "True2":
                                             self.Dateiliste.append((fullpath + "/", name, "all", True, "dir", True))
@@ -8147,7 +8136,7 @@ class rec_menu_13(Screen, ConfigListScreen):
 
                 self.stream = stream
                 self.list = []
-                self.now = [x for x in localtime()]
+                self.now = [x for x in time.localtime()]
                 def_Start_Time = time.mktime(self.now)
                 if int(self.stream[2]) > 0:
                     self.timed = NoSave(ConfigSelection(choices=[("only switch", _("only switch"))]))
@@ -8210,8 +8199,8 @@ class rec_menu_13(Screen, ConfigListScreen):
                     eListboxPythonConfigContent.setDescriptionFont(parseFont(conf_font1, ((1, 1), (1, 1))))
                     eListboxPythonConfigContent.setValueFont(parseFont(conf_font2, ((1, 1), (1, 1))))
                     eListboxPythonConfigContent.setItemHeight(conf_item)
-                    stylemgr.setStyle(0, styleskinned)
-              except:
+                    stylemgr.setStyle(0, skinned)
+              except Exception:
                   pass
             self.reloadList()
 
@@ -8323,7 +8312,7 @@ class rec_menu_13(Screen, ConfigListScreen):
             if self.neg_filter.value != "":
                 neg = self.neg_filter.value.lower().replace(",", "|")
             if self.timed.value == "by time" and self.endTime.value != self.startTime:
-                self.now = [x for x in localtime()]
+                self.now = [x for x in time.localtime()]
                 if self.now[3] > self.startTime.value[0]:
                     add = 24
                 if self.startTime.value[0] > self.endTime.value[0]:
@@ -8331,7 +8320,7 @@ class rec_menu_13(Screen, ConfigListScreen):
                 diff2 = (self.startTime.value[0] + add - self.now[3]) * 60 + self.startTime.value[1] - self.now[4]
                 diff_min = (self.endTime.value[0] + add2 - self.startTime.value[0]) * 60 + self.endTime.value[1] - self.startTime.value[1]
             elif self.timed.value == "only switch":
-                self.now = [x for x in localtime()]
+                self.now = [x for x in time.localtime()]
                 if self.now[3] > self.startTime.value[0]:
                     add = 24
                 diff2 = (self.startTime.value[0] + add - self.now[3]) * 60 + self.startTime.value[1] - self.now[4]
@@ -8359,7 +8348,7 @@ class webradioFS_video(Screen):
                 self.playService()
                 try:
                         self["video1"].instance.setOverscan(False)
-                except:
+                except Exception:
                         pass
 
         def playService(self):
@@ -8367,7 +8356,7 @@ class webradioFS_video(Screen):
                 try:
                         self.vid_serv = eServiceCenter.getInstance().play(ref)
                         self.vid_serv.start()
-                except:
+                except Exception:
                         pass
 
         def stopService(self):
@@ -8475,7 +8464,7 @@ class file_list2:
                                       elif not all:
                                                 name = fullpath.split('/')[-1]
                                                 self.Dateiliste.append((name, fullpath + "/", name, 0, num, 0, 0, "Dir"))
-                        except:
+                        except Exception:
                             pass
                 if all == "fi2":
                     if fi_num:
@@ -8546,8 +8535,8 @@ class play_settings(Screen, ConfigListScreen):
                     eListboxPythonConfigContent.setDescriptionFont(parseFont(conf_font1, ((1, 1), (1, 1))))
                     eListboxPythonConfigContent.setValueFont(parseFont(conf_font2, ((1, 1), (1, 1))))
                     eListboxPythonConfigContent.setItemHeight(conf_item)
-                    stylemgr.setStyle(0, styleskinned)
-              except:
+                    stylemgr.setStyle(0, skinned)
+              except Exception:
                   pass
             self.reloadList()
 
@@ -8662,12 +8651,12 @@ class wbrFS_r_site15(Screen):
                         self["picture"].updateIcon()
                     else:
                         self["picture"].updateIcon(9)
-                except:
+                except Exception:
                     pass
 
         def set_logo(self, picInfo=None):
                   ptr = self.picload.getData()
-                  if ptr != None:
+                  if ptr is not None:
                       self["streamlogo"].instance.setPixmap(ptr)
 
         def set(self):
@@ -8717,7 +8706,7 @@ class wbrFS_r_site15(Screen):
                          self["streamlogo"].hide()
                          self["fav_name"].setText(self.sets["name_text"])
                          self["fav_name"].show()
-            except:
+            except Exception:
                 pass
 
 
@@ -8761,123 +8750,122 @@ def playlist_read(playlist):
                    s[2] = getEncodedString(s[2])
                    s[3] = getEncodedString(s[3])
                    pl.append(s)
-         except:
+         except Exception:
             pass
        f2.close()
        return pl
 
 
 def getEncodedString(value):
-        returnValue = ""
+    returnValue = ""
+    try:
+        returnValue = value.encode("utf-8", 'ignore')
+    except UnicodeDecodeError:
         try:
-                returnValue = value.encode("utf-8", 'ignore')
+            returnValue = value.encode("iso8859-1", 'ignore')
         except UnicodeDecodeError:
-                try:
-                        returnValue = value.encode("iso8859-1", 'ignore')
-                except UnicodeDecodeError:
-                        try:
-                                returnValue = value.decode("cp1252").encode("utf-8")
-                        except UnicodeDecodeError:
-                                returnValue = "n/a"
-        return returnValue
+            try:
+                returnValue = value.decode("cp1252").encode("utf-8")
+            except UnicodeDecodeError:
+                returnValue = "n/a"
+    return returnValue
 
 
 def str2bool(v=None):
-  if v:
-      return v.lower() in ("yes", "true")
+    if v:
+        return v.lower() in ("yes", "true")
 
 
 def set_onwbrScreenSaver():
-        global onwbrScreenSaver
-        if onwbrScreenSaver:
-                onwbrScreenSaver = None
-        else:
-                onwbrScreenSaver = True
+    global onwbrScreenSaver
+    if onwbrScreenSaver:
+        onwbrScreenSaver = None
+    else:
+        onwbrScreenSaver = True
 
 
 def set_groups(groups1):
-        global fav_groups
-        fav_groups = groups1
-        fav_groups.sort(key=lambda x: x[1].lower())
+    global fav_groups
+    fav_groups = groups1
+    fav_groups.sort(key=lambda x: x[1].lower())
 
 
 def set_display(Zeile1, Zeile2, Zeile3):
-              if L4LwbrFS:
-                   if str2bool(l4ls[9]):
-                       L4LwbrFS.add('wbrFS.01.txt1', {'Typ': 'txt',
-                        'Align': str(l4ls[10]),
-                        'Color': l4ls[29],
-                        'Text': Zeile1,
-                        'Pos': int(l4ls[11]),
-                        'Size': int(l4ls[12]),
-                        'Lines': int(l4ls[13]),
-                        'Screen': l4ls[3],
-                        'Lcd': l4ls[1],
-                        'Mode': 'OnMedia'})
-                   if str2bool(l4ls[14]):
-                       L4LwbrFS.add('wbrFS.03.txt3', {'Typ': 'txt',
-                        'Align': str(l4ls[15]),
-                        'Color': l4ls[29],
-                        'Text': Zeile3,
-                        'Pos': int(l4ls[16]),
-                        'Size': int(l4ls[17]),
-                        'Lines': int(l4ls[18]),
-                        'Screen': l4ls[3],
-                        'Lcd': l4ls[1],
-                        'Mode': 'OnMedia'})
-                   if str2bool(l4ls[4]):
-                       L4LwbrFS.add('wbrFS.02.txt2', {'Typ': 'txt',
-                        'Align': str(l4ls[5]),
-                        'Color': l4ls[29],
-                        'Text': Zeile2,
-                        'Pos': int(l4ls[6]),
-                        'Size': int(l4ls[7]),
-                        'Lines': int(l4ls[8]),
-                        'Screen': l4ls[3],
-                        'Lcd': l4ls[1],
-                        'Mode': 'OnMedia'})
+    if L4LwbrFS:
+        if str2bool(l4ls[9]):
+            L4LwbrFS.add('wbrFS.01.txt1', {'Typ': 'txt',
+            'Align': str(l4ls[10]),
+            'Color': l4ls[29],
+            'Text': Zeile1,
+            'Pos': int(l4ls[11]),
+            'Size': int(l4ls[12]),
+            'Lines': int(l4ls[13]),
+            'Screen': l4ls[3],
+            'Lcd': l4ls[1],
+            'Mode': 'OnMedia'})
+        if str2bool(l4ls[14]):
+            L4LwbrFS.add('wbrFS.03.txt3', {'Typ': 'txt',
+            'Align': str(l4ls[15]),
+            'Color': l4ls[29],
+            'Text': Zeile3,
+            'Pos': int(l4ls[16]),
+            'Size': int(l4ls[17]),
+            'Lines': int(l4ls[18]),
+            'Screen': l4ls[3],
+            'Lcd': l4ls[1],
+            'Mode': 'OnMedia'})
+        if str2bool(l4ls[4]):
+            L4LwbrFS.add('wbrFS.02.txt2', {'Typ': 'txt',
+            'Align': str(l4ls[5]),
+            'Color': l4ls[29],
+            'Text': Zeile2,
+            'Pos': int(l4ls[6]),
+            'Size': int(l4ls[7]),
+            'Lines': int(l4ls[8]),
+            'Screen': l4ls[3],
+            'Lcd': l4ls[1],
+            'Mode': 'OnMedia'})
 
 
 class Cover(Pixmap):
-        def __init__(self):
-                Pixmap.__init__(self)
-                self.picload = ePicLoad()
-                if fontlist[4]:
-                   self.picload_conn = self.picload.PictureData.connect(self.paintIconPixmapCB)
-                else:
-                    self.picload.PictureData.get().append(self.paintIconPixmapCB)
-                self.noCoverFile = def_pic
-                self.updateIcon()
+    def __init__(self):
+        Pixmap.__init__(self)
+        self.picload = ePicLoad()
+        if fontlist[4]:
+            self.picload_conn = self.picload.PictureData.connect(self.paintIconPixmapCB)
+        else:
+            self.picload.PictureData.get().append(self.paintIconPixmapCB)
+        self.noCoverFile = def_pic
+        self.updateIcon()
 
-        def applySkin(self, desktop, screen):
-                from Tools.LoadPixmap import LoadPixmap
-                noCoverFile = None
-                if self.skinAttributes is not None:
-                        for (attrib, value) in self.skinAttributes:
-                                if attrib == "pixmap":
-                                        noCoverFile = value
-                                        break
-                if noCoverFile is None:
-                        noCoverFile = def_pic
-                return Pixmap.applySkin(self, desktop, screen)
+    def applySkin(self, desktop, screen):
+        noCoverFile = None
+        if self.skinAttributes is not None:
+            for (attrib, value) in self.skinAttributes:
+                if attrib == "pixmap":
+                    noCoverFile = value
+                    break
+        if noCoverFile is None:
+            noCoverFile = def_pic
+        return Pixmap.applySkin(self, desktop, screen)
 
-        def onShow(self):
-                Pixmap.onShow(self)
-                sc = AVSwitch().getFramebufferScale()
-                self.picload.setPara((self.instance.size().width(), self.instance.size().height(), sc[0], sc[1], False, 1, 'transparent'))
+    def onShow(self):
+        Pixmap.onShow(self)
+        sc = AVSwitch().getFramebufferScale()
+        self.picload.setPara((self.instance.size().width(), self.instance.size().height(), sc[0], sc[1], False, 1, 'transparent'))
 
-        def paintIconPixmapCB(self, picInfo=None):
-          ptr = self.picload.getData()
-          if ptr != None:
-              self.instance.setPixmap(ptr)
+    def paintIconPixmapCB(self, picInfo=None):
+        ptr = self.picload.getData()
+        if ptr is not None:
+            self.instance.setPixmap(ptr)
 
-        def updateIcon(self, Numx=2, file1=None):
-          if self.instance:
+    def updateIcon(self, Numx=2, file1=None):
+        if self.instance:
             sc = AVSwitch().getFramebufferScale()
             self.picload.setPara((self.instance.size().width(), self.instance.size().height(), sc[0], sc[1], False, 1, 'transparent'))     #
             if Numx == 4 and file1:
-               if fileExists(file1):
-                   self.instance.setPixmap(LoadPixmap(file1))
+                if fileExists(file1):
+                    self.instance.setPixmap(LoadPixmap(file1))
             else:
                 picfile = None
                 if fileExists("/tmp/.wbrfs_pic"):
@@ -8885,10 +8873,10 @@ class Cover(Pixmap):
                 if Numx < 9 and picfile:
                     try:
                         self.picload.startDecode("/tmp/.wbrfs_pic")
-                    except:
+                    except Exception:
                         self.instance.setPixmap(noCoverPixmap)
                 else:
-                   self.instance.setPixmap(noCoverPixmap)
+                    self.instance.setPixmap(noCoverPixmap)
 
 
 def Codierung(text1="", sender="", typ=1):
@@ -8985,7 +8973,7 @@ def grab(sender="", sTitle=None):
         #f.close()
         if url:
             user_agent = 'Mozilla/5.0 (Macintosh; U; Intel Mac OS X 10_6_4; en-US) AppleWebKit/534.3 (KHTML, like Gecko) Chrome/6.0.472.63 Safari/534.3'
-            headers = {'User-Agent': user_agent}
+            headers = {'User-Agent': user_agent}  # noqa F841
             callInThread(threadGetPage, url, grab2, grab_err, 1)
 
 
@@ -9030,7 +9018,7 @@ def grab2(result):
                         if not len(url1) or "blogspot" in url1 or "logos.tmdb" in url1:
                                 url1 = ''
                         else:
-                             if not url1 in pic_urls:
+                             if url1 not in pic_urls:
                                 if url1.startswith('http'):
                                     url1 = url1.replace("&amp;", "&").replace("%25", "%")
                                     pic_urls.append(url1)
@@ -9071,9 +9059,9 @@ def grab_err(result=None):
     pic_urls = []
     if write_debug > 1:
         if not result:
-            d = debug("found pic failed")
+            d = debug("found pic failed")  # noqa F841
         else:
-            d = debug("found pic failed2\n" + str(result) + "\n")
+            d = debug("found pic failed2\n" + str(result) + "\n")  # noqa F841
     copyfile(def_pic, "/tmp/.wbrfs_pic")
     pic_show("noPic")
 
@@ -9089,8 +9077,8 @@ def pic_show(result=None, pic=None):
                         coverArtFile.close()
                 elif result != "noPic":
                         if sets_rec["cover"]:
-                                if l4l_info["rec"] and result != "noPic" and onwbrScreenSaver == None:
-                                        sp = sets_exp["coversafepath"]
+                                if l4l_info["rec"] and result != "noPic" and onwbrScreenSaver is None:
+                                        sp = sets_exp["coversafepath"]  # noqa F841
                                         if cover_save["cache"]:
                                                 for name in os.listdir(cover_save["path"] + "incomplete/"):
                                                         if not name.startswith(" - ."):
@@ -9101,7 +9089,7 @@ def pic_show(result=None, pic=None):
                                                         copyfile("/tmp/.wbrfs_pic", sets_exp["coversafepath"] + cover_save["titel"] + ".jpg")
                 else:
                     p = None
-                if onwbrScreenSaver == None:
+                if onwbrScreenSaver is None:
                     right_site.new_Bild(p)
 
 
@@ -9154,8 +9142,8 @@ class planer_list(Screen):
                     eListboxPythonConfigContent.setDescriptionFont(parseFont(conf_font1, ((1, 1), (1, 1))))
                     eListboxPythonConfigContent.setValueFont(parseFont(conf_font2, ((1, 1), (1, 1))))
                     eListboxPythonConfigContent.setItemHeight(conf_item)
-                    stylemgr.setStyle(0, styleskinned)
-              except:
+                    stylemgr.setStyle(0, skinned)
+              except Exception:
                   pass
 
         def edit(self):
@@ -9196,7 +9184,7 @@ class planer_list(Screen):
         def dele(self):
              try:
                 pl_id = int(self["termine"].getCurrent()[5])
-                d = read_plan().deling(pl_id)
+                d = read_plan().deling(pl_id)  # noqa F841
                 self.edit_back(2)
              except Exception as e:
                 f2 = open("/var/webradioFS_debug.log", "a")
@@ -9209,7 +9197,7 @@ class planer_list(Screen):
 
 
 class planer_edit(Screen, ConfigListScreen):
-        def __init__(self, session, term, streamliste):
+    def __init__(self, session, term, streamliste):
                 if fontlist[5] == plugin_path + "/skin/SD/":
                     right_site.hide()
                 self.term = term
@@ -9218,7 +9206,7 @@ class planer_edit(Screen, ConfigListScreen):
                 self.skin = tmpskin.read()
                 tmpskin.close()
                 self.onChangedEntry = []
-                now = [xl for xl in localtime()]
+                now = [xl for xl in time.localtime()]
                 tz1 = now
                 self.pl_id = "neu"
                 aktiv = True
@@ -9289,67 +9277,67 @@ class planer_edit(Screen, ConfigListScreen):
                 self.setTitle("webradioFS: " + _("Edit this termin"))
                 self.onLayoutFinish.append(self.layoutFinished)
 
-        def layoutFinished(self):
-            self.onLayoutFinish.remove(self.layoutFinished)
-            self.instance.setZPosition(2)
-            self.reloadList()
+    def layoutFinished(self):
+        self.onLayoutFinish.remove(self.layoutFinished)
+        self.instance.setZPosition(2)
+        self.reloadList()
 
-        def reloadList(self):
-            self.refresh()
-            self["config"].setList(self.list)
+    def reloadList(self):
+        self.refresh()
+        self["config"].setList(self.list)
 
-        def refresh(self):
-            list = []
-            list.append(getConfigListEntry(_("Active:"), self.aktiv))
-            list.append(getConfigListEntry(_("Action:"), self.aktion))
-            if self.aktion.value == "select":
-                list.append(getConfigListEntry(_("Station:"), self.sender))
-            list.append(getConfigListEntry(_("Time for action:"), self.startTime))
-            list.append(getConfigListEntry(_("Repeat:"), self.repeat))
-            if self.repeat.value == "once":
-                list.append(getConfigListEntry(_("Date:"), self.datum))
-            elif self.repeat.value == "weekdays":
-                list.append(getConfigListEntry(_("Monday") + ":", self.mo))
-                list.append(getConfigListEntry(_("Tuesday") + ":", self.di))
-                list.append(getConfigListEntry(_("Wednesday") + ":", self.mi))
-                list.append(getConfigListEntry(_("Thursday") + ":", self.do))
-                list.append(getConfigListEntry(_("Friday") + ":", self.fr))
-                list.append(getConfigListEntry(_("Saturday") + ":", self.sa))
-                list.append(getConfigListEntry(_("Sunday") + ":", self.so))
-            self.list = list
+    def refresh(self):
+        list = []
+        list.append(getConfigListEntry(_("Active:"), self.aktiv))
+        list.append(getConfigListEntry(_("Action:"), self.aktion))
+        if self.aktion.value == "select":
+            list.append(getConfigListEntry(_("Station:"), self.sender))
+        list.append(getConfigListEntry(_("Time for action:"), self.startTime))
+        list.append(getConfigListEntry(_("Repeat:"), self.repeat))
+        if self.repeat.value == "once":
+            list.append(getConfigListEntry(_("Date:"), self.datum))
+        elif self.repeat.value == "weekdays":
+            list.append(getConfigListEntry(_("Monday") + ":", self.mo))
+            list.append(getConfigListEntry(_("Tuesday") + ":", self.di))
+            list.append(getConfigListEntry(_("Wednesday") + ":", self.mi))
+            list.append(getConfigListEntry(_("Thursday") + ":", self.do))
+            list.append(getConfigListEntry(_("Friday") + ":", self.fr))
+            list.append(getConfigListEntry(_("Saturday") + ":", self.sa))
+            list.append(getConfigListEntry(_("Sunday") + ":", self.so))
+        self.list = list
 
-        def press_ok(self):
-            if self["config"].getCurrent()[1] == self.sender:
-                l = []
-                for x in self.streamliste:
-                    l.append((x[1], x[0]))
-                self.session.openWithCallback(self.press_ok_back, ChoiceBox, title=_("Select station"), list=(l))
+    def press_ok(self):
+        if self["config"].getCurrent()[1] == self.sender:
+            items = []
+            for x in self.streamliste:
+                items.append((x[1], x[0]))
+            self.session.openWithCallback(self.press_ok_back, ChoiceBox, title=_("Select station"), list=(items))
 
-        def press_ok_back(self, ret):
-                if ret:
-                   self.sender.setValue(ret[1])
+    def press_ok_back(self, ret):
+        if ret:
+            self.sender.setValue(ret[1])
 
-        def Cancel(self):
-            self.close(1)
+    def Cancel(self):
+        self.close(1)
 
-        def save(self):
-                err = None
-                nam = '%0.2d:%0.2d' % (self.startTime.value[0], self.startTime.value[1])
-                weedk = 'None'
-                datumr = 'None'
-                if self.repeat.value == "weekdays":
-                    wds = (self.mo.value, self.di.value, self.mi.value, self.do.value, self.fr.value, self.sa.value, self.so.value)
-                    weedk = (','.join(str(x) for x in wds))
-                if self.repeat.value == "once":
-                    if datetime.date.today() > datetime.date.fromtimestamp(self.datum.value):
-                          err = 1
-                          self.session.open(MessageBox, _("Appointment can not start in the past"), MessageBox.TYPE_ERROR)
-                    else:
-                        datumr = str(self.datum.value)
-                wert = ';'.join((str(self.sender.value), str(self.aktiv.value), self.aktion.value, self.repeat.value, datumr, weedk))
-                if not err:
-                    d = read_plan().writing(self.pl_id, nam, wert)
-                    self.close(2)
+    def save(self):
+        err = None
+        nam = '%0.2d:%0.2d' % (self.startTime.value[0], self.startTime.value[1])
+        weedk = 'None'
+        datumr = 'None'
+        if self.repeat.value == "weekdays":
+            wds = (self.mo.value, self.di.value, self.mi.value, self.do.value, self.fr.value, self.sa.value, self.so.value)
+            weedk = (','.join(str(x) for x in wds))
+        if self.repeat.value == "once":
+            if datetime.date.today() > datetime.date.fromtimestamp(self.datum.value):
+                err = 1
+                self.session.open(MessageBox, _("Appointment can not start in the past"), MessageBox.TYPE_ERROR)
+            else:
+                datumr = str(self.datum.value)
+        wert = ';'.join((str(self.sender.value), str(self.aktiv.value), self.aktion.value, self.repeat.value, datumr, weedk))
+        if not err:
+            d = read_plan().writing(self.pl_id, nam, wert)  # noqa F841
+            self.close(2)
 
 
 def debug(result=None):
