@@ -1,0 +1,3 @@
+<screen name="webradioFSdisplay13_2" position="0,0" size="302,264" >
+                        <widget source="Zeile2" render="Label" position="4,0" size="302,40" font="Regular;40" noWrap="1"/>
+</screen>

@@ -1,0 +1,2859 @@
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: webradioFS\n"
+"POT-Creation-Date: 2026-04-12 08:46+0200\n"
+"PO-Revision-Date: 2026-04-12 08:37+0200\n"
+"Last-Translator: \n"
+"Language-Team: oe-a\n"
+"Language: de\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: Poedit 3.8\n"
+"X-Poedit-Basepath: ..\n"
+"X-Poedit-SearchPath-0: .\n"
+
+#: chset.py:31
+msgid "alert time"
+msgstr ""
+
+#: chset.py:32
+msgid "chill volume"
+msgstr ""
+
+#: chset.py:36
+msgid "max volume"
+msgstr ""
+
+#: chset.py:45
+msgid "chill-timer"
+msgstr ""
+
+#: chset.py:47 webradioFS.py:7952
+msgid "Start"
+msgstr ""
+
+#: chset.py:48 wbrfs_funct.py:1117 wbrfscol.py:92 wbrfscol.py:93
+#: webradioFS.py:5847 webradioFS.py:6335 webradioFS.py:6925 webradioFS.py:7950
+#: webradioFS.py:8283 webradioFS.py:9016
+msgid "Cancel"
+msgstr ""
+
+#: chset.py:49
+msgid "Set Time to wake up and volume for chilling"
+msgstr ""
+
+#: chset.py:51
+msgid "Warning: This function can changes the volume"
+msgstr ""
+
+#: chset.py:94
+msgid "Period must be greater than 2 minutes"
+msgstr ""
+
+#: plugin.py:193
+msgid "Settings have been deleted, please restart your stb!"
+msgstr ""
+
+#: plugin.py:333 plugin.py:340
+msgid "Radio"
+msgstr ""
+
+#: wbrfs_funct.py:425 wbrfs_funct.py:427
+msgid "No"
+msgstr ""
+
+#: wbrfs_funct.py:427 wbrfs_funct.py:429
+msgid "Yes"
+msgstr ""
+
+#: wbrfs_funct.py:552
+msgid "Please select the backup path..."
+msgstr ""
+
+#: wbrfs_funct.py:562
+msgid "Overwrite existing Backup?"
+msgstr ""
+
+#: wbrfs_funct.py:566 wbrfs_funct.py:568
+msgid "Backup failed"
+msgstr ""
+
+#: wbrfs_funct.py:597
+msgid "Backup from settings successfully"
+msgstr ""
+
+#: wbrfs_funct.py:599 wbrfs_funct.py:606
+msgid "Backup-Error:"
+msgstr ""
+
+#: wbrfs_funct.py:604 wbrfs_funct.py:648 wbrfs_funct.py:654
+msgid "Settings were restored successfully"
+msgstr ""
+
+#: wbrfs_funct.py:620
+msgid "Please select the restore path..."
+msgstr ""
+
+#: wbrfs_funct.py:628
+msgid "Overwrite existing Files?"
+msgstr ""
+
+#: wbrfs_funct.py:630
+#, python-format
+msgid "File %s nonexistent."
+msgstr ""
+
+#: wbrfs_funct.py:632
+msgid "restore failed"
+msgstr ""
+
+#: wbrfs_funct.py:648 wbrfs_funct.py:654 webradioFS.py:4696
+msgid "Please restart webradioFS"
+msgstr ""
+
+#: wbrfs_funct.py:650 wbrfs_funct.py:656
+msgid "Restore-Error:"
+msgstr ""
+
+#: wbrfs_funct.py:718
+msgid "Installation finished."
+msgstr ""
+
+#: wbrfs_funct.py:718 webradioFS.py:4724
+msgid "Restart must be performed"
+msgstr ""
+
+#: wbrfs_funct.py:720
+msgid "Installation failed."
+msgstr ""
+
+#: wbrfs_funct.py:720
+msgid ""
+", error-text in\n"
+"/var/webradioFS_debug.log"
+msgstr ""
+
+#: wbrfs_funct.py:738 webradioFS.py:484 webradioFS.py:8871
+msgid "Close"
+msgstr ""
+
+#: wbrfs_funct.py:739
+msgid "set selcted"
+msgstr ""
+
+#: wbrfs_funct.py:910 wbrfsmenu.py:40 wbrfsmenu.py:143
+msgid "webradioFS-Menu"
+msgstr ""
+
+#: wbrfs_funct.py:1064
+msgid "by settings"
+msgstr ""
+
+#: wbrfs_funct.py:1064
+msgid "by xml-file"
+msgstr ""
+
+#: wbrfs_funct.py:1064
+msgid "single-line"
+msgstr ""
+
+#: wbrfs_funct.py:1064
+msgid "deactivated"
+msgstr ""
+
+#: wbrfs_funct.py:1071 webradioFS.py:148 webradioFS.py:6561 webradioFS.py:7597
+msgid "Show logo"
+msgstr ""
+
+#: wbrfs_funct.py:1071
+msgid "Show pictures"
+msgstr ""
+
+#: wbrfs_funct.py:1076 wbrfs_funct.py:1077
+msgid "Station-Name"
+msgstr ""
+
+#: wbrfs_funct.py:1076 wbrfs_funct.py:1077
+msgid "information transmitted"
+msgstr ""
+
+#: wbrfs_funct.py:1076 wbrfs_funct.py:1077
+msgid "Favorite name"
+msgstr ""
+
+#: wbrfs_funct.py:1077
+msgid "time"
+msgstr ""
+
+#: wbrfs_funct.py:1118 wbrfscol.py:91 wbrfscol.py:94 webradioFS.py:485
+#: webradioFS.py:5848 webradioFS.py:6336 webradioFS.py:6926 webradioFS.py:9018
+msgid "Save"
+msgstr ""
+
+#: wbrfs_funct.py:1121
+msgid "Standards"
+msgstr ""
+
+#: wbrfs_funct.py:1122
+msgid "Display Settings"
+msgstr ""
+
+#: wbrfs_funct.py:1166
+msgid "Type of setting:"
+msgstr ""
+
+#: wbrfs_funct.py:1167
+msgid "No effect on displays white LCD4Linux!"
+msgstr ""
+
+#: wbrfs_funct.py:1169
+msgid "Nothing is displayed in VFD(text) displays"
+msgstr ""
+
+#: wbrfs_funct.py:1172
+msgid "Skin and xml file have no effect!"
+msgstr ""
+
+#: wbrfs_funct.py:1173
+msgid "Number of lines:"
+msgstr ""
+
+#: wbrfs_funct.py:1175
+msgid "Scroll-line:"
+msgstr ""
+
+#: wbrfs_funct.py:1176
+msgid "Scroll-Speed:"
+msgstr ""
+
+#: wbrfs_funct.py:1178 wbrfs_funct.py:1180 wbrfs_funct.py:1182
+#: wbrfs_funct.py:1201 wbrfs_funct.py:1210 wbrfs_funct.py:1219
+msgid "Line"
+msgstr ""
+
+#: wbrfs_funct.py:1179 wbrfs_funct.py:1181 wbrfs_funct.py:1183
+#: wbrfs_funct.py:1202 wbrfs_funct.py:1211 wbrfs_funct.py:1220
+msgid "Text"
+msgstr ""
+
+#: wbrfs_funct.py:1186
+msgid "Display-Len:"
+msgstr ""
+
+#: wbrfs_funct.py:1187
+msgid "Distance from the left:"
+msgstr ""
+
+#: wbrfs_funct.py:1188
+msgid "Show logos/pics"
+msgstr ""
+
+#: wbrfs_funct.py:1193
+msgid "Logo/Picture Settings"
+msgstr ""
+
+#: wbrfs_funct.py:1194 wbrfs_funct.py:1228
+msgid "What show"
+msgstr ""
+
+#: wbrfs_funct.py:1195
+msgid "Logo/Picture Pos. left"
+msgstr ""
+
+#: wbrfs_funct.py:1196
+msgid "Logo/Picture Pos. top"
+msgstr ""
+
+#: wbrfs_funct.py:1197
+msgid "Logo/Picture widht"
+msgstr ""
+
+#: wbrfs_funct.py:1198
+msgid "Logo/Picture high"
+msgstr ""
+
+#: wbrfs_funct.py:1203 wbrfs_funct.py:1212 wbrfs_funct.py:1221
+msgid "add more text"
+msgstr ""
+
+#: wbrfs_funct.py:1204 wbrfs_funct.py:1213 wbrfs_funct.py:1222
+msgid "Distance from the top"
+msgstr ""
+
+#: wbrfs_funct.py:1205 wbrfs_funct.py:1214 wbrfs_funct.py:1223
+msgid "height"
+msgstr ""
+
+#: wbrfs_funct.py:1206 wbrfs_funct.py:1215 wbrfs_funct.py:1224
+msgid "Font-Size"
+msgstr ""
+
+#: wbrfs_funct.py:1207 wbrfs_funct.py:1216 wbrfs_funct.py:1225
+msgid "line breaks"
+msgstr ""
+
+#: wbrfs_funct.py:1229
+msgid "make all other settings in the xml-file!"
+msgstr ""
+
+#: wbrfs_funct.py:1233
+msgid "VFD-Display"
+msgstr ""
+
+#: wbrfs_funct.py:1233
+msgid "Grafik-Display"
+msgstr ""
+
+#: wbrfs_funct.py:1233
+msgid "Grafik-Display 480x320"
+msgstr ""
+
+#: wbrfs_funct.py:1234
+msgid "Select Standards"
+msgstr ""
+
+#: wbrfs_funct.py:1246
+msgid "Save Standard-Settings?"
+msgstr ""
+
+#: wbrfs_funct.py:1299
+msgid "Line without text can not be saved"
+msgstr ""
+
+#: wbrfs_funct.py:1325
+msgid "Close and restart webradioFS for activate settings"
+msgstr ""
+
+#: wbrfs_screensaver.py:135
+msgid "please wait, loading picture..."
+msgstr ""
+
+#: wbrfs_screensaver.py:285
+msgid "Slide Time has been changed to"
+msgstr ""
+
+#: wbrfs_screensaver.py:285
+msgid "seconds"
+msgstr ""
+
+#: wbrfscol.py:70 webradioFS.py:7564 webradioFS.py:9055
+msgid "Monday"
+msgstr ""
+
+#: wbrfscol.py:70 webradioFS.py:7564 webradioFS.py:9056
+msgid "Tuesday"
+msgstr ""
+
+#: wbrfscol.py:70 webradioFS.py:7564 webradioFS.py:9057
+msgid "Wednesday"
+msgstr ""
+
+#: wbrfscol.py:70 webradioFS.py:7564 webradioFS.py:9058
+msgid "Thursday"
+msgstr ""
+
+#: wbrfscol.py:70 webradioFS.py:7564 webradioFS.py:9059
+msgid "Friday"
+msgstr ""
+
+#: wbrfscol.py:70 webradioFS.py:7564 webradioFS.py:9060
+msgid "Saturday"
+msgstr ""
+
+#: wbrfscol.py:70 webradioFS.py:7564 webradioFS.py:9061
+msgid "Sunday"
+msgstr ""
+
+#: wbrfscol.py:76 wbrfscol.py:171
+msgid "Show live what you set"
+msgstr ""
+
+#: wbrfscol.py:77 wbrfscol.py:172
+msgid "Change color with: left,right, up,down"
+msgstr ""
+
+#: wbrfscol.py:95
+msgid "preview text color"
+msgstr ""
+
+#: wbrfscol.py:96
+msgid "next text color"
+msgstr ""
+
+#: wbrfscol.py:97
+msgid "next back color"
+msgstr ""
+
+#: wbrfscol.py:98
+msgid "preview back color"
+msgstr ""
+
+#: wbrfscol.py:165
+msgid "failed, not a regular color-string"
+msgstr ""
+
+#: wbrfsmenu.py:168 wbrfsmenu.py:185
+msgid "Group-Menu"
+msgstr ""
+
+#: wbrfsmenu.py:194 webradioFS.py:5706 webradioFS.py:5851 webradioFS.py:8873
+msgid "Delete"
+msgstr ""
+
+#: wbrfsmenu.py:195
+msgid "New"
+msgstr ""
+
+#: wbrfsmenu.py:196
+msgid "Rename"
+msgstr ""
+
+#: wbrfsmenu.py:232 wbrfsmenu.py:277 wbrfsmenu.py:285 webradioFS.py:3376
+msgid "not assigned"
+msgstr ""
+
+#: wbrfsmenu.py:240
+msgid "Rename group"
+msgstr ""
+
+#: wbrfsmenu.py:269
+msgid "Enter Name for new group"
+msgstr ""
+
+#: wbrfsmenu.py:280
+msgid "Delete all the streams of this group?"
+msgstr ""
+
+#: wbrfsmenu.py:282
+msgid "at least one group must be present!"
+msgstr ""
+
+#: wbrfsmenu.py:300
+msgid "Group can not be deleted"
+msgstr ""
+
+#: webradioFS.py:146 webradioFS.py:7597
+msgid "rotation"
+msgstr ""
+
+#: webradioFS.py:146 webradioFS.py:7597
+msgid "only show big pictures"
+msgstr ""
+
+#: webradioFS.py:146 webradioFS.py:7597
+msgid "show no big pictures"
+msgstr ""
+
+#: webradioFS.py:146 webradioFS.py:7597
+msgid "show no pictures"
+msgstr ""
+
+#: webradioFS.py:146 webradioFS.py:7597
+msgid "pure black"
+msgstr ""
+
+#: webradioFS.py:146
+msgid "slideshow sorted"
+msgstr ""
+
+#: webradioFS.py:147
+msgid "slideshow random"
+msgstr ""
+
+#: webradioFS.py:147 webradioFS.py:7597 webradioFS.py:7612
+msgid "theme images"
+msgstr ""
+
+#: webradioFS.py:147 webradioFS.py:222
+msgid "TV"
+msgstr ""
+
+#: webradioFS.py:147
+msgid "Play Video"
+msgstr ""
+
+#: webradioFS.py:147
+msgid "Play Video sorted"
+msgstr ""
+
+#: webradioFS.py:148
+msgid "Play Video random"
+msgstr ""
+
+#: webradioFS.py:154 webradioFS.py:162
+msgid " (not installed)"
+msgstr ""
+
+#: webradioFS.py:158
+msgid "Start Plugin PictureCenterFS"
+msgstr ""
+
+#: webradioFS.py:160
+msgid "Open PictureCenterFS"
+msgstr ""
+
+#: webradioFS.py:163 webradioFS.py:218 webradioFS.py:219 webradioFS.py:222
+#: webradioFS.py:800 webradioFS.py:4992 webradioFS.py:5768 webradioFS.py:5813
+#: webradioFS.py:6125 webradioFS.py:6128 webradioFS.py:6311
+msgid "None"
+msgstr ""
+
+#: webradioFS.py:218
+msgid "Play"
+msgstr ""
+
+#: webradioFS.py:218
+msgid "Exit"
+msgstr ""
+
+#: webradioFS.py:218
+msgid "Stream-Tools"
+msgstr ""
+
+#: webradioFS.py:219 webradioFS.py:770 webradioFS.py:3239 webradioFS.py:3242
+#: webradioFS.py:4635 webradioFS.py:5330 webradioFS.py:5350 webradioFS.py:5408
+msgid "Chillen"
+msgstr ""
+
+#: webradioFS.py:219 webradioFS.py:4636
+msgid "Sleeptimer"
+msgstr ""
+
+#: webradioFS.py:219
+msgid "Favoriten"
+msgstr ""
+
+#: webradioFS.py:219
+msgid "Edit/Info"
+msgstr ""
+
+#: webradioFS.py:220
+msgid "Played-Stream Info"
+msgstr ""
+
+#: webradioFS.py:220
+msgid "Preview Favorit-File"
+msgstr ""
+
+#: webradioFS.py:220
+msgid "Next Favorit-File"
+msgstr ""
+
+#: webradioFS.py:220
+msgid "Stop Playing"
+msgstr ""
+
+#: webradioFS.py:221 webradioFS.py:824
+msgid "Down"
+msgstr ""
+
+#: webradioFS.py:221 webradioFS.py:823
+msgid "Up"
+msgstr ""
+
+#: webradioFS.py:221 webradioFS.py:7100
+msgid "Save Title-Info"
+msgstr ""
+
+#: webradioFS.py:221
+msgid "Zap down"
+msgstr ""
+
+#: webradioFS.py:221
+msgid "Zap up"
+msgstr ""
+
+#: webradioFS.py:222
+msgid "TV or Video: prev"
+msgstr ""
+
+#: webradioFS.py:222
+msgid "TV or Video: next"
+msgstr ""
+
+#: webradioFS.py:222
+msgid "Play my files"
+msgstr ""
+
+#: webradioFS.py:459
+msgid "now: "
+msgstr ""
+
+#: webradioFS.py:469
+msgid "Save not yet possible"
+msgstr ""
+
+#: webradioFS.py:486
+msgid "Stop cache"
+msgstr ""
+
+#: webradioFS.py:487
+msgid "Save from cache"
+msgstr ""
+
+#: webradioFS.py:674
+msgid "Typ:"
+msgstr ""
+
+#: webradioFS.py:704 webradioFS.py:1608 webradioFS.py:4640 webradioFS.py:4950
+#: webradioFS.py:5033
+msgid "back"
+msgstr ""
+
+#: webradioFS.py:705
+msgid "aktualisieren"
+msgstr ""
+
+#: webradioFS.py:805 webradioFS.py:7110
+msgid "Record On/Off"
+msgstr ""
+
+#: webradioFS.py:806
+msgid "Show Menu"
+msgstr ""
+
+#: webradioFS.py:807
+msgid "set Standard Volume"
+msgstr ""
+
+#: webradioFS.py:808
+msgid "Play/Pause"
+msgstr ""
+
+#: webradioFS.py:809
+msgid "Page up"
+msgstr ""
+
+#: webradioFS.py:810
+msgid "Page down"
+msgstr ""
+
+#: webradioFS.py:815 webradioFS.py:4542 webradioFS.py:4584 webradioFS.py:7111
+msgid "Record-Menu"
+msgstr ""
+
+#: webradioFS.py:821 webradioFS.py:4630 webradioFS.py:7129
+msgid "Standby"
+msgstr ""
+
+#: webradioFS.py:822 webradioFS.py:7130
+msgid "Off"
+msgstr ""
+
+#: webradioFS.py:974 webradioFS.py:3200
+msgid "Failed to start automatically"
+msgstr ""
+
+#: webradioFS.py:975
+msgid "Planer-Error"
+msgstr ""
+
+#: webradioFS.py:1096
+msgid "Database:"
+msgstr ""
+
+#: webradioFS.py:1146 webradioFS.py:3437 webradioFS.py:3473 webradioFS.py:3967
+#: webradioFS.py:3972
+msgid "PVR-Radio all"
+msgstr ""
+
+#: webradioFS.py:1415 webradioFS.py:1429
+msgid "files in folder/m3u not found"
+msgstr ""
+
+#: webradioFS.py:1438 webradioFS.py:3871 webradioFS.py:3893 webradioFS.py:5106
+#: webradioFS.py:5119
+msgid "Play file"
+msgstr ""
+
+#: webradioFS.py:1454
+msgid "file not found"
+msgstr ""
+
+#: webradioFS.py:1468
+msgid "Len:"
+msgstr ""
+
+#: webradioFS.py:1474
+msgid "Dir:"
+msgstr ""
+
+#: webradioFS.py:1489 webradioFS.py:1511 webradioFS.py:1539 webradioFS.py:3286
+#: webradioFS.py:3287 webradioFS.py:3288 webradioFS.py:3291 webradioFS.py:3379
+#: webradioFS.py:3913 webradioFS.py:6314
+msgid "My files"
+msgstr ""
+
+#: webradioFS.py:1599
+msgid "Play from folder"
+msgstr ""
+
+#: webradioFS.py:1603 webradioFS.py:1623 webradioFS.py:1631 webradioFS.py:1655
+#: webradioFS.py:3038 webradioFS.py:3083 webradioFS.py:3084 webradioFS.py:3262
+#: webradioFS.py:3263 webradioFS.py:3277 webradioFS.py:3281 webradioFS.py:3295
+#: webradioFS.py:3859
+msgid "Playlist"
+msgstr ""
+
+#: webradioFS.py:1609
+msgid "Files from"
+msgstr ""
+
+#: webradioFS.py:1652 webradioFS.py:3278 webradioFS.py:3292 webradioFS.py:4524
+msgid "Settings"
+msgstr ""
+
+#: webradioFS.py:1653 webradioFS.py:3279 webradioFS.py:3293
+msgid "Autoplay"
+msgstr ""
+
+#: webradioFS.py:1666
+msgid ""
+"contains no audio files\n"
+"or is incorrectly formatted"
+msgstr ""
+
+#: webradioFS.py:1766 webradioFS.py:1779
+msgid "Skin-Error or Favorites file faulty"
+msgstr ""
+
+#: webradioFS.py:1777
+msgid "This Favorite-Group is empty"
+msgstr ""
+
+#: webradioFS.py:1779
+msgid "Favorites file can be deleted and recreated in the menu Extras"
+msgstr ""
+
+#: webradioFS.py:1804 webradioFS.py:2019 webradioFS.py:2998 webradioFS.py:4535
+msgid "Stream Actions"
+msgstr ""
+
+#: webradioFS.py:1816
+msgid "Sorry, live-TV not possible on this box"
+msgstr ""
+
+#: webradioFS.py:1847
+msgid "Sorry, Video-Screensaver not possible on this box"
+msgstr ""
+
+#: webradioFS.py:1905
+msgid "Screensaver-Video-File"
+msgstr ""
+
+#: webradioFS.py:1905
+msgid "not exist"
+msgstr ""
+
+#: webradioFS.py:1918
+msgid "Select Group"
+msgstr ""
+
+#: webradioFS.py:2003
+msgid "Playlists"
+msgstr ""
+
+#: webradioFS.py:2011 webradioFS.py:3510 webradioFS.py:4537
+msgid "Group tools"
+msgstr ""
+
+#: webradioFS.py:2044
+msgid "function not exist"
+msgstr ""
+
+#: webradioFS.py:2060 webradioFS.py:2922
+msgid ", add to fav for all functions"
+msgstr ""
+
+#: webradioFS.py:2078
+msgid "Recording stopped, interrupted stream"
+msgstr ""
+
+#: webradioFS.py:2116 webradioFS.py:2118
+msgid "Current record keeping?"
+msgstr ""
+
+#: webradioFS.py:2116 webradioFS.py:2118 webradioFS.py:2277 webradioFS.py:2280
+#: webradioFS.py:2425 webradioFS.py:2427 webradioFS.py:2474 webradioFS.py:3939
+#: webradioFS.py:4007 webradioFS.py:4296 webradioFS.py:4298 webradioFS.py:4301
+#: webradioFS.py:4310 webradioFS.py:4455 webradioFS.py:4724 webradioFS.py:4783
+#: webradioFS.py:4863 webradioFS.py:5291 webradioFS.py:5742 webradioFS.py:6072
+#: webradioFS.py:6103
+msgid "query"
+msgstr ""
+
+#: webradioFS.py:2146 webradioFS.py:2372 webradioFS.py:2494 webradioFS.py:2800
+#: webradioFS.py:3130 webradioFS.py:3846 webradioFS.py:3877 webradioFS.py:3966
+msgid "no recording is in progress or timer planned"
+msgstr ""
+
+#: webradioFS.py:2185
+msgid "recording has deleted"
+msgstr ""
+
+#: webradioFS.py:2187
+msgid "error on delete"
+msgstr ""
+
+#: webradioFS.py:2189 webradioFS.py:2254
+msgid "recording has finished"
+msgstr ""
+
+#: webradioFS.py:2256
+msgid "Directory incomplete not exist"
+msgstr ""
+
+#: webradioFS.py:2277 webradioFS.py:2425 webradioFS.py:4301
+msgid "Do you really want to stop the recording?"
+msgstr ""
+
+#: webradioFS.py:2280 webradioFS.py:2427 webradioFS.py:4298
+msgid "Discard scheduled timer?"
+msgstr ""
+
+#: webradioFS.py:2282 webradioFS.py:2296 webradioFS.py:2439 webradioFS.py:2538
+msgid "Record only from your Favorites"
+msgstr ""
+
+#: webradioFS.py:2298
+msgid "No Stream running to be recorded!"
+msgstr ""
+
+#: webradioFS.py:2355
+msgid "Saving"
+msgstr ""
+
+#: webradioFS.py:2361 webradioFS.py:2766 webradioFS.py:2791
+msgid "press record for save a title"
+msgstr ""
+
+#: webradioFS.py:2391
+msgid "Recording stopped, Error in system-modul GStreamer"
+msgstr ""
+
+#: webradioFS.py:2391 webradioFS.py:2713
+msgid "show for update on your image"
+msgstr ""
+
+#: webradioFS.py:2400
+msgid "record, len: "
+msgstr ""
+
+#: webradioFS.py:2400 webradioFS.py:2403 webradioFS.py:2411 webradioFS.py:2413
+msgid " min"
+msgstr ""
+
+#: webradioFS.py:2403
+msgid "Record, time remaining:"
+msgstr ""
+
+#: webradioFS.py:2411
+msgid "stream switching is scheduled in:"
+msgstr ""
+
+#: webradioFS.py:2413
+msgid "Recording is scheduled in"
+msgstr ""
+
+#: webradioFS.py:2474
+msgid ""
+"Warning! The recordings are saved to '/tmp' and can overload the memory, it is better in the settings of a directory to put on hdd or usb stick\n"
+"Save recordings to tmp really?"
+msgstr ""
+
+#: webradioFS.py:2532 webradioFS.py:2796
+msgid "start caching..."
+msgstr ""
+
+#: webradioFS.py:2556 webradioFS.py:6850
+msgid "Path"
+msgstr ""
+
+#: webradioFS.py:2556
+msgid " not exist!"
+msgstr ""
+
+#: webradioFS.py:2558 webradioFS.py:8002
+msgid "the sender does not allow recording"
+msgstr ""
+
+#: webradioFS.py:2626
+msgid "Functions for record not activated"
+msgstr ""
+
+#: webradioFS.py:2697
+msgid "required modules for records"
+msgstr ""
+
+#: webradioFS.py:2710
+msgid "Stopped caching, free menory in your cache-path < 20 MB"
+msgstr ""
+
+#: webradioFS.py:2713
+msgid "Stopped caching, Error in system-modul GStreamer"
+msgstr ""
+
+#: webradioFS.py:2773
+msgid "Stopped caching, can not delete files in the cache directory"
+msgstr ""
+
+#: webradioFS.py:2920 webradioFS.py:4471 webradioFS.py:5114 webradioFS.py:5132
+msgid "Stopped"
+msgstr ""
+
+#: webradioFS.py:2921
+msgid "DB: "
+msgstr ""
+
+#: webradioFS.py:2928
+#, python-format
+msgid "can't decode %s streams!"
+msgstr ""
+
+#: webradioFS.py:2975 webradioFS.py:4024 webradioFS.py:4115
+msgid "Station is not currently accessible"
+msgstr ""
+
+#: webradioFS.py:3010 webradioFS.py:5106
+msgid "trying to establish connection"
+msgstr ""
+
+#: webradioFS.py:3010 webradioFS.py:4863
+msgid "of"
+msgstr ""
+
+#: webradioFS.py:3040
+msgid "Add files (selected folder) to tmp-list"
+msgstr ""
+
+#: webradioFS.py:3040
+msgid "Add files (selected folder+subfolder) to tmp-list"
+msgstr ""
+
+#: webradioFS.py:3041
+msgid "Open Playlist Temp"
+msgstr ""
+
+#: webradioFS.py:3041
+msgid "Open Playlist 1"
+msgstr ""
+
+#: webradioFS.py:3041
+msgid "Open Playlist 2"
+msgstr ""
+
+#: webradioFS.py:3041
+msgid "Open Playlist 3"
+msgstr ""
+
+#: webradioFS.py:3041
+msgid "Open Playlist 4"
+msgstr ""
+
+#: webradioFS.py:3041
+msgid "Open Playlist 5"
+msgstr ""
+
+#: webradioFS.py:3041
+msgid "Clear Playlist Temp"
+msgstr ""
+
+#: webradioFS.py:3043
+msgid "Playlist menu"
+msgstr ""
+
+#: webradioFS.py:3201
+msgid "Startstream-Error"
+msgstr ""
+
+#: webradioFS.py:3222
+msgid "Save stream"
+msgstr ""
+
+#: webradioFS.py:3230 webradioFS.py:3232 webradioFS.py:3480 webradioFS.py:3484
+msgid "No group selected"
+msgstr ""
+
+#: webradioFS.py:3233
+msgid "Add to fav"
+msgstr ""
+
+#: webradioFS.py:3237 webradioFS.py:8872
+msgid "Edit"
+msgstr ""
+
+#: webradioFS.py:3238
+msgid "Favoriten: "
+msgstr ""
+
+#: webradioFS.py:3247 webradioFS.py:3253
+msgid "Info"
+msgstr ""
+
+#: webradioFS.py:3251
+msgid "Genres"
+msgstr ""
+
+#: webradioFS.py:3309 webradioFS.py:8874
+msgid "Add new"
+msgstr ""
+
+#: webradioFS.py:3400 webradioFS.py:3436 webradioFS.py:3967
+msgid "PVR-Radio Favoriten"
+msgstr ""
+
+#: webradioFS.py:3503
+msgid "My Favorites and database"
+msgstr ""
+
+#: webradioFS.py:3615
+msgid "no stream exist, read from database (yellow)"
+msgstr ""
+
+#: webradioFS.py:3642
+msgid "Fav-File-Error! file not exist? file read-only?"
+msgstr ""
+
+#: webradioFS.py:3648
+msgid "Stream successfully saved"
+msgstr ""
+
+#: webradioFS.py:3669
+msgid "Select genre"
+msgstr ""
+
+#: webradioFS.py:3686
+msgid "Genre: "
+msgstr ""
+
+#: webradioFS.py:3811 webradioFS.py:4617 webradioFS.py:4766
+msgid "Sort streams"
+msgstr ""
+
+#: webradioFS.py:3850 webradioFS.py:3890 webradioFS.py:3906 webradioFS.py:3929
+msgid "Playing from folder"
+msgstr ""
+
+#: webradioFS.py:3939
+msgid "A recording is in progress or is planned, terminate recording for switch?"
+msgstr ""
+
+#: webradioFS.py:3973
+msgid "All PVR-Stations"
+msgstr ""
+
+#: webradioFS.py:3975
+msgid "PVR-Favorites"
+msgstr ""
+
+#: webradioFS.py:4007
+msgid "Stream-Typ failed (not "
+msgstr ""
+
+#: webradioFS.py:4007
+msgid "edit setting?"
+msgstr ""
+
+#: webradioFS.py:4010
+msgid "unknown error"
+msgstr ""
+
+#: webradioFS.py:4015 webradioFS.py:4016
+msgid "not url"
+msgstr ""
+
+#: webradioFS.py:4025 webradioFS.py:4026 webradioFS.py:4035
+msgid "url not readable"
+msgstr ""
+
+#: webradioFS.py:4030
+msgid "url timeout"
+msgstr ""
+
+#: webradioFS.py:4079
+msgid "invalid service reference"
+msgstr ""
+
+#: webradioFS.py:4085
+msgid "PVR:"
+msgstr ""
+
+#: webradioFS.py:4087 webradioFS.py:4984 webradioFS.py:5895 webradioFS.py:5916
+#: webradioFS.py:5954
+msgid "Group:"
+msgstr ""
+
+#: webradioFS.py:4099 webradioFS.py:4987 webradioFS.py:5899
+msgid "Bitrate:"
+msgstr ""
+
+#: webradioFS.py:4116
+msgid "Station is not currently accessible1"
+msgstr ""
+
+#: webradioFS.py:4137
+msgid "my records"
+msgstr ""
+
+#: webradioFS.py:4163 webradioFS.py:7477
+msgid "LCD4Linux-Version not compatible"
+msgstr ""
+
+#: webradioFS.py:4296 webradioFS.py:4455
+msgid "A recording is in progress or is planned, terminate recording and stop stream?"
+msgstr ""
+
+#: webradioFS.py:4310
+msgid "Exit the program?"
+msgstr ""
+
+#: webradioFS.py:4511
+msgid "Delete selected file"
+msgstr ""
+
+#: webradioFS.py:4518
+msgid "admin-tools"
+msgstr ""
+
+#: webradioFS.py:4518
+msgid "fuer administrative Aufgaben"
+msgstr ""
+
+#: webradioFS.py:4520
+msgid "Note on text from sender/pictures"
+msgstr ""
+
+#: webradioFS.py:4522 webradioFS.py:4588 webradioFS.py:6391
+msgid "Settings-basics"
+msgstr ""
+
+#: webradioFS.py:4524
+msgid "edit settings, backup, restore,groups,import"
+msgstr ""
+
+#: webradioFS.py:4526 webradioFS.py:4590 webradioFS.py:6474
+msgid "Additional functions on / off"
+msgstr ""
+
+#: webradioFS.py:4528
+msgid "Tools and extras"
+msgstr ""
+
+#: webradioFS.py:4528
+msgid "show saved titles and pictures, Backup, restore, reset picons, show new streams"
+msgstr ""
+
+#: webradioFS.py:4530
+msgid "I miss functions"
+msgstr ""
+
+#: webradioFS.py:4530
+msgid "show all options"
+msgstr ""
+
+#: webradioFS.py:4535
+msgid "Selected Stream copy,move,edit,new,delete"
+msgstr ""
+
+#: webradioFS.py:4537
+msgid "add, delete groups"
+msgstr ""
+
+#: webradioFS.py:4538 webradioFS.py:4951
+msgid "About"
+msgstr ""
+
+#: webradioFS.py:4538
+msgid "show info for plugin and contact"
+msgstr ""
+
+#: webradioFS.py:4540 webradioFS.py:4637
+msgid "Actions-Menu"
+msgstr ""
+
+#: webradioFS.py:4540
+msgid "Standby,Deepstandby,Chillmodus,Sleeptimer"
+msgstr ""
+
+#: webradioFS.py:4542
+msgid "Instant recording, recording with special settings, check modules"
+msgstr ""
+
+#: webradioFS.py:4549
+msgid "mainmenu"
+msgstr ""
+
+#: webradioFS.py:4553
+msgid "Import stream-file"
+msgstr ""
+
+#: webradioFS.py:4553
+msgid "read and import streams from *imp-file in /tmp"
+msgstr ""
+
+#: webradioFS.py:4555
+msgid "Show Stored Titles List"
+msgstr ""
+
+#: webradioFS.py:4555
+msgid "Show the title stored"
+msgstr ""
+
+#: webradioFS.py:4556
+msgid "Show Stored Pictures"
+msgstr ""
+
+#: webradioFS.py:4556
+msgid "Show the cover images stored"
+msgstr ""
+
+#: webradioFS.py:4557
+msgid "Planer: "
+msgstr ""
+
+#: webradioFS.py:4557 webradioFS.py:8876
+msgid "I make my radio day"
+msgstr ""
+
+#: webradioFS.py:4559
+msgid "Start PictureCenterFS"
+msgstr ""
+
+#: webradioFS.py:4560
+msgid "Backup webradioFS Favs and settings"
+msgstr ""
+
+#: webradioFS.py:4560
+msgid "Save Favorites and settings"
+msgstr ""
+
+#: webradioFS.py:4561
+msgid "Backup ConfFS-Dir"
+msgstr ""
+
+#: webradioFS.py:4561
+msgid "Save all files for webradioFS, PictureCenterFS, PlanerFS"
+msgstr ""
+
+#: webradioFS.py:4562
+msgid "Restore webradioFS Favs and settings"
+msgstr ""
+
+#: webradioFS.py:4563
+msgid "Restore ConfFS-Dir"
+msgstr ""
+
+#: webradioFS.py:4563
+msgid "Restore all files for webradioFS, PictureCenterFS, PlanerFS"
+msgstr ""
+
+#: webradioFS.py:4564
+msgid "Delete Stream-Picons"
+msgstr ""
+
+#: webradioFS.py:4564
+msgid "Delete all Picons in /etc/ConfFS/streamlogos/ (e.g. for refresh)"
+msgstr ""
+
+#: webradioFS.py:4565
+msgid "Delete Favs-File and restart"
+msgstr ""
+
+#: webradioFS.py:4565
+msgid "Delete all your favorites and make new file"
+msgstr ""
+
+#: webradioFS.py:4566
+msgid "Extras"
+msgstr ""
+
+#: webradioFS.py:4570
+msgid "Check required Module"
+msgstr ""
+
+#: webradioFS.py:4570
+msgid "Check if the required modules are available"
+msgstr ""
+
+#: webradioFS.py:4571
+msgid "Install rec-Modules"
+msgstr ""
+
+#: webradioFS.py:4574
+msgid "Instant recording, endless"
+msgstr ""
+
+#: webradioFS.py:4574
+msgid "Run directly endlessly recording"
+msgstr ""
+
+#: webradioFS.py:4578
+msgid "Cache to store later"
+msgstr ""
+
+#: webradioFS.py:4578
+msgid "Tracks"
+msgstr ""
+
+#: webradioFS.py:4578
+msgid "only works when the station clean title separation allows"
+msgstr ""
+
+#: webradioFS.py:4580
+msgid "Stop caching"
+msgstr ""
+
+#: webradioFS.py:4582
+msgid "Timer and Record (set preferences)"
+msgstr ""
+
+#: webradioFS.py:4582
+msgid "Recording and switching timer, additional settings"
+msgstr ""
+
+#: webradioFS.py:4583 webradioFS.py:4597 webradioFS.py:6522
+msgid "Record-Settings"
+msgstr ""
+
+#: webradioFS.py:4591 webradioFS.py:6486
+msgid "Screensaver-Settings"
+msgstr ""
+
+#: webradioFS.py:4592
+msgid "Display-Settings"
+msgstr ""
+
+#: webradioFS.py:4593
+msgid "File Play-Settings"
+msgstr ""
+
+#: webradioFS.py:4595
+msgid "LCD4Linux Display-Settings"
+msgstr ""
+
+#: webradioFS.py:4598
+msgid "RC-Buttons -Settings"
+msgstr ""
+
+#: webradioFS.py:4600
+msgid "Font in setups too small? then change"
+msgstr ""
+
+#: webradioFS.py:4602
+msgid "Font in setups too big or crash on setup? then change"
+msgstr ""
+
+#: webradioFS.py:4603
+msgid "Change setup xml"
+msgstr ""
+
+#: webradioFS.py:4604
+msgid "Tools"
+msgstr ""
+
+#: webradioFS.py:4611
+msgid "export"
+msgstr ""
+
+#: webradioFS.py:4611
+msgid "to"
+msgstr ""
+
+#: webradioFS.py:4614
+msgid "Import streams"
+msgstr ""
+
+#: webradioFS.py:4614
+msgid "read and import streams from *imp file in /tmp"
+msgstr ""
+
+#: webradioFS.py:4617
+msgid "Change order of streams"
+msgstr ""
+
+#: webradioFS.py:4618
+msgid "show genres"
+msgstr ""
+
+#: webradioFS.py:4618
+msgid "show streams with genre"
+msgstr ""
+
+#: webradioFS.py:4619
+msgid "Edit selected stream"
+msgstr ""
+
+#: webradioFS.py:4620
+msgid "Add new stream to favorites"
+msgstr ""
+
+#: webradioFS.py:4621
+msgid "Autostart this Stream"
+msgstr ""
+
+#: webradioFS.py:4621
+msgid "Set this stream for automatically play on plugin-start"
+msgstr ""
+
+#: webradioFS.py:4622
+msgid "Delete selected stream"
+msgstr ""
+
+#: webradioFS.py:4624 webradioFS.py:4626
+msgid "Tools for selected Stream"
+msgstr ""
+
+#: webradioFS.py:4631
+msgid "Deepstandby"
+msgstr ""
+
+#: webradioFS.py:4633 webradioFS.py:5342 webradioFS.py:5500
+msgid "Stop Chill/Sleep"
+msgstr ""
+
+#: webradioFS.py:4682
+msgid ""
+"This image does not allow size for the ConfigListScreen, Font is from Image - I can not help unfortunately\n"
+"Please contact the skin developer"
+msgstr ""
+
+#: webradioFS.py:4696
+msgid "Import successfully"
+msgstr ""
+
+#: webradioFS.py:4698
+msgid "read-error from import-file"
+msgstr ""
+
+#: webradioFS.py:4700
+msgid "import-file /tmp/webradioFS.imp not exist"
+msgstr ""
+
+#: webradioFS.py:4724
+msgid "Patch finished."
+msgstr ""
+
+#: webradioFS.py:4747
+msgid "Groups"
+msgstr ""
+
+#: webradioFS.py:4783
+msgid "All stored streams are lost, sure?"
+msgstr ""
+
+#: webradioFS.py:4806 webradioFS.py:4809 webradioFS.py:4820
+msgid "Plugin PictureCenterFS not installed or Path failed"
+msgstr ""
+
+#: webradioFS.py:4863
+msgid "Connection attempt"
+msgstr ""
+
+#: webradioFS.py:4863
+msgid ""
+"Stop trying to connect?\n"
+"(wait to check update from DB)"
+msgstr ""
+
+#: webradioFS.py:4901
+msgid "Enter the minutes to shutdown:"
+msgstr ""
+
+#: webradioFS.py:4907
+msgid "Stop Sleeptimer"
+msgstr ""
+
+#: webradioFS.py:4912
+msgid "Start Sleeptimer"
+msgstr ""
+
+#: webradioFS.py:4921
+msgid "exit"
+msgstr ""
+
+#: webradioFS.py:4942
+msgid "Your have"
+msgstr ""
+
+#: webradioFS.py:4942
+msgid "streams in"
+msgstr ""
+
+#: webradioFS.py:4942
+msgid "groups"
+msgstr ""
+
+#: webradioFS.py:4973
+msgid "Info for selected stream:"
+msgstr ""
+
+#: webradioFS.py:4974
+msgid "Info for continuous stream:"
+msgstr ""
+
+#: webradioFS.py:4977
+msgid "Streamname:"
+msgstr ""
+
+#: webradioFS.py:4986 webradioFS.py:5908
+msgid "Description:"
+msgstr ""
+
+#: webradioFS.py:4988
+msgid "Genre(s):"
+msgstr ""
+
+#: webradioFS.py:4989
+msgid "Stream-Typ:"
+msgstr ""
+
+#: webradioFS.py:4990
+msgid "caching Tracks"
+msgstr ""
+
+#: webradioFS.py:4995 webradioFS.py:5901
+msgid "Volume:"
+msgstr ""
+
+#: webradioFS.py:4997 webradioFS.py:5896 webradioFS.py:5919
+msgid "URL:"
+msgstr ""
+
+#: webradioFS.py:4999
+msgid "Path:"
+msgstr ""
+
+#: webradioFS.py:5005
+msgid "saved as defect"
+msgstr ""
+
+#: webradioFS.py:5010
+msgid "Organization:"
+msgstr ""
+
+#: webradioFS.py:5011
+msgid "AudioCodec:"
+msgstr ""
+
+#: webradioFS.py:5012
+msgid "ChannelMode:"
+msgstr ""
+
+#: webradioFS.py:5013
+msgid "Location:"
+msgstr ""
+
+#: webradioFS.py:5017
+msgid "Tag Title:"
+msgstr ""
+
+#: webradioFS.py:5018
+msgid "Tag Album:"
+msgstr ""
+
+#: webradioFS.py:5020
+msgid "Tag Artist:"
+msgstr ""
+
+#: webradioFS.py:5021
+msgid "Tag Date:"
+msgstr ""
+
+#: webradioFS.py:5022
+msgid "Tag Comment:"
+msgstr ""
+
+#: webradioFS.py:5032
+msgid "Error in Stream-data, webradioFS.fav corrupted"
+msgstr ""
+
+#: webradioFS.py:5032 webradioFS.py:5051 webradioFS.py:5164 webradioFS.py:5187
+#: webradioFS.py:5751
+msgid "ERROR"
+msgstr ""
+
+#: webradioFS.py:5051
+msgid "No Pictures in Path"
+msgstr ""
+
+#: webradioFS.py:5121
+msgid "Single-play"
+msgstr ""
+
+#: webradioFS.py:5164
+msgid "Path not exist"
+msgstr ""
+
+#: webradioFS.py:5187
+msgid "no picture in path for slideshow"
+msgstr ""
+
+#: webradioFS.py:5291
+msgid "Delete this stream from Favorites"
+msgstr ""
+
+#: webradioFS.py:5364
+msgid "week up!"
+msgstr ""
+
+#: webradioFS.py:5372 webradioFS.py:7191
+msgid "Chilling: still"
+msgstr ""
+
+#: webradioFS.py:5372 webradioFS.py:5374
+msgid "min."
+msgstr ""
+
+#: webradioFS.py:5374 webradioFS.py:7193
+msgid "Sleep in"
+msgstr ""
+
+#: webradioFS.py:5651
+msgid "Media player setting may interfere with viewing station text and images"
+msgstr ""
+
+#: webradioFS.py:5652
+msgid "to change it, please change over:"
+msgstr ""
+
+#: webradioFS.py:5653
+msgid "Menu->Settings->System->Media Playback = original"
+msgstr ""
+
+#: webradioFS.py:5665
+msgid "Titles"
+msgstr ""
+
+#: webradioFS.py:5723
+msgid "Back"
+msgstr ""
+
+#: webradioFS.py:5741
+msgid "Selceted File is:"
+msgstr ""
+
+#: webradioFS.py:5741
+msgid "Do you really want to delete this file?"
+msgstr ""
+
+#: webradioFS.py:5771
+msgid "Add New Stream"
+msgstr ""
+
+#: webradioFS.py:5783 webradioFS.py:5844
+msgid "Stream edit"
+msgstr ""
+
+#: webradioFS.py:5792
+msgid "Add Stream"
+msgstr ""
+
+#: webradioFS.py:5823
+msgid "default"
+msgstr ""
+
+#: webradioFS.py:5849 webradioFS.py:5918
+msgid "New group"
+msgstr ""
+
+#: webradioFS.py:5894 webradioFS.py:5922
+msgid "Name/Title:"
+msgstr ""
+
+#: webradioFS.py:5897
+msgid "Genre:"
+msgstr ""
+
+#: webradioFS.py:5898 webradioFS.py:5922
+msgid "Genre 2 (optional):"
+msgstr ""
+
+#: webradioFS.py:5900
+msgid "Typ (mp3, pls, ogg....):"
+msgstr ""
+
+#: webradioFS.py:5902
+msgid "Screensaver:"
+msgstr ""
+
+#: webradioFS.py:5903
+msgid "Automatically caching Tracks"
+msgstr ""
+
+#: webradioFS.py:5905
+msgid "Screensaver Video:"
+msgstr ""
+
+#: webradioFS.py:5907
+msgid "Picture path:"
+msgstr ""
+
+#: webradioFS.py:5917 webradioFS.py:5925 webradioFS.py:5927
+msgid "Left/Right for select"
+msgstr ""
+
+#: webradioFS.py:5917
+msgid "Yellow for new group"
+msgstr ""
+
+#: webradioFS.py:5921 webradioFS.py:5923
+msgid "Press OK for edit"
+msgstr ""
+
+#: webradioFS.py:5956
+msgid "enter name for new group"
+msgstr ""
+
+#: webradioFS.py:5962
+msgid "Group exist"
+msgstr ""
+
+#: webradioFS.py:5970 webradioFS.py:6869
+msgid "Please select Path"
+msgstr ""
+
+#: webradioFS.py:5986
+msgid "Select typ"
+msgstr ""
+
+#: webradioFS.py:6013
+msgid "Stream-Name"
+msgstr ""
+
+#: webradioFS.py:6016
+msgid "Stream-URL"
+msgstr ""
+
+#: webradioFS.py:6019
+msgid "Stream-description"
+msgstr ""
+
+#: webradioFS.py:6022 webradioFS.py:6025
+msgid "Genre 2"
+msgstr ""
+
+#: webradioFS.py:6060
+msgid "Please select Group"
+msgstr ""
+
+#: webradioFS.py:6072
+msgid "Streamname in this group exist, overwrite?"
+msgstr ""
+
+#: webradioFS.py:6103
+msgid "Stream delete?"
+msgstr ""
+
+#: webradioFS.py:6125 webradioFS.py:6128 webradioFS.py:6208 webradioFS.py:8271
+msgid "alphabetically"
+msgstr ""
+
+#: webradioFS.py:6125 webradioFS.py:6128
+msgid "by user"
+msgstr ""
+
+#: webradioFS.py:6132
+msgid "off"
+msgstr ""
+
+#: webradioFS.py:6132
+msgid "Variante 1"
+msgstr ""
+
+#: webradioFS.py:6132
+msgid "Variante 2"
+msgstr ""
+
+#: webradioFS.py:6132
+msgid "Variante 3"
+msgstr ""
+
+#: webradioFS.py:6166
+msgid "simple"
+msgstr ""
+
+#: webradioFS.py:6166
+msgid "Show all options"
+msgstr ""
+
+#: webradioFS.py:6178 webradioFS.py:7627
+msgid "not random color"
+msgstr ""
+
+#: webradioFS.py:6178 webradioFS.py:7618
+msgid "random color for labels"
+msgstr ""
+
+#: webradioFS.py:6178 webradioFS.py:7621
+msgid "random color for background"
+msgstr ""
+
+#: webradioFS.py:6178 webradioFS.py:7624
+msgid "random color for labels and background"
+msgstr ""
+
+#: webradioFS.py:6202
+msgid "always ask"
+msgstr ""
+
+#: webradioFS.py:6202
+msgid "always store"
+msgstr ""
+
+#: webradioFS.py:6202
+msgid "never store"
+msgstr ""
+
+#: webradioFS.py:6208 webradioFS.py:8271
+msgid "Random"
+msgstr ""
+
+#: webradioFS.py:6208 webradioFS.py:8271
+msgid "by Folder"
+msgstr ""
+
+#: webradioFS.py:6208 webradioFS.py:8271
+msgid "Random by Folder"
+msgstr ""
+
+#: webradioFS.py:6208 webradioFS.py:8271
+msgid "Not sort"
+msgstr ""
+
+#: webradioFS.py:6241
+msgid "left"
+msgstr ""
+
+#: webradioFS.py:6241
+msgid "center"
+msgstr ""
+
+#: webradioFS.py:6241
+msgid "right"
+msgstr ""
+
+#: webradioFS.py:6241
+msgid "5%"
+msgstr ""
+
+#: webradioFS.py:6241
+msgid "10%"
+msgstr ""
+
+#: webradioFS.py:6241
+msgid "15%"
+msgstr ""
+
+#: webradioFS.py:6241
+msgid "20%"
+msgstr ""
+
+#: webradioFS.py:6241
+msgid "25%"
+msgstr ""
+
+#: webradioFS.py:6241
+msgid "30%"
+msgstr ""
+
+#: webradioFS.py:6241
+msgid "35%"
+msgstr ""
+
+#: webradioFS.py:6241
+msgid "40%"
+msgstr ""
+
+#: webradioFS.py:6241
+msgid "45%"
+msgstr ""
+
+#: webradioFS.py:6241
+msgid "50%"
+msgstr ""
+
+#: webradioFS.py:6241
+msgid "55%"
+msgstr ""
+
+#: webradioFS.py:6241
+msgid "60%"
+msgstr ""
+
+#: webradioFS.py:6241
+msgid "65%"
+msgstr ""
+
+#: webradioFS.py:6241
+msgid "70%"
+msgstr ""
+
+#: webradioFS.py:6241
+msgid "75%"
+msgstr ""
+
+#: webradioFS.py:6241
+msgid "80%"
+msgstr ""
+
+#: webradioFS.py:6241
+msgid "85%"
+msgstr ""
+
+#: webradioFS.py:6241
+msgid "90%"
+msgstr ""
+
+#: webradioFS.py:6241
+msgid "95%"
+msgstr ""
+
+#: webradioFS.py:6269
+msgid "black"
+msgstr ""
+
+#: webradioFS.py:6269
+msgid "white"
+msgstr ""
+
+#: webradioFS.py:6271
+msgid "gray"
+msgstr ""
+
+#: webradioFS.py:6271
+msgid "silver"
+msgstr ""
+
+#: webradioFS.py:6271
+msgid "slategray"
+msgstr ""
+
+#: webradioFS.py:6272
+msgid "aquamarine"
+msgstr ""
+
+#: webradioFS.py:6273
+msgid "yellow"
+msgstr ""
+
+#: webradioFS.py:6273
+msgid "greenyellow"
+msgstr ""
+
+#: webradioFS.py:6273
+msgid "gold"
+msgstr ""
+
+#: webradioFS.py:6274
+msgid "red"
+msgstr ""
+
+#: webradioFS.py:6274
+msgid "tomato"
+msgstr ""
+
+#: webradioFS.py:6274
+msgid "darkred"
+msgstr ""
+
+#: webradioFS.py:6274
+msgid "indianred"
+msgstr ""
+
+#: webradioFS.py:6274
+msgid "orange"
+msgstr ""
+
+#: webradioFS.py:6274
+msgid "darkorange"
+msgstr ""
+
+#: webradioFS.py:6274
+msgid "orangered"
+msgstr ""
+
+#: webradioFS.py:6275
+msgid "green"
+msgstr ""
+
+#: webradioFS.py:6275
+msgid "lawngreen"
+msgstr ""
+
+#: webradioFS.py:6275
+msgid "darkgreen"
+msgstr ""
+
+#: webradioFS.py:6275
+msgid "lime"
+msgstr ""
+
+#: webradioFS.py:6275
+msgid "lightgreen"
+msgstr ""
+
+#: webradioFS.py:6276
+msgid "blue"
+msgstr ""
+
+#: webradioFS.py:6276
+msgid "blueviolet"
+msgstr ""
+
+#: webradioFS.py:6276
+msgid "indigo"
+msgstr ""
+
+#: webradioFS.py:6276
+msgid "darkblue"
+msgstr ""
+
+#: webradioFS.py:6276
+msgid "cadetblue"
+msgstr ""
+
+#: webradioFS.py:6276
+msgid "cornflowerblue"
+msgstr ""
+
+#: webradioFS.py:6276
+msgid "lightblue"
+msgstr ""
+
+#: webradioFS.py:6277
+msgid "magenta"
+msgstr ""
+
+#: webradioFS.py:6277
+msgid "violet"
+msgstr ""
+
+#: webradioFS.py:6277
+msgid "darkorchid"
+msgstr ""
+
+#: webradioFS.py:6277
+msgid "deeppink"
+msgstr ""
+
+#: webradioFS.py:6277
+msgid "cyan"
+msgstr ""
+
+#: webradioFS.py:6278
+msgid "brown"
+msgstr ""
+
+#: webradioFS.py:6278
+msgid "sandybrown"
+msgstr ""
+
+#: webradioFS.py:6278
+msgid "moccasin"
+msgstr ""
+
+#: webradioFS.py:6278
+msgid "rosybrown"
+msgstr ""
+
+#: webradioFS.py:6278
+msgid "olive"
+msgstr ""
+
+#: webradioFS.py:6312
+msgid "Remember last used"
+msgstr ""
+
+#: webradioFS.py:6368
+msgid "webradioFS - Settings"
+msgstr ""
+
+#: webradioFS.py:6375
+msgid "Select Stream for automatic start"
+msgstr ""
+
+#: webradioFS.py:6393
+msgid "Scope of possible options / settings"
+msgstr ""
+
+#: webradioFS.py:6395
+msgid "start stream automatically:"
+msgstr ""
+
+#: webradioFS.py:6396
+msgid "Picture search"
+msgstr ""
+
+#: webradioFS.py:6397
+msgid "Show webradioFS in mainmenu:"
+msgstr ""
+
+#: webradioFS.py:6398
+msgid "Ignore skin:"
+msgstr ""
+
+#: webradioFS.py:6402
+msgid "Show webradioFS in extensionsmenu:"
+msgstr ""
+
+#: webradioFS.py:6407
+msgid "View"
+msgstr ""
+
+#: webradioFS.py:6411
+msgid "Images Additional search word"
+msgstr ""
+
+#: webradioFS.py:6412
+msgid "Images Additional search word at the end"
+msgstr ""
+
+#: webradioFS.py:6413
+msgid "Exclude search word"
+msgstr ""
+
+#: webradioFS.py:6416
+msgid "Sorting Stream List:"
+msgstr ""
+
+#: webradioFS.py:6417
+msgid "Picons for Streams:"
+msgstr ""
+
+#: webradioFS.py:6418
+msgid "Picons in List:"
+msgstr ""
+
+#: webradioFS.py:6423
+msgid "Path-options"
+msgstr ""
+
+#: webradioFS.py:6424
+msgid "File path for Favorites:"
+msgstr ""
+
+#: webradioFS.py:6425
+msgid "File path for Picons:"
+msgstr ""
+
+#: webradioFS.py:6426
+msgid "File path for PVR-logos:"
+msgstr ""
+
+#: webradioFS.py:6427
+msgid "Storage path for cover and title:"
+msgstr ""
+
+#: webradioFS.py:6428 webradioFS.py:6525 webradioFS.py:8015
+msgid "Path for record"
+msgstr ""
+
+#: webradioFS.py:6433
+msgid "Volume-options"
+msgstr ""
+
+#: webradioFS.py:6434
+msgid "Volume on start:"
+msgstr ""
+
+#: webradioFS.py:6435
+msgid "Time for auto-volume steps (0=off):"
+msgstr ""
+
+#: webradioFS.py:6436
+msgid "max Volume on chill-end:"
+msgstr ""
+
+#: webradioFS.py:6438
+msgid "other"
+msgstr ""
+
+#: webradioFS.py:6439
+msgid "Blocking inactivity off timer (system):"
+msgstr ""
+
+#: webradioFS.py:6440
+msgid "Timeout for connection attempt:"
+msgstr ""
+
+#: webradioFS.py:6441
+msgid "Timeout for stream termination:"
+msgstr ""
+
+#: webradioFS.py:6442
+msgid "Number of connection attempts:"
+msgstr ""
+
+#: webradioFS.py:6443
+msgid "Off Timer (minutes):"
+msgstr ""
+
+#: webradioFS.py:6444
+msgid "Result for Off-Timer (Standby/Deepstandby):"
+msgstr ""
+
+#: webradioFS.py:6445
+msgid "Question before exiting?"
+msgstr ""
+
+#: webradioFS.py:6446
+msgid "Write debug:"
+msgstr ""
+
+#: webradioFS.py:6451
+msgid "sispmctl Menu Name 1:"
+msgstr ""
+
+#: webradioFS.py:6452
+msgid "sispmctl Switching Menu 1:"
+msgstr ""
+
+#: webradioFS.py:6453
+msgid "sispmctl Menu Name 2:"
+msgstr ""
+
+#: webradioFS.py:6454
+msgid "sispmctl Switching Menu 2:"
+msgstr ""
+
+#: webradioFS.py:6456
+msgid "Set sispmctl on start:"
+msgstr ""
+
+#: webradioFS.py:6457
+msgid "Set sispmctl on exit:"
+msgstr ""
+
+#: webradioFS.py:6458
+msgid "Set sispmctl when saver on:"
+msgstr ""
+
+#: webradioFS.py:6459
+msgid "Set sispmctl when saver off:"
+msgstr ""
+
+#: webradioFS.py:6465
+msgid "default directory"
+msgstr ""
+
+#: webradioFS.py:6465 webradioFS.py:6490 webradioFS.py:6495 webradioFS.py:6504
+#: webradioFS.py:6505 webradioFS.py:6641
+msgid " (Press OK)"
+msgstr ""
+
+#: webradioFS.py:6466 webradioFS.py:8326
+msgid "Play files from sub-dirs"
+msgstr ""
+
+#: webradioFS.py:6467 webradioFS.py:8325
+msgid "Play random"
+msgstr ""
+
+#: webradioFS.py:6468
+msgid "Auto play"
+msgstr ""
+
+#: webradioFS.py:6469 webradioFS.py:8327
+msgid "Auto play endless"
+msgstr ""
+
+#: webradioFS.py:6470
+msgid "Save list in random order"
+msgstr ""
+
+#: webradioFS.py:6471
+msgid "Save position in list"
+msgstr ""
+
+#: webradioFS.py:6476
+msgid "Enable Screensaver options menu"
+msgstr ""
+
+#: webradioFS.py:6477
+msgid "Enable display settings menu"
+msgstr ""
+
+#: webradioFS.py:6478
+msgid "Enable record functions menu"
+msgstr ""
+
+#: webradioFS.py:6479
+msgid "Enable Audio-file playing menu"
+msgstr ""
+
+#: webradioFS.py:6480
+msgid "Enable change assignment of keys menu"
+msgstr ""
+
+#: webradioFS.py:6481
+msgid "Enable sispmctl settings menu"
+msgstr ""
+
+#: webradioFS.py:6484
+msgid "Enable external display settings menu"
+msgstr ""
+
+#: webradioFS.py:6490
+msgid "Screensaver-Art:"
+msgstr ""
+
+#: webradioFS.py:6492
+msgid "Time (sec) to screen saver:"
+msgstr ""
+
+#: webradioFS.py:6495
+msgid "Video Path:"
+msgstr ""
+
+#: webradioFS.py:6497
+msgid "Video File:"
+msgstr ""
+
+#: webradioFS.py:6499
+msgid "Second to recurrence:"
+msgstr ""
+
+#: webradioFS.py:6501
+msgid "Fixed position for text and cover"
+msgstr ""
+
+#: webradioFS.py:6502
+msgid "Colors from skin"
+msgstr ""
+
+#: webradioFS.py:6504 webradioFS.py:6641
+msgid "Color screensaver labels"
+msgstr ""
+
+#: webradioFS.py:6505 webradioFS.py:6641
+msgid "Color screensaver background"
+msgstr ""
+
+#: webradioFS.py:6506
+msgid "Color random"
+msgstr ""
+
+#: webradioFS.py:6509 webradioFS.py:6641
+msgid "backround color:"
+msgstr ""
+
+#: webradioFS.py:6510 webradioFS.py:6520
+msgid "Slideshow Path:"
+msgstr ""
+
+#: webradioFS.py:6511
+msgid "Text-space:"
+msgstr ""
+
+#: webradioFS.py:6512
+msgid "Show subdirs:"
+msgstr ""
+
+#: webradioFS.py:6513
+msgid "Toggle-Time:"
+msgstr ""
+
+#: webradioFS.py:6518
+msgid "Keyword(s) for Picture:"
+msgstr ""
+
+#: webradioFS.py:6524
+msgid "Set caching individually in stream settings"
+msgstr ""
+
+#: webradioFS.py:6526
+msgid "Path for caching"
+msgstr ""
+
+#: webradioFS.py:6527
+msgid "Show *rec* when record"
+msgstr ""
+
+#: webradioFS.py:6528 webradioFS.py:8016
+msgid "Make subdir for record"
+msgstr ""
+
+#: webradioFS.py:6529 webradioFS.py:8017
+msgid "Split recording with event"
+msgstr ""
+
+#: webradioFS.py:6530
+msgid "Save on recording a found image automatically"
+msgstr ""
+
+#: webradioFS.py:6531
+msgid "store recordings of incompleteness"
+msgstr ""
+
+#: webradioFS.py:6534 webradioFS.py:6537
+msgid "LCD4linux-Settings"
+msgstr ""
+
+#: webradioFS.py:6534
+msgid "for external display"
+msgstr ""
+
+#: webradioFS.py:6538
+msgid "Show on LCD"
+msgstr ""
+
+#: webradioFS.py:6539
+msgid "Set LCD"
+msgstr ""
+
+#: webradioFS.py:6540
+msgid "Stop screen toggle"
+msgstr ""
+
+#: webradioFS.py:6541
+msgid "Set screen"
+msgstr ""
+
+#: webradioFS.py:6543
+msgid "Show infotext"
+msgstr ""
+
+#: webradioFS.py:6544 webradioFS.py:6550 webradioFS.py:6556 webradioFS.py:6562
+#: webradioFS.py:6567
+msgid "Align"
+msgstr ""
+
+#: webradioFS.py:6545 webradioFS.py:6551 webradioFS.py:6557 webradioFS.py:6563
+#: webradioFS.py:6568
+msgid "Position"
+msgstr ""
+
+#: webradioFS.py:6546 webradioFS.py:6552 webradioFS.py:6558 webradioFS.py:6564
+#: webradioFS.py:6569
+msgid "Size"
+msgstr ""
+
+#: webradioFS.py:6547 webradioFS.py:6553 webradioFS.py:6559
+msgid "Lines"
+msgstr ""
+
+#: webradioFS.py:6549
+msgid "Show Station-Name"
+msgstr ""
+
+#: webradioFS.py:6555
+msgid "Show Fav-group name"
+msgstr ""
+
+#: webradioFS.py:6566
+msgid "Show picture/cover"
+msgstr ""
+
+#: webradioFS.py:6571
+msgid "Text-Size in list"
+msgstr ""
+
+#: webradioFS.py:6572
+msgid "Text-Size if no logo"
+msgstr ""
+
+#: webradioFS.py:6573
+msgid "Text-color"
+msgstr ""
+
+#: webradioFS.py:6601
+msgid ""
+"When activated: set the options for this in the settings!\n"
+"When deactivated: the settings remain active!"
+msgstr ""
+
+#: webradioFS.py:6603
+msgid "Press OK for select"
+msgstr ""
+
+#: webradioFS.py:6605
+msgid "Video or live TV are not available on all boxes"
+msgstr ""
+
+#: webradioFS.py:6607
+msgid "000 = off"
+msgstr ""
+
+#: webradioFS.py:6609
+msgid "When activated: block automatic shutdown from system when inactive"
+msgstr ""
+
+#: webradioFS.py:6664
+msgid ""
+"Sorry your path destination is not writeable.\n"
+"Please choose an other one."
+msgstr ""
+
+#: webradioFS.py:6732
+msgid "can not copy Fav-File on new path"
+msgstr ""
+
+#: webradioFS.py:6735
+msgid "Plugin for screensaver not installed"
+msgstr ""
+
+#: webradioFS.py:6737 webradioFS.py:6766
+msgid "Sorry, color-Code is failed, settig default"
+msgstr ""
+
+#: webradioFS.py:6760
+msgid "webradioFS - select screensaver"
+msgstr ""
+
+#: webradioFS.py:6817
+msgid "Input failed, color sample for with: ffffff, for black: 000000"
+msgstr ""
+
+#: webradioFS.py:6844 webradioFS.py:6847
+msgid "Create a new subdirectory?"
+msgstr ""
+
+#: webradioFS.py:6850
+msgid "not writable!"
+msgstr ""
+
+#: webradioFS.py:6854
+msgid "Name for new subdirectory"
+msgstr ""
+
+#: webradioFS.py:6872
+msgid "Please select Save-Path for favorites..."
+msgstr ""
+
+#: webradioFS.py:6875 webradioFS.py:8084
+msgid "Please select Save-Path for cover and titles..."
+msgstr ""
+
+#: webradioFS.py:6878
+msgid "Please select path for stream-logos..."
+msgstr ""
+
+#: webradioFS.py:6881
+msgid "Please select your image picon-path..."
+msgstr ""
+
+#: webradioFS.py:6884
+msgid "Please select startpath for audiofiles..."
+msgstr ""
+
+#: webradioFS.py:6887
+msgid "Please select path for caching..."
+msgstr ""
+
+#: webradioFS.py:6913 webradioFS.py:6942
+msgid "RemoteControl-Settings"
+msgstr ""
+
+#: webradioFS.py:6980
+msgid "fb"
+msgstr ""
+
+#: webradioFS.py:7093 webradioFS.py:7094 webradioFS.py:7102 webradioFS.py:7103
+msgid "Stop Screensaver"
+msgstr ""
+
+#: webradioFS.py:7095 webradioFS.py:7096
+msgid "Toggle Picture"
+msgstr ""
+
+#: webradioFS.py:7097
+msgid "change keyword for Picture"
+msgstr ""
+
+#: webradioFS.py:7098
+msgid "Save Picture"
+msgstr ""
+
+#: webradioFS.py:7099
+msgid "set random color"
+msgstr ""
+
+#: webradioFS.py:7101
+msgid "Set Saver-Type"
+msgstr ""
+
+#: webradioFS.py:7104
+msgid "Exit prog"
+msgstr ""
+
+#: webradioFS.py:7105
+msgid "Stop and exit"
+msgstr ""
+
+#: webradioFS.py:7106
+msgid "Play next"
+msgstr ""
+
+#: webradioFS.py:7497
+msgid "Edit cover-save-name:"
+msgstr ""
+
+#: webradioFS.py:7511
+msgid "Cover saved"
+msgstr ""
+
+#: webradioFS.py:7513
+msgid "Error, Cover no saved"
+msgstr ""
+
+#: webradioFS.py:7598
+msgid "Select Screensaver-Art"
+msgstr ""
+
+#: webradioFS.py:7610
+msgid "change Keyword for Picture"
+msgstr ""
+
+#: webradioFS.py:7612
+msgid "First select Screensaver-Art"
+msgstr ""
+
+#: webradioFS.py:7717
+msgid "caching"
+msgstr ""
+
+#: webradioFS.py:7719
+msgid "recording in progress"
+msgstr ""
+
+#: webradioFS.py:7822
+msgid "Single-play from webif"
+msgstr ""
+
+#: webradioFS.py:7869
+msgid "Title saved in titel_list.txt"
+msgstr ""
+
+#: webradioFS.py:7871
+msgid "Error, Title no saved"
+msgstr ""
+
+#: webradioFS.py:7925 webradioFS.py:7927
+msgid "only switch"
+msgstr ""
+
+#: webradioFS.py:7927
+msgid "record endless"
+msgstr ""
+
+#: webradioFS.py:7927
+msgid "record by minutes"
+msgstr ""
+
+#: webradioFS.py:7927
+msgid "record by time"
+msgstr ""
+
+#: webradioFS.py:7947 webradioFS.py:7967
+msgid "temporary Record-Settings"
+msgstr ""
+
+#: webradioFS.py:7996
+msgid "These settings are only for this one recording!"
+msgstr ""
+
+#: webradioFS.py:7997
+msgid "(Help press for explanations)"
+msgstr ""
+
+#: webradioFS.py:7998 webradioFS.py:8003 webradioFS.py:8021
+msgid " "
+msgstr ""
+
+#: webradioFS.py:7999
+msgid "Stream-Name: "
+msgstr ""
+
+#: webradioFS.py:8004
+msgid "timing art"
+msgstr ""
+
+#: webradioFS.py:8007
+msgid "Recording len (minutes)"
+msgstr ""
+
+#: webradioFS.py:8010
+msgid "Start-time:"
+msgstr ""
+
+#: webradioFS.py:8012
+msgid "End-time:"
+msgstr ""
+
+#: webradioFS.py:8022
+msgid "experimental:"
+msgstr ""
+
+#: webradioFS.py:8023 webradioFS.py:8058
+msgid "Recording when in title"
+msgstr ""
+
+#: webradioFS.py:8024 webradioFS.py:8061
+msgid "Not recording when in title"
+msgstr ""
+
+#: webradioFS.py:8032
+msgid "Select a recording mode"
+msgstr ""
+
+#: webradioFS.py:8034
+msgid "Begin recording immediately, recording time specify in minutes"
+msgstr ""
+
+#: webradioFS.py:8036
+msgid "Recording / switching at a certain time, edit start time"
+msgstr ""
+
+#: webradioFS.py:8038
+msgid "Time, when to stop recording"
+msgstr ""
+
+#: webradioFS.py:8040
+msgid "edit the recording directory"
+msgstr ""
+
+#: webradioFS.py:8042
+msgid "Creating a subdirectory for Stream"
+msgstr ""
+
+#: webradioFS.py:8044
+msgid "Split recordings by title"
+msgstr ""
+
+#: webradioFS.py:8046
+msgid "Record only if at least one of the words in the title"
+msgstr ""
+
+#: webradioFS.py:8048
+msgid "Not record if at least one of the words in the title"
+msgstr ""
+
+#: webradioFS.py:8058 webradioFS.py:8061
+msgid " (separate with commas)"
+msgstr ""
+
+#: webradioFS.py:8160
+msgid "Change the Box-Volume"
+msgstr ""
+
+#: webradioFS.py:8161
+msgid "down or left for lower"
+msgstr ""
+
+#: webradioFS.py:8162
+msgid "up or right for higher"
+msgstr ""
+
+#: webradioFS.py:8163
+msgid "Exit or OK for exit"
+msgstr ""
+
+#: webradioFS.py:8261
+msgid "My records"
+msgstr ""
+
+#: webradioFS.py:8285
+msgid "OK"
+msgstr ""
+
+#: webradioFS.py:8297
+msgid "Play settings"
+msgstr ""
+
+#: webradioFS.py:8324
+msgid "Set permanently"
+msgstr ""
+
+#: webradioFS.py:8922
+msgid "Deactivated"
+msgstr ""
+
+#: webradioFS.py:8924
+msgid "active"
+msgstr ""
+
+#: webradioFS.py:8932 webradioFS.py:8994
+msgid "Exit webradioFS"
+msgstr ""
+
+#: webradioFS.py:8934 webradioFS.py:8994
+msgid "Exit webradioFS and standby"
+msgstr ""
+
+#: webradioFS.py:8936 webradioFS.py:8994
+msgid "Start webradioFS"
+msgstr ""
+
+#: webradioFS.py:8938 webradioFS.py:8994
+msgid "Start webradioFS from standby"
+msgstr ""
+
+#: webradioFS.py:8991
+msgid "Daily"
+msgstr ""
+
+#: webradioFS.py:8991
+msgid "Once only"
+msgstr ""
+
+#: webradioFS.py:8991
+msgid "By weekday"
+msgstr ""
+
+#: webradioFS.py:8992
+msgid "%A, %d.%m %Y"
+msgstr ""
+
+#: webradioFS.py:8994 webradioFS.py:9069
+msgid "Select station"
+msgstr ""
+
+#: webradioFS.py:9013 webradioFS.py:9032
+msgid "Edit this termin"
+msgstr ""
+
+#: webradioFS.py:9046
+msgid "Active:"
+msgstr ""
+
+#: webradioFS.py:9047
+msgid "Action:"
+msgstr ""
+
+#: webradioFS.py:9049
+msgid "Station:"
+msgstr ""
+
+#: webradioFS.py:9050
+msgid "Time for action:"
+msgstr ""
+
+#: webradioFS.py:9051
+msgid "Repeat:"
+msgstr ""
+
+#: webradioFS.py:9053
+msgid "Date:"
+msgstr ""
+
+#: webradioFS.py:9086
+msgid "Appointment can not start in the past"
+msgstr ""
+
+#: webradioFSSite.py:136
+msgid "running"
+msgstr ""
+
+#: webradioFSSite.py:136
+msgid "stopped"
+msgstr ""
+
+#: webradioFSSite.py:137
+msgid "yes"
+msgstr ""
+
+#: webradioFSSite.py:137
+msgid "no"
+msgstr ""

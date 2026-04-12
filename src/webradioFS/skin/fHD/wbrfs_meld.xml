@@ -1,0 +1,9 @@
+<!-- webradioFS message -->
+<screen name="wbrfs_message" position="center,center" zPosition="4" size="800,200" title="webradioFS-Info" backgroundColor="#000000" flags="wfNoBorder" >
+    <widget name="bgr" position="2,70" size="796,223" transparent="0"  backgroundColor="#00008B" zPosition="1" />
+    <widget name="titel" font="Regular;35" valign="center" halign="left" position="100,10" size="450,50" transparent="0"  backgroundColor="#000000" foregroundColor="#ffffff" shadowColor="#000000" zPosition="5" />
+    <widget name="time" font="Regular;35" valign="center" halign="right" position="500,1" size="50,50" transparent="0"  backgroundColor="#000000" foregroundColor="#ffffff" shadowColor="#000000" zPosition="6" />
+    <ePixmap position="10,1" zPosition="2" size="70,70" backgroundColor="#000000" pixmap="/usr/lib/enigma2/python/Plugins/Extensions/webradioFS/skin/images/logodef.png" transparent="0" alphatest="on" />
+    <widget name="text" font="Regular;35" halign="left" position="20,90" size="760,50" transparent="1"  foregroundColor="#ffffff" shadowColor="#000000"  zPosition="6" />
+    <widget name="list" transparent="0" position="2000,2000" size="500,50" zPosition="7" />
+</screen>

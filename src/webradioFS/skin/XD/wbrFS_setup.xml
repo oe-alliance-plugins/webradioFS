@@ -1,0 +1,25 @@
+<screen name="WebradioFSSetup_13" zPosition="2" position="center,66" backgroundColor="#000000" size="900,480" title="webradioFS">
+<!--top on left site in stream-list-Screen-->
+                <widget name="rec_txt" position="1,0" size="605,35" font="Regular;22" halign="center" valign="center" foregroundColor="#00f47d19" zPosition="2" backgroundColor="#20343c4f" transparent="1" /> 
+<!--left site in Screen for Streams, Genres...-->
+                <widget name="config" position="1,35" size="605,326" zPosition="3" foregroundColor="#FFFFFF" backgroundColor="#000000" scrollbarMode="showOnDemand" enableWrapAround="1"/>
+
+<!--bottom left-->
+                <widget  source="playtext" render="Label"  position="1,376" zPosition="2" size="900,60" font="Regular;20" valign="center" halign="center" foregroundColor="#FFD700" backgroundColor="#000000" transparent="0" />           
+
+
+<!--bottom in Screen for streams and genres, ... (button-line)-->
+   <ePixmap pixmap="skin_default/buttons/key_red.png" position="3,451" size="40,30" backgroundColor="#000000" alphatest="blend" />
+  <widget name="green_pic" pixmap="skin_default/buttons/key_green.png" position="206,451" size="40,30" backgroundColor="#000000" alphatest="blend" />
+  <ePixmap pixmap="skin_default/buttons/key_yellow.png" position="409,451" size="31,30" backgroundColor="#000000" alphatest="blend" />
+  <ePixmap pixmap="skin_default/buttons/key_blue.png" position="612,451" size="40,30" backgroundColor="#000000" alphatest="blend" />
+  <widget name="key_red" position="43,451" zPosition="1" size="160,30" font="Regular;19" foregroundColor="#FFFFFF" backgroundColor="#000000" noWrap="1" transparent="1" />
+  <widget name="key_green" position="246,451" zPosition="1" size="161,30" font="Regular;19" foregroundColor="#FFFFFF" backgroundColor="#000000" noWrap="1" transparent="1" />
+  <widget name="key_yellow" position="449,451" zPosition="1" size="160,30" font="Regular;19" foregroundColor="#FFFFFF" backgroundColor="#000000" noWrap="1" transparent="1" />
+  <widget name="key_blue" position="652,451" zPosition="1" size="149,30" font="Regular;19" foregroundColor="#FFFFFF" backgroundColor="#000000" noWrap="1" transparent="1" />
+  <ePixmap pixmap="/usr/lib/enigma2/python/Plugins/Extensions/webradioFS/skin/images/wbrl.png" position="760,450" size="120,30" alphatest="blend" zPosition="5" transparent="1" />
+<!--lines-->
+  <eLabel position="0,438" size="900,2" backgroundColor="#D3D3D3" />
+  <eLabel position="613,0" size="2,370" backgroundColor="#D3D3D3" />
+  <eLabel position="2,370" size="900,2" backgroundColor="#D3D3D3" />              
+</screen>
