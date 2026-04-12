@@ -5397,6 +5397,7 @@ class WebradioFSScreen_15(Screen, InfoBarSeek, HelpableScreen, InfoBarNotificati
         if right_site:
             right_site.show()
         if not self.tv1:
+            pass
     #        if self.wecker==1:
     #                self.volume_timer.stop()
     #                self.wecker=0
