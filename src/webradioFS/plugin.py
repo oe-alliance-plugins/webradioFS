@@ -38,15 +38,6 @@ set_file = '/etc/ConfFS/webradioFS_sets.db'
 
 favpath = None
 autoTimes = []
-new_set = None
-if not os.path.isfile(set_file):
-    f = open(set_file, "w")
-    f.close()
-    new_set = 1
-
-if os.path.getsize(set_file) < 10:
-    new_set = 1
-os.chmod('/etc/ConfFS/webradioFS_sets.db', 644)
 
 tlr = True
 try:
@@ -55,34 +46,17 @@ except ImportError:
     tlr = False
 
 if tlr:
+    from .settings_db import initialize_settings_db
+
     connection = sqlite3.connect(set_file)
     connection.text_factory = str
-    wbrfscursor = connection.cursor()
-
     try:
-        wbrfscursor.execute('SELECT COUNT(*) FROM settings WHERE wert2=?', ("progversion"))
-    except Exception as e:
-        if not new_set and "no such table: settings" in str(e):
-            wbrfscursor.execute('ALTER TABLE settings2 RENAME TO settings;')
-        else:
-            if new_set:
-                wbrfscursor.execute('CREATE TABLE IF NOT EXISTS settings (id INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT, group1 TEXT, nam1 TEXT, wert1 TEXT, wert2 TEXT NOT NULL UNIQUE)')
-            else:
-                wbrfscursor.execute('CREATE TABLE IF NOT EXISTS settings2 (id INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT, group1 TEXT, nam1 TEXT, wert1 TEXT, wert2 TEXT NOT NULL UNIQUE)')
-                wbrfscursor.execute('SELECT group1,nam1,wert1 from settings')
-                uniq_tb = []
-                dats = []
-                for row in wbrfscursor:
-                    uniq = str(row[0]) + str(row[1])
-                    if uniq not in uniq_tb:
-                        uniq_tb.append(uniq)
-                        dats.append((row[0], row[1], row[2], uniq))
-                for x in dats:
-                    wbrfscursor.execute("INSERT OR IGNORE INTO settings2 (group1,nam1,wert1,wert2) VALUES(?,?,?,?)", (x[0], x[1], x[2], x[3]))
-            connection.commit()
-            wbrfscursor.execute('DROP TABLE settings;')
-            wbrfscursor.execute('ALTER TABLE settings2 RENAME TO settings;')
-        connection.commit()
+        os.chmod(set_file, 0o644)
+        initialize_settings_db(connection)
+    except Exception:
+        connection.close()
+        raise
+    wbrfscursor = connection.cursor()
 
     #   aenderungen auch in func beim read aendern!!
     setsb = (
@@ -118,7 +92,7 @@ if tlr:
     row3 = wbrfscursor.fetchone()
     favpath = row3[0]
     try:
-        os.chmod(os.path.join(favpath, "webradioFS_favs.db"), 644)
+        os.chmod(os.path.join(favpath, "webradioFS_favs.db"), 0o644)
     except OSError:
         pass
 
