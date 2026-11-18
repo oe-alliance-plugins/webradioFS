@@ -32,8 +32,6 @@ def run_webradioFS(session=None):
     return restarter2()
 
 
-
-
 def _s(value):
     # backend lists may contain bytes
     return value.decode("utf-8", "replace") if isinstance(value, bytes) else str(value)
