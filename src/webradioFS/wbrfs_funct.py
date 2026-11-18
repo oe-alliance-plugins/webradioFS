@@ -299,7 +299,7 @@ class Streamlist:
                 #f7.write(str(out)+"\n")
                 #f7.write(str(path.info())+"\n")
                 #f7.close()
-                i1 = dict(path.info())
+                i1 = {k.lower(): v for k, v in path.info().items()}
 
                 if 'content-type' in i1 and etest is None:
                     typ7 = i1['content-type']
@@ -315,7 +315,7 @@ class Streamlist:
                         typ_check = 'wma'  # noqa F841
                         typ = 'wma'
                 read_timer.startLongTimer(timeout1)
-                linex2 = path.read(1000)
+                linex2 = path.read(1000).decode("utf-8", "ignore")
                 #f7.write(str(linex2)+"\n")
                 #f7.write(str(typ)+"\n")
                 if etest:
@@ -1397,7 +1397,7 @@ class tag_read:
                                     mdate = self.getEncodedString(maudio.get('date', ['n/a'])[0])
                                     try:
                                         mlen = int(maudio.info.length)
-                                        mlength = str(timedelta(seconds=mlen)).encode("utf-8", 'ignore')
+                                        mlength = str(timedelta(seconds=mlen))
                                         if mlen < 3600:
                                             mlength = mlength[-5:]
                                     except Exception:
@@ -1406,18 +1406,12 @@ class tag_read:
             return mtags
 
     def getEncodedString(self, value):
-        returnValue = ""
-        try:
-                returnValue = value.encode("utf-8", 'ignore')
-        except UnicodeDecodeError:
-                try:
-                        returnValue = value.encode("iso8859-1", 'ignore')
-                except UnicodeDecodeError:
-                        try:
-                                returnValue = value.decode("cp1252").encode("utf-8")
-                        except UnicodeDecodeError:
-                                returnValue = "n/a"
-        return returnValue
+        if isinstance(value, bytes):
+            try:
+                return value.decode("utf-8")
+            except UnicodeDecodeError:
+                return value.decode("cp1252", "replace")
+        return str(value)
 
 
 class fav_import:

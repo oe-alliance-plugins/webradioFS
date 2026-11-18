@@ -2645,7 +2645,7 @@ class WebradioFSScreen_15(Screen, InfoBarSeek, HelpableScreen, InfoBarNotificati
                                  if not os.path.exists(self.rec_path1):
                                        os.mkdir(self.rec_path1)
                             args = " "
-                            args += self.stream_url.decode("utf-8", "ignore")
+                            args += self.stream_url
                             args += ' -s'
                             args += ' -r '
                             args += '9555'
@@ -2665,7 +2665,7 @@ class WebradioFSScreen_15(Screen, InfoBarSeek, HelpableScreen, InfoBarNotificati
                             else:
                                 args += ' -d "' + self.rec_path + '"'
                                 self.rec_check_path = self.rec_path
-                            cmd = self.wbrfs_rec_BIN + args.encode('utf-8')
+                            cmd = self.wbrfs_rec_BIN + args
                             try:
                               if self.containerwbrfs_rec:
                                  self.containerwbrfs_rec.execute(cmd)
@@ -8711,64 +8711,39 @@ class wbrFS_r_site15(Screen):
 
 
 def playlist_read(playlist):
-       f2 = open(playlist, "r")
-       line = f2.readline()
-       pl = []
-       s = [None, None, None, None]
-       title = None
-       for line in f2:
-         try:
-           line = line.strip()
-           if line == "#EXTM3U" or not len(line):
-              pass
-           elif line.startswith('#EXTINF:'):
-               sp1 = line.split('#EXTINF:')[1].split(',', 1)
-               if len(sp1) == 2:
-                   length = sp1[0]
-                   title = sp1[1]
-                   s = [length, getEncodedString(title), None, None]
-           elif not line.startswith(("#", "http", "www", "rtsp")):
-               if not title:
-                  title = os.path.splitext(os.path.basename(line))[0]
-                  s = [-1, getEncodedString(title), None, None]
-               s[3] = getEncodedString(line)
-               title = None
-               if line.startswith("../"):
-                   fpath2 = os.path.dirname(os.path.abspath(playlist))
-                   while line.startswith("../"):
-                          dir2 = fpath2.split('/')
-                          fpath2 = os.path.join(*dir2[:-1])
-                          line = line[3:]
-                   s[2] = os.path.join(fpath2, line)  # .decode("cp1252").encode("utf-8")
-               elif not line.startswith("/"):
-                   s[2] = os.path.join(os.path.dirname(playlist), line)  # .decode("cp1252").encode("utf-8")
-               else:
-                   s[2] = line  # .decode("cp1252").encode("utf-8")
-               if s[2]:
-                   if not s[2].startswith("/"):
-                       s[2] = "/" + s[2]
-                   s[2] = getEncodedString(s[2])
-                   s[3] = getEncodedString(s[3])
-                   pl.append(s)
-         except Exception:
-            pass
-       f2.close()
-       return pl
-
-
-def getEncodedString(value):
-    returnValue = ""
+    # returns [length, title, path, raw line] entries of a (extended) m3u file
+    pl = []
     try:
-        returnValue = value.encode("utf-8", 'ignore')
+        with open(playlist, "rb") as f:
+            data = f.read()
+    except OSError:
+        return pl
+    try:
+        text = data.decode("utf-8")
     except UnicodeDecodeError:
-        try:
-            returnValue = value.encode("iso8859-1", 'ignore')
-        except UnicodeDecodeError:
-            try:
-                returnValue = value.decode("cp1252").encode("utf-8")
-            except UnicodeDecodeError:
-                returnValue = "n/a"
-    return returnValue
+        text = data.decode("cp1252", "replace")
+    title = None
+    length = -1
+    for line in text.splitlines():
+        line = line.strip()
+        if not line or line == "#EXTM3U":
+            continue
+        if line.startswith("#EXTINF:"):
+            sp1 = line[8:].split(",", 1)
+            if len(sp1) == 2:
+                length = sp1[0]
+                title = sp1[1]
+        elif not line.startswith(("#", "http", "www", "rtsp")):
+            if not title:
+                title = os.path.splitext(os.path.basename(line))[0]
+            if line.startswith("/"):
+                path = line
+            else:
+                path = "/" + os.path.normpath(os.path.join(os.path.dirname(os.path.abspath(playlist)), line)).lstrip("/")
+            pl.append([length, title, path, line])
+            title = None
+            length = -1
+    return pl
 
 
 def str2bool(v=None):
