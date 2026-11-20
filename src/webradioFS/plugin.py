@@ -362,6 +362,6 @@ def autostart(reason, **kwargs):
                     addExternalChild(("webradiofs", root))
             if os.path.exists("/usr/lib/enigma2/python/Plugins/Extensions/OpenWebif/pluginshook.src"):
                 try:
-                    addExternalChild(("webradiofs", root, "webradiofs", __version__))
+                    addExternalChild(("webradiofs", root, "WebradioFS", __version__, True))
                 except Exception:
                     pass
