@@ -762,6 +762,7 @@ class WebradioFSScreen_15(Screen, InfoBarSeek, HelpableScreen, InfoBarNotificati
         self.__event_tracker = ServiceEventTracker(screen=self, eventmap={
                     iPlayableService.evUpdatedInfo: self.__evUpdatedInfo,
                     iPlayableService.evUpdatedEventInfo: self.__evUpdatedInfo,
+                    iPlayableService.evUpdateTags: self.__evUpdatedInfo,
                     iPlayableService.evStart: self.__serviceStarted,
                     iPlayableService.evEOF: self.aktual2,
                     iPlayableService.evUser + 10: self.aktual2,
@@ -7265,6 +7266,7 @@ class wbrScreenSaver_13(Screen, HelpableScreen, InfoBarNotifications):
 
         self.__event_tracker = ServiceEventTracker(screen=self, eventmap={
                                 iPlayableService.evUpdatedInfo: self.__mevUpdatedInfo,
+                                iPlayableService.evUpdateTags: self.__mevUpdatedInfo,
                                 iPlayableService.evStart: self.__serviceStarted,
                                 iPlayableService.evUpdatedRadioText: self.RadioText,
                                 iPlayableService.evUpdatedRtpText: self.RTPText,
